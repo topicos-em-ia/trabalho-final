@@ -1,0 +1,41 @@
+{
+  "modelo": "Qwen/Qwen2.5-0.5B",
+  "dataset": "gutoportelaa/DOMPI-2025",
+  "territorios": [
+    "carnaubais",
+    "tabuleiros_alto_parnaiba",
+    "planice_litoran",
+    "entre_rios",
+    "vale_do_sambito",
+    "vale_dos_rios_piaui_e_itaueiras",
+    "cocais",
+    "mangabeiras",
+    "serra_da_capivara",
+    "vale_do_rio_guaribas",
+    "chapada_vale_do_rio_itaim",
+    "vale_do_caninde"
+  ],
+  "n_treino": 71431,
+  "n_avaliacao": 1000,
+  "hiperparametros": {
+    "epocas": 2,
+    "batch_efetivo": 32,
+    "learning_rate": 5e-05,
+    "max_length": 256
+  },
+  "metricas_antes": {
+    "entropia_cruzada": 3.0812,
+    "perplexidade": 21.78,
+    "acuracia_tokens": 42.25
+  },
+  "metricas_depois": {
+    "entropia_cruzada": 0.739,
+    "perplexidade": 2.09,
+    "acuracia_tokens": 82.0
+  },
+  "delta": {
+    "entropia_cruzada": -2.3422,
+    "perplexidade": -19.69,
+    "acuracia_tokens_pp": 39.75
+  }
+}

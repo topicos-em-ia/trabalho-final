@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "cat": "Entidades",
+    "pergunta": "Qual é o CNPJ da Prefeitura Municipal de Aroazes?",
+    "resposta": "06.554.984/0001-39"
+  },
+  {
+    "id": 2,
+    "cat": "Entidades",
+    "pergunta": "Qual é o CEP da Prefeitura Municipal de Aroazes?",
+    "resposta": "64.310-000"
+  },
+  {
+    "id": 3,
+    "cat": "Entidades",
+    "pergunta": "Qual é o endereço da Prefeitura Municipal de Aroazes?",
+    "resposta": "Av. 27 de Fevereiro, 691, Centro"
+  },
+  {
+    "id": 4,
+    "cat": "Entidades",
+    "pergunta": "Qual é o CNPJ da Câmara Municipal de Juazeiro do Piauí?",
+    "resposta": "01.878.514/0001-07"
+  },
+  {
+    "id": 5,
+    "cat": "Entidades",
+    "pergunta": "Qual é o CNPJ da Prefeitura Municipal de Assunção do Piauí?",
+    "resposta": "01.612.561/0001-04"
+  },
+  {
+    "id": 6,
+    "cat": "Atos Adm.",
+    "pergunta": "Quais são os principais tipos de atos publicados no DOM-PI?",
+    "resposta": "Decreto, Portaria, Licitação, Edital, Lei, Ata, LRF"
+  },
+  {
+    "id": 7,
+    "cat": "Atos Adm.",
+    "pergunta": "O que é um Relatório de Gestão Fiscal (RGF) e qual lei o regulamenta?",
+    "resposta": "Documento obrigatório de situação financeira regulamentado pela LRF (art. 55 da LC 101/2000)"
+  },
+  {
+    "id": 8,
+    "cat": "Atos Adm.",
+    "pergunta": "O que é uma Dispensa Eletrônica no contexto de licitações?",
+    "resposta": "Contratação direta sem licitação realizada por meio eletrônico para aquisições de menor valor"
+  },
+  {
+    "id": 9,
+    "cat": "Atos Adm.",
+    "pergunta": "O que é um Termo de Rescisão/Distrato de Contrato Administrativo?",
+    "resposta": "Documento que formaliza o encerramento antecipado e amigável de um contrato administrativo"
+  },
+  {
+    "id": 10,
+    "cat": "Atos Adm.",
+    "pergunta": "O que é uma Ata de Registro de Preços?",
+    "resposta": "Documento que formaliza preços registrados após licitação, permitindo compras futuras sem nova licitação"
+  },
+  {
+    "id": 11,
+    "cat": "Territorial",
+    "pergunta": "Quantos territórios compõem o dataset DOMPI-2025?",
+    "resposta": "12 territórios"
+  },
+  {
+    "id": 12,
+    "cat": "Territorial",
+    "pergunta": "Qual território possui o maior número de documentos no DOMPI-2025?",
+    "resposta": "Cocais, com 12.188 documentos"
+  },
+  {
+    "id": 13,
+    "cat": "Territorial",
+    "pergunta": "Em qual cidade são publicados os Diários Oficiais dos Municípios do Piauí?",
+    "resposta": "Teresina (PI)"
+  },
+  {
+    "id": 14,
+    "cat": "Territorial",
+    "pergunta": "Qual é o CEP da Prefeitura Municipal de Anísio de Abreu?",
+    "resposta": "64.780-000"
+  },
+  {
+    "id": 15,
+    "cat": "Territorial",
+    "pergunta": "Qual é o e-mail da Prefeitura Municipal de Anísio de Abreu?",
+    "resposta": "pmanisiodeabreupi@gmail.com"
+  },
+  {
+    "id": 16,
+    "cat": "Processos",
+    "pergunta": "O que é o Pregão Eletrônico no contexto das licitações municipais?",
+    "resposta": "Modalidade licitatória realizada eletronicamente em que fornecedores competem por lances"
+  },
+  {
+    "id": 17,
+    "cat": "Processos",
+    "pergunta": "O que é o Demonstrativo da Dívida Consolidada no RGF?",
+    "resposta": "RGF Anexo 2: apresenta o total das obrigações financeiras do município conforme a LRF"
+  },
+  {
+    "id": 18,
+    "cat": "Processos",
+    "pergunta": "Quais motivos constituem causa para extinção de contrato administrativo?",
+    "resposta": "Descumprimento de cláusulas contratuais, irregularidade fiscal, entre outros (Art. 137 da Lei 14.133/2021)"
+  },
+  {
+    "id": 19,
+    "cat": "Processos",
+    "pergunta": "O que é a Comissão Permanente de Licitação?",
+    "resposta": "Órgão colegiado da prefeitura responsável por conduzir e fiscalizar processos licitatórios"
+  },
+  {
+    "id": 20,
+    "cat": "Processos",
+    "pergunta": "O que é uma Errata em publicação de diário oficial?",
+    "resposta": "Publicação que corrige erro material contido em publicação anterior"
+  },
+  {
+    "id": 21,
+    "cat": "Legislação",
+    "pergunta": "Qual lei federal regulamenta as licitações e contratos municipais atualmente?",
+    "resposta": "Lei Federal nº 14.133/2021 (Nova Lei de Licitações), que substituiu a Lei nº 8.666/1993"
+  },
+  {
+    "id": 22,
+    "cat": "Legislação",
+    "pergunta": "O que significa a sigla LRF?",
+    "resposta": "Lei de Responsabilidade Fiscal — Lei Complementar nº 101/2000"
+  },
+  {
+    "id": 23,
+    "cat": "Legislação",
+    "pergunta": "O que é o Orçamento Fiscal e da Seguridade Social na LOA?",
+    "resposta": "Os dois orçamentos da LOA: fiscal (governo geral) e seguridade social (saúde, previdência, assistência)"
+  },
+  {
+    "id": 24,
+    "cat": "Dataset",
+    "pergunta": "Quais ferramentas foram usadas para extrair texto dos PDFs no DOMPI-2025?",
+    "resposta": "PaddleOCR-GPU (portarias/decretos), Docling (tabelas/relatórios) e PyMuPDF (texto nativo)"
+  },
+  {
+    "id": 25,
+    "cat": "Dataset",
+    "pergunta": "Qual é o volume total de documentos e o período coberto pelo DOMPI-2025?",
+    "resposta": "77.337 documentos cobrindo publicações de 2025 do DOM-PI"
+  }
+]
