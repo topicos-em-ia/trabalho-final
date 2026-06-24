@@ -1,3 +1,3 @@
 - [ ] Adaptar o código das questões 2 e 3 para puxarem direto de https://huggingface.co/datasets/vickminari/docentesDC
+- [ ] Adapatar pra usar também https://huggingface.co/datasets/gutoportelaa/DOMPI-2025
 - [ ] Finalizar completamente as questões 1, 2 e 3
-- [ ] 
