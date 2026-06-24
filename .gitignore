@@ -1,2 +1,16 @@
 plans/
 data/
+
+# Artefatos pesados (modelos e zips nao vao pro git)
+*.zip
+*.safetensors
+q1_resultados/dompi_qwen25_final/
+
+# Artefatos de build do LaTeX
+relatorio/*.aux
+relatorio/*.bbl
+relatorio/*.blg
+relatorio/*.fdb_latexmk
+relatorio/*.fls
+relatorio/*.log
+relatorio/*.out
