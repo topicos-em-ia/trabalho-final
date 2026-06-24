@@ -1,0 +1,47 @@
+\section{Introdução}
+
+Modelos de linguagem de grande porte (\textit{Large Language Models}, LLMs) são
+pré-treinados sobre vastos corpora de texto de propósito geral. Embora isso lhes
+confira fluência ampla, o conhecimento adquirido tende a ser raso em domínios
+especializados e em variedades regionais da língua, pouco representados nos dados
+de origem. Adaptar esses modelos a um domínio específico, com custo computacional
+acessível, é um problema central tanto na pesquisa quanto na aplicação prática de
+Processamento de Linguagem Natural~\cite{gururangan2020dont}.
+
+Este relatório documenta três experimentos de adaptação do modelo
+\texttt{Qwen2.5-0.5B}~\cite{qwen2025} ao domínio público piauiense, conduzidos no
+âmbito da disciplina de Tópicos em Inteligência Artificial. Cada experimento
+corresponde a uma questão do trabalho e a uma técnica distinta de treinamento:
+
+\begin{itemize}[leftmargin=2.2em]
+  \item \textbf{Questão 01 -- Pré-Treino Continuado.} Adaptação não supervisionada
+        do modelo ao corpus DOMPI-2025 (Diário Oficial dos Municípios do Piauí),
+        avaliando a qualidade da modelagem de linguagem antes e depois do treino.
+  \item \textbf{Questão 02 -- Pós-Treino com SFT.} Ajuste fino supervisionado
+        (\textit{Supervised Fine-Tuning}) sobre pares de pergunta e resposta
+        gerados a partir do dataset docentesDC, atualizando todos os parâmetros do
+        modelo.
+  \item \textbf{Questão 03 -- Pós-Treino com LoRA/QLoRA.} Repetição do experimento
+        anterior por meio de adaptação de baixo posto (\textit{Low-Rank
+        Adaptation}), que atualiza menos de 1\% dos parâmetros, comparando custo e
+        qualidade frente ao ajuste fino completo.
+\end{itemize}
+
+As três técnicas são avaliadas pelas mesmas métricas quantitativas de modelagem de
+linguagem: perplexidade, entropia cruzada e acurácia de previsão de
+tokens~\cite{jelinek1977perplexity}. A hipótese geral é que o treinamento, em todas
+as suas formas, reduz a incerteza do modelo sobre o texto do domínio e melhora sua
+capacidade de previsão.
+
+\subsection{Estado dos experimentos e escopo do relatório}
+
+A Questão 01 foi executada de ponta a ponta em uma GPU NVIDIA T4 (Kaggle), com
+resultados completos antes e depois do treino. As Questões 02 e 03 tiveram a
+geração dos dados, o carregamento dos modelos e a avaliação \textit{baseline} (antes
+do treino) concluídos; o laço de treinamento, contudo, foi interrompido em uma
+tentativa de execução local por restrição de tempo de hardware. Por essa razão, este
+relatório apresenta para as Questões 02 e 03 a metodologia completa e os resultados
+\textit{baseline} reais já coletados, deixando as métricas pós-treino sinalizadas
+como \emph{em andamento}. Essa decisão preserva a honestidade dos números
+reportados: nenhuma métrica é estimada ou fabricada. A
+Seção~\ref{sec:consideracoes} detalha o caminho de conclusão dessas duas questões.

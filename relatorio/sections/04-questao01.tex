@@ -1,0 +1,148 @@
+\section{Questão 01 -- Pré-Treino Continuado}
+\label{sec:q1}
+
+\subsection{Objetivo e configuração}
+
+A Questão 01 realiza o pré-treino continuado do \texttt{Qwen2.5-0.5B} sobre o corpus
+DOMPI-2025, avaliando se o modelo melhora sua capacidade de modelar a linguagem
+jurídico-administrativa do Piauí. Dos 77.337 documentos brutos, 72.431 passaram pelo
+filtro de tamanho (entre 200 e 50.000 caracteres); destes, 71.431 foram usados no
+treino e 1.000 reservados para avaliação \textit{held-out}. A
+Tabela~\ref{tab:q1-hiper} apresenta os hiperparâmetros efetivos.
+
+\begin{table}[h]
+  \centering
+  \caption{Hiperparâmetros do pré-treino continuado (Questão 01).}
+  \label{tab:q1-hiper}
+  \footnotesize
+  \begin{tabularx}{0.92\textwidth}{@{}l X@{}}
+    \toprule
+    \textbf{Item} & \textbf{Valor} \\
+    \midrule
+    Documentos de treino / avaliação & 71.431 / 1.000 (held-out) \\
+    Épocas & 2 \\
+    Tamanho de lote efetivo & 32 \\
+    Taxa de aprendizado & $5 \times 10^{-5}$ (\textit{cosine}, \textit{warmup} 5\%)~\cite{loshchilov2017sgdr} \\
+    Comprimento máximo de sequência & 256 tokens \\
+    Precisão & \texttt{fp32} + \textit{autocast} \texttt{fp16}, \textit{gradient checkpointing} \\
+    Passos de treino / tempo & 4.466 passos / 16.821~s ($\approx$ 4h40 em 1 GPU T4) \\
+    \textit{Loss} final de treino & 0,8945 \\
+    Melhor \textit{checkpoint} & passo 4.466 (fim da época 2) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Resultados quantitativos}
+
+A Tabela~\ref{tab:q1-metricas} e a Figura~\ref{fig:q1-metricas} apresentam as
+métricas sobre os 1.000 documentos reservados, antes e depois do treino. A
+perplexidade caiu de 21,78 para 2,09 (redução de 90,4\%), a entropia cruzada caiu
+76\% e a acurácia de previsão de tokens quase dobrou, de 42,25\% para 82,00\%.
+
+\begin{table}[h]
+  \centering
+  \caption{Métricas da Questão 01 sobre o conjunto held-out (1.000 documentos).}
+  \label{tab:q1-metricas}
+  \begin{tabular}{@{}l c c c c@{}}
+    \toprule
+    \textbf{Métrica} & \textbf{Antes} & \textbf{Depois} & \textbf{$\Delta$} & \textbf{Variação} \\
+    \midrule
+    Entropia Cruzada    & 3,0812 & \textbf{0,7390} & $-2,3422$ & $-76\%$ \\
+    Perplexidade        & 21,78  & \textbf{2,09}   & $-19,69$  & $\mathbf{-90,4\%}$ \\
+    Acurácia de Tokens  & 42,25\% & \textbf{82,00\%} & $+39,75$ p.p. & $+94\%$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{q1_metricas.png}
+  \caption{Métricas de modelagem de linguagem antes e depois do pré-treino
+  continuado. A perplexidade despenca de $\approx$22 para $\approx$2, indicando que o
+  modelo passou a prever o próximo token com quase nenhuma hesitação no domínio.}
+  \label{fig:q1-metricas}
+\end{figure}
+
+\subsection{Dinâmica do treino e ausência de \textit{overfitting}}
+
+O melhor \textit{checkpoint} selecionado pelo \texttt{Trainer} (via
+\texttt{load\_best\_model\_at\_end} por \texttt{eval\_loss}) foi o do último passo,
+ao fim da época 2, e não o da época 1. Isso indica que a perda de validação
+continuou caindo até o fim do treino: não houve sinal de \textit{overfitting}, pois
+um modelo que tivesse decorado o conjunto de treino teria visto a perda de validação
+subir na segunda época, levando o \texttt{Trainer} a preferir o \textit{checkpoint}
+anterior. A avaliação final, portanto, foi feita no ponto ótimo.
+
+\subsection{Análise qualitativa}
+
+Submetendo os mesmos prompts ao modelo base e ao modelo treinado, o contraste é
+nítido: o modelo treinado produz texto administrativo autêntico do Piauí, enquanto o
+base divaga em conteúdo genérico, muitas vezes de outros estados.
+
+\begin{quote}
+\footnotesize
+\textbf{Prompt:} \textit{``O Prefeito Municipal, no uso de suas atribuições
+legais,''}\\[0.3em]
+\textbf{Base:} divaga sobre um ``sorteio para o prêmio do Imposto sobre receitas
+brutas (IRBR) 2018'', texto genérico e fora de domínio.\\[0.3em]
+\textbf{Treinado:} ``\ldots{}e com fulcro na Lei n. 14.133/2021 e demais normas
+pertinentes, RESOLVE, após exame criterioso de documentação \ldots{} RATIFICAR o
+procedimento licitatório referente a DISPENSA\ldots''
+\end{quote}
+
+\begin{quote}
+\footnotesize
+\textbf{Prompt:} \textit{``EXTRATO DE CONTRATO. Contratante: Prefeitura Municipal
+de''}\\[0.3em]
+\textbf{Base:} ``São Carlos -- SP \ldots{} eleição do candidato à presidência da
+Câmara'' (alucinação fora de domínio).\\[0.3em]
+\textbf{Treinado:} ``São João do Arraial-PI. Objeto: Aquisição de material
+permanente para a Secretaria Municipal de Educação. Recursos: Orçamento Geral. Valor
+global: R\$ 124.036,54\ldots''
+\end{quote}
+
+O modelo treinado acerta a lei vigente de licitações (14.133/2021), cita municípios
+reais do Piauí (São João do Arraial, Simões) e reproduz a estrutura de portarias e
+extratos, inclusive com valores monetários formatados.
+
+\subsection{Benchmark de perguntas e respostas}
+
+Conforme sugerido no enunciado, foi construído um \textit{benchmark} com 25 pares de
+pergunta e resposta de referência sobre o DOM-PI, distribuídos em cinco categorias
+(Entidades, Atos Administrativos, Territorial, Processos, Legislação e Dataset). A
+Tabela~\ref{tab:q1-bench} mostra exemplos. No \textit{benchmark}, o modelo base trata
+as perguntas como busca na web (``Blog do Carlos'', ``Portal de Notícias'') e não
+recupera CNPJ, CEP ou e-mail corretos.
+
+\begin{table}[h]
+  \centering
+  \caption{Exemplos do \textit{benchmark} de 25 pares pergunta/resposta (Questão 01).}
+  \label{tab:q1-bench}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}l X X@{}}
+    \toprule
+    \textbf{Cat.} & \textbf{Pergunta} & \textbf{Resposta de referência} \\
+    \midrule
+    Legislação & Qual lei federal regulamenta as licitações e contratos municipais atualmente? & Lei Federal n. 14.133/2021, que substituiu a Lei n. 8.666/1993 \\
+    Territorial & Quantos territórios compõem o dataset DOMPI-2025? & 12 territórios \\
+    Atos Adm. & O que é uma Ata de Registro de Preços? & Documento que formaliza preços registrados após licitação, permitindo compras futuras sem nova licitação \\
+    Dataset & Qual o volume total de documentos e o período coberto pelo DOMPI-2025? & 77.337 documentos cobrindo publicações de 2025 do DOM-PI \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Esse resultado é esperado e reforça uma distinção importante: o pré-treino ensina o
+modelo a \emph{falar} o domínio (modelagem de linguagem), não a \emph{decorar}
+fatos pontuais como CNPJ ou CEP, que são memorização factual. Por isso a métrica
+central da questão é a perplexidade, e não a acurácia factual do \textit{benchmark}.
+
+\subsection{Observações técnicas}
+
+Registram-se dois pontos metodológicos. Primeiro, o aviso \texttt{missing keys:
+['lm\_head.weight']} é inofensivo: o Qwen2.5 usa \texttt{tie\_word\_embeddings},
+de modo que a camada de saída compartilha pesos com a matriz de \textit{embeddings} e
+é reconstruída no carregamento. Segundo, a perplexidade final muito baixa (2,09)
+combina a adaptação real ao domínio com a natureza altamente templada e repetitiva do
+texto de diário oficial, de baixa entropia intrínseca; como o conjunto de avaliação é
+\textit{held-out}, não há vazamento, mas vale registrar que parte do mérito decorre
+da regularidade do corpus.

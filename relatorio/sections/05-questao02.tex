@@ -1,0 +1,108 @@
+\section{Questão 02 -- Pós-Treino com SFT}
+\label{sec:q2}
+
+\subsection{Objetivo}
+
+A Questão 02 aplica o ajuste fino supervisionado (SFT) ao \texttt{Qwen2.5-0.5B},
+atualizando \emph{todos} os 494 milhões de parâmetros sobre pares de instrução e
+resposta derivados do dataset docentesDC. O objetivo é avaliar se o SFT melhora a
+capacidade do modelo de responder no estilo instrução/resposta sobre o conteúdo
+acadêmico do Departamento de Computação.
+
+\subsection{Geração dos pares de instrução e resposta}
+
+A partir dos registros do docentesDC foram gerados \textbf{3.111 pares} no formato
+\texttt{instruction} / \texttt{input} / \texttt{output}, valor que supera com folga o
+mínimo de 1.000 exigido pelo enunciado. Cada par associa uma instrução referente ao
+material de um professor a um trecho de resposta extraído desse material. Os pares
+são então formatados no molde de prompt estilo
+Alpaca~\cite{taori2023alpaca}, como ilustra a Listagem~\ref{lst:par-sft}.
+
+\begin{lstlisting}[caption={Exemplo de par formatado para o SFT (estilo Alpaca).},label={lst:par-sft},captionpos=b]
+### Instrução:
+Explique o que é tratado neste trecho do material do professor
+Weslley Emmanuel Martins Lima.
+
+### Resposta:
+Ponteiros são tipos especiais de dados que armazenam endereços de
+memória. Uma variável do tipo ponteiro deve ser declarada da forma:
+tipo *nome_variavel; ...<|endoftext|>
+\end{lstlisting}
+
+Os 3.111 pares foram divididos em 2.800 para treino e 311 para avaliação. A
+Tabela~\ref{tab:q2-hiper} resume a configuração do experimento.
+
+\begin{table}[h]
+  \centering
+  \caption{Configuração do SFT (Questão 02).}
+  \label{tab:q2-hiper}
+  \footnotesize
+  \begin{tabularx}{0.92\textwidth}{@{}l X@{}}
+    \toprule
+    \textbf{Item} & \textbf{Valor} \\
+    \midrule
+    Pares gerados (docentesDC) & 3.111 (mínimo exigido: 1.000) \\
+    Split treino / avaliação & 2.800 / 311 \\
+    Parâmetros treinados & 494M (100\%, \textit{full fine-tuning}) \\
+    Épocas / passos & 3 / 525 \\
+    Formato de prompt & estilo Alpaca (\texttt{\#\#\# Instrução} / \texttt{\#\#\# Resposta}) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Resultado \textit{baseline} (antes do SFT)}
+
+A avaliação do modelo base sobre o conjunto de 311 exemplos, antes de qualquer
+treino, produziu os valores da Tabela~\ref{tab:q2-baseline}. Esses números são reais
+e servem de ponto de partida para a comparação pós-treino.
+
+\begin{table}[h]
+  \centering
+  \caption{\textit{Baseline} da Questão 02: modelo base sobre o conjunto docentesDC, antes do SFT.}
+  \label{tab:q2-baseline}
+  \begin{tabular}{@{}l c c@{}}
+    \toprule
+    \textbf{Métrica} & \textbf{Antes (baseline)} & \textbf{Depois (SFT)} \\
+    \midrule
+    Entropia Cruzada   & 3,3151 & \textit{em andamento} \\
+    Perplexidade       & 27,53  & \textit{em andamento} \\
+    Acurácia de Tokens & 41,37\% & \textit{em andamento} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Qualitativamente, antes do SFT o modelo responde de forma vaga e genérica. Para a
+pergunta ``Quem é o professor responsável pela disciplina de Tópicos em IA?'', o
+modelo base devolve ``\textit{O professor responsável \ldots{} é [Professor X]}'',
+evidenciando ausência de conhecimento específico sobre o corpo docente.
+
+\subsection{Estado da execução e pontos de melhoria identificados}
+
+O laço de treinamento do SFT foi iniciado, mas \textbf{interrompido manualmente}
+durante a primeira época. A execução tentada em uma GPU local estimava de 7 a 9 horas
+para completar os 525 passos, inviável dentro da janela de hardware disponível;
+diferentemente da Questão 01, este treino ainda não foi reexecutado na T4 do Kaggle.
+Em consequência, as métricas pós-treino, a comparação final e o salvamento do modelo
+permanecem pendentes (sinalizados como \textit{em andamento} na
+Tabela~\ref{tab:q2-baseline}).
+
+A análise dos artefatos já gerados também revelou três oportunidades de melhoria de
+qualidade, a serem aplicadas antes da execução definitiva:
+
+\begin{enumerate}[leftmargin=2.2em]
+  \item \textbf{Qualidade dos pares.} Parte das respostas é composta por texto bruto
+        (fragmentos de código, trechos em inglês), o que tende a ensinar o modelo a
+        regurgitar conteúdo em vez de transferir conhecimento. Recomenda-se
+        deduplicar, filtrar idioma e garantir respostas coerentes em português.
+  \item \textbf{Máscara de \textit{loss}.} A perda deve ser calculada apenas sobre os
+        tokens da resposta (mascarando a instrução com \texttt{-100} até o marcador
+        \texttt{\#\#\# Resposta:}), para o modelo aprender a responder e não a
+        reproduzir a pergunta.
+  \item \textbf{Perguntas de avaliação reais.} Substituir os marcadores genéricos
+        (``professor X/Y'') por nomes que de fato constam no dataset (p.\,ex.\
+        Raimundo Moura, Erico Leão, André Soares, Vinícius Machado), tornando a
+        comparação antes/depois significativa.
+\end{enumerate}
+
+O caminho de conclusão desta questão, junto com a Questão 03, é detalhado na
+Seção~\ref{sec:consideracoes}.

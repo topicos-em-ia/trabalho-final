@@ -1,0 +1,58 @@
+\section{Metodologia Geral}
+\label{sec:metodologia}
+
+\subsection{Conjuntos de dados}
+
+\paragraph{DOMPI-2025 (Questão 01).} O corpus DOMPI-2025~\cite{dataset_dompi2025}
+reúne publicações do Diário Oficial dos Municípios do Piauí (DOM-PI) referentes a
+2025, distribuídas em 12 territórios de desenvolvimento do estado. O texto foi
+extraído dos PDFs originais com PaddleOCR, Docling e PyMuPDF, totalizando 77.337
+documentos brutos. Trata-se de linguagem jurídico-administrativa: portarias,
+decretos, extratos de contrato, editais de licitação e relatórios fiscais.
+
+\paragraph{docentesDC (Questões 02 e 03).} O dataset
+docentesDC~\cite{dataset_docentesdc} contém materiais acadêmicos (slides, notas de
+aula, fragmentos de código e artigos) de 19 professores do Departamento de
+Computação da UFPI, em 13.762 registros com os campos \texttt{text} e
+\texttt{nome\_professor}. É a base do pós-treino, da qual foram gerados os pares de
+pergunta e resposta usados no SFT e no LoRA/QLoRA.
+
+\subsection{Modelo e ambiente computacional}
+
+Todos os experimentos partem do mesmo modelo base, \texttt{Qwen2.5-0.5B}, carregado
+via biblioteca \textit{Transformers}~\cite{wolf2020transformers}. O treino de
+referência foi executado em uma única GPU NVIDIA T4 (16~GB) na plataforma Kaggle. A
+escolha de uma única T4 (em vez das duas disponíveis) foi deliberada: com duas GPUs,
+o \texttt{Trainer} ativaria \textit{DataParallel} e concentraria os \textit{logits}
+do vocabulário de 151~mil tokens em uma só placa, estourando a memória. O modelo de
+0,5~bilhão de parâmetros cabe folgadamente em uma T4.
+
+Por exigência do \textit{GradScaler} usado no treino em precisão mista (\texttt{fp16}
+com \textit{autocast}), os pesos mestres foram mantidos em \texttt{fp32}; sem isso, a
+T4, que não possui suporte de hardware a \texttt{bfloat16}, falhava no treino.
+Empregou-se \textit{gradient checkpointing} para reduzir o consumo de memória.
+
+\subsection{Protocolo de avaliação}
+
+Para cada questão, o modelo é avaliado \emph{antes} e \emph{depois} do treino sobre
+o mesmo conjunto reservado, usando as métricas da Seção~\ref{sec:metricas}
+(perplexidade, entropia cruzada e acurácia de tokens). Complementa-se a avaliação
+quantitativa com inspeção qualitativa de gerações livres a partir de prompts fixos,
+contrastando o comportamento do modelo base e do modelo treinado. A
+Tabela~\ref{tab:visao-geral} resume a configuração das três questões.
+
+\begin{table}[h]
+  \centering
+  \caption{Visão geral das três questões e do estado de execução.}
+  \label{tab:visao-geral}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}l l l l X@{}}
+    \toprule
+    \textbf{Questão} & \textbf{Técnica} & \textbf{Dataset} & \textbf{Params. treinados} & \textbf{Estado} \\
+    \midrule
+    01 & Pré-treino continuado & DOMPI-2025 & 100\% (494M) & Concluída (antes/depois) \\
+    02 & SFT (full)            & docentesDC & 100\% (494M) & Baseline coletado; treino em andamento \\
+    03 & LoRA/QLoRA            & docentesDC & 0,44\% (2,16M) & Baseline coletado; treino em andamento \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

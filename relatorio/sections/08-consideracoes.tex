@@ -1,0 +1,50 @@
+\section{Considerações Finais}
+\label{sec:consideracoes}
+
+Este relatório documentou três experimentos de adaptação do \texttt{Qwen2.5-0.5B} ao
+domínio público piauiense. A Questão 01, concluída integralmente, confirma sua
+hipótese de forma robusta: o pré-treino continuado sobre o DOMPI-2025 reduziu a
+perplexidade de 21,78 para 2,09 (queda de 90,4\%) e elevou a acurácia de previsão de
+tokens de 42,25\% para 82,00\%, sem sinais de \textit{overfitting} e com clara
+transformação qualitativa das gerações, que passaram de texto genérico para linguagem
+administrativa autêntica do Piauí.
+
+As Questões 02 (SFT completo) e 03 (LoRA/QLoRA) tiveram a metodologia, a geração dos
+3.111 pares de instrução/resposta e a avaliação \textit{baseline} concluídas com
+números reais, mas o treinamento foi interrompido por restrição de tempo de hardware
+na tentativa local. Optou-se por reportar esse estado de forma transparente, sem
+estimar métricas pós-treino. Os dados já evidenciam o principal trade-off entre as
+duas técnicas: o LoRA/QLoRA atualiza apenas 0,44\% dos parâmetros e estimou treino
+cerca de 20 vezes mais rápido que o ajuste fino completo.
+
+\subsection{Caminho para conclusão das Questões 02 e 03}
+
+Para fechar as duas questões pendentes, basta reexecutar os notebooks na GPU T4 do
+Kaggle (o mesmo ambiente que viabilizou a Questão 01 em $\approx$4h40), aplicando os
+ajustes já identificados:
+
+\begin{enumerate}[leftmargin=2.2em]
+  \item aplicar as três melhorias de qualidade dos pares de QA da
+        Seção~\ref{sec:q2} (deduplicação, filtro de idioma, máscara de \textit{loss})
+        e as perguntas de avaliação com nomes reais de professores;
+  \item aplicar a correção do modo LoRA puro da Seção~\ref{sec:q3}
+        (\texttt{enable\_input\_require\_grads});
+  \item executar o treino, coletar as métricas pós-treino e preencher as células
+        ``depois'' das Tabelas~\ref{tab:q2-baseline}, \ref{tab:q3-baseline}
+        e~\ref{tab:comparativo}.
+\end{enumerate}
+
+Como o conjunto docentesDC é muito menor que o DOMPI-2025, estima-se que cada treino
+leve apenas dezenas de minutos na T4, dominado pelo custo fixo de carregamento e
+avaliação. A estrutura deste relatório já está preparada para receber esses números.
+
+\subsection{Trabalhos futuros}
+
+O trabalho da disciplina prevê ainda três frentes não cobertas por este relatório,
+que dão sequência natural ao que foi construído: \textbf{(4)} destilação de
+conhecimento de um modelo professor para um aluno; \textbf{(5)} uma aplicação de RAG
+(\textit{Retrieval-Augmented Generation}) sobre o DOMPI-2025 ou o docentesDC, capaz
+de recuperar fatos pontuais (CNPJ, CEP, e-mail) que o pré-treino não memoriza; e
+\textbf{(6)} a inclusão de camadas de \textit{guardrails} sobre um dos modelos
+desenvolvidos. A frente de RAG, em particular, complementa diretamente a limitação de
+memorização factual observada no \textit{benchmark} da Questão 01.

@@ -1,0 +1,82 @@
+% Relatorio - Topicos em IA (UFPI - CCN - DC) - Questoes 01, 02 e 03.
+% Classe article, fonte Times, margens ABNT, citacoes abntex2cite (autor-data).
+% Compile com: ./compile.sh   ou   make build
+
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{mathptmx}
+\usepackage[top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{csquotes}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,urlcolor=blue,linkcolor=black,citecolor=blue]{hyperref}
+\usepackage[alf]{abntex2cite}
+
+\graphicspath{{figures/}}
+
+\onehalfspacing
+\setlength{\parindent}{1.25cm}
+\renewcommand{\arraystretch}{1.3}
+
+\titleformat{\section}{\normalfont\bfseries}{\thesection.}{0.5em}{\MakeUppercase}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{0.5em}{}
+
+\pagestyle{plain}
+
+\definecolor{cinzacodigo}{gray}{0.95}
+\definecolor{comentario}{rgb}{0.30,0.45,0.30}
+\definecolor{palavrachave}{rgb}{0.10,0.10,0.60}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{cinzacodigo},
+  commentstyle=\color{comentario},
+  keywordstyle=\color{palavrachave}\bfseries,
+  showstringspaces=false,
+  breaklines=true,
+  frame=single,
+  framesep=5pt,
+  columns=fullflexible,
+  literate=
+    {á}{{\'a}}1 {à}{{\`a}}1 {â}{{\^a}}1 {ã}{{\~a}}1 {ä}{{\"a}}1
+    {é}{{\'e}}1 {ê}{{\^e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ô}{{\^o}}1
+    {õ}{{\~o}}1 {ú}{{\'u}}1 {ç}{{\c c}}1
+    {Á}{{\'A}}1 {Â}{{\^A}}1 {Ã}{{\~A}}1 {É}{{\'E}}1 {Ê}{{\^E}}1
+    {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ô}{{\^O}}1 {Õ}{{\~O}}1 {Ú}{{\'U}}1 {Ç}{{\c C}}1,
+}
+
+\begin{document}
+
+\input{sections/00-capa}
+
+\newpage
+
+\input{sections/01-introducao}
+\input{sections/02-fundamentacao}
+\input{sections/03-metodologia}
+\input{sections/04-questao01}
+\input{sections/05-questao02}
+\input{sections/06-questao03}
+\input{sections/07-discussao}
+\input{sections/08-consideracoes}
+
+\bibliographystyle{abntex2-alf}
+\bibliography{refs}
+
+\end{document}

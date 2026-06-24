@@ -1,0 +1,93 @@
+\section{Questão 03 -- Pós-Treino com LoRA/QLoRA}
+\label{sec:q3}
+
+\subsection{Objetivo}
+
+A Questão 03 repete o pós-treino da Questão 02, mas substitui o ajuste fino completo
+por adaptação de baixo posto (LoRA)~\cite{hu2022lora} sobre o modelo carregado em 4
+bits (QLoRA)~\cite{dettmers2023qlora}. A meta é verificar se uma técnica que atualiza
+uma fração mínima dos parâmetros alcança qualidade próxima à do SFT completo, com
+custo de memória e tempo muito menores. Reaproveitam-se os mesmos 3.111 pares e o
+mesmo split (2.800/311) da Questão 02.
+
+\subsection{Configuração do adaptador}
+
+Os adaptadores LoRA foram inseridos nas camadas de projeção do modelo, resultando em
+apenas \textbf{2.162.688 parâmetros treináveis} de um total de 496.195.456, ou seja,
+\textbf{0,44\%} do modelo. A Figura~\ref{fig:q3-lora} contrasta esse custo com o do
+ajuste fino completo da Questão 02: o LoRA atualiza cerca de 228 vezes menos
+parâmetros.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\textwidth]{q3_lora_params.png}
+  \caption{Parâmetros atualizados no treino. O \textit{full fine-tuning} da Questão
+  02 ajusta os 494M de parâmetros; o LoRA/QLoRA da Questão 03 ajusta apenas 2,16M
+  (0,44\%), em escala logarítmica.}
+  \label{fig:q3-lora}
+\end{figure}
+
+\begin{table}[h]
+  \centering
+  \caption{Configuração do LoRA/QLoRA (Questão 03).}
+  \label{tab:q3-hiper}
+  \footnotesize
+  \begin{tabularx}{0.92\textwidth}{@{}l X@{}}
+    \toprule
+    \textbf{Item} & \textbf{Valor} \\
+    \midrule
+    Modo & QLoRA (modelo base quantizado em 4 bits, NF4) \\
+    Parâmetros treináveis & 2.162.688 de 496.195.456 (0,44\%) \\
+    Dados / split & 3.111 pares; 2.800 treino / 311 avaliação \\
+    Épocas / passos & 3 / 525 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Resultado \textit{baseline} (antes do LoRA/QLoRA)}
+
+A Tabela~\ref{tab:q3-baseline} traz a avaliação do modelo base, em 4 bits, sobre os
+311 exemplos de avaliação, antes do treino dos adaptadores.
+
+\begin{table}[h]
+  \centering
+  \caption{\textit{Baseline} da Questão 03: modelo base quantizado, antes do LoRA/QLoRA.}
+  \label{tab:q3-baseline}
+  \begin{tabular}{@{}l c c@{}}
+    \toprule
+    \textbf{Métrica} & \textbf{Antes (baseline)} & \textbf{Depois (LoRA/QLoRA)} \\
+    \midrule
+    Entropia Cruzada   & 3,5413 & \textit{em andamento} \\
+    Perplexidade       & 34,51  & \textit{em andamento} \\
+    Acurácia de Tokens & 38,42\% & \textit{em andamento} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Nota-se que o \textit{baseline} desta questão (perplexidade 34,51) é pior que o da
+Questão 02 (27,53), apesar de o modelo e o conjunto serem os mesmos. A explicação
+mais provável é a \textbf{quantização em 4 bits}: o QLoRA mede o \textit{baseline}
+sobre a versão comprimida do modelo, cujos pesos aproximados elevam a perplexidade
+antes de qualquer treino. É justamente essa perda inicial que os adaptadores LoRA
+devem recuperar ao longo do ajuste.
+
+\subsection{Estado da execução}
+
+Assim como na Questão 02, o treino do LoRA/QLoRA foi iniciado e \textbf{interrompido}
+antes de concluir as 3 épocas, faltando as métricas pós-treino, a comparação final e
+o salvamento dos adaptadores. Vale destacar, contudo, uma evidência prática
+favorável à técnica já visível nos artefatos: enquanto o SFT completo da Questão 02
+estimava de 7 a 9 horas de treino na GPU local, o LoRA/QLoRA estimava cerca de
+\textbf{21 minutos} no mesmo hardware, uma redução drástica coerente com o fato de
+atualizar apenas 0,44\% dos parâmetros. Esse contraste de custo é o argumento central
+da comparação entre as Questões 02 e 03.
+
+\subsection{Ponto de correção identificado}
+
+A análise do notebook identificou um ajuste necessário para o modo LoRA puro
+(sem quantização): com \textit{gradient checkpointing} ativo e sem
+\texttt{prepare\_model\_for\_kbit\_training} (que só roda no caminho QLoRA), ocorre o
+erro ``\textit{element 0 of tensors does not require grad}''. A correção é chamar
+\texttt{model.enable\_input\_require\_grads()} antes de \texttt{get\_peft\_model},
+ou desativar o \textit{gradient checkpointing} nesse modo. No caminho QLoRA padrão,
+usado nos resultados acima, o problema não ocorre.

@@ -1,0 +1,67 @@
+\section{Fundamentação Teórica}
+
+\subsection{Modelos de linguagem e o objetivo de pré-treino}
+
+Um modelo de linguagem autorregressivo, baseado na arquitetura
+\textit{Transformer}~\cite{vaswani2017attention}, estima a probabilidade do próximo
+token $x_t$ dado o contexto anterior, $P(x_t \mid x_{<t})$. O treinamento minimiza a
+entropia cruzada média entre a distribuição prevista e o token observado:
+
+\begin{equation}
+  \mathcal{L} = -\frac{1}{N} \sum_{t=1}^{N} \log P(x_t \mid x_{<t}),
+  \label{eq:entropia}
+\end{equation}
+
+\noindent onde $N$ é o número de tokens. O \texttt{Qwen2.5-0.5B} adotado neste
+trabalho possui 494 milhões de parâmetros, 24 camadas, dimensão oculta de 896 e
+vocabulário de 151.936 tokens~\cite{qwen2025}.
+
+\subsection{Pré-treino continuado (\textit{continued pretraining})}
+
+O pré-treino continuado consiste em prosseguir o treino não supervisionado de um
+modelo já pré-treinado sobre um corpus de um domínio-alvo, usando o mesmo objetivo
+da Equação~\ref{eq:entropia}. A técnica adapta o modelo ao vocabulário, ao estilo e
+às regularidades estatísticas do domínio sem necessidade de rótulos, e é
+reconhecidamente eficaz para domínios especializados~\cite{gururangan2020dont}. É a
+abordagem da Questão 01.
+
+\subsection{Pós-treino: ajuste fino supervisionado (SFT)}
+
+O \textit{Supervised Fine-Tuning} (SFT) treina o modelo sobre pares de instrução e
+resposta, ensinando-o a seguir comandos e a responder no formato
+desejado~\cite{ouyang2022instructgpt}. Os exemplos seguem tipicamente um molde de
+prompt como o do \textit{Stanford Alpaca}~\cite{taori2023alpaca}, com campos de
+instrução, entrada opcional e resposta. No SFT clássico (Questão 02), todos os
+parâmetros do modelo são atualizados, o que oferece máxima capacidade de adaptação
+ao custo de elevada demanda de memória e tempo.
+
+\subsection{Adaptação eficiente: LoRA e QLoRA}
+
+A \textit{Low-Rank Adaptation} (LoRA)~\cite{hu2022lora} congela os pesos originais
+$W_0$ e aprende apenas um par de matrizes de baixo posto $A$ e $B$, de modo que a
+atualização efetiva seja $W_0 + BA$, com $\mathrm{posto}(BA) = r \ll d$. Como apenas
+$A$ e $B$ são treinados, o número de parâmetros atualizados cai em ordens de
+grandeza, reduzindo memória e tempo sem alterar a arquitetura na inferência.
+
+O QLoRA~\cite{dettmers2023qlora} estende a ideia carregando o modelo base
+\emph{quantizado} em 4 bits (formato NF4) e aplicando os adaptadores LoRA sobre essa
+representação comprimida~\cite{dettmers2022llmint8}. Isso permite ajustar modelos em
+GPUs modestas. Ambas as técnicas são disponibilizadas pela biblioteca
+PEFT~\cite{peft2022} e correspondem à Questão 03.
+
+\subsection{Métricas de avaliação}
+\label{sec:metricas}
+
+As três questões usam o mesmo conjunto de métricas, calculadas sobre um conjunto de
+avaliação reservado (\textit{held-out}):
+
+\begin{itemize}[leftmargin=2.2em]
+  \item \textbf{Entropia cruzada:} a perda média da Equação~\ref{eq:entropia};
+        quanto menor, melhor o ajuste do modelo ao texto.
+  \item \textbf{Perplexidade:} o exponencial da entropia cruzada,
+        $\mathrm{PPL} = e^{\mathcal{L}}$~\cite{jelinek1977perplexity}. Interpreta-se
+        como o número médio de opções entre as quais o modelo hesita por token; uma
+        perplexidade próxima de 1 indica previsão quase determinística.
+  \item \textbf{Acurácia de previsão de tokens:} a fração de tokens em que o token de
+        maior probabilidade (\textit{argmax}) coincide com o token real.
+\end{itemize}
