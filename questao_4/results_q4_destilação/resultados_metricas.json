@@ -1,0 +1,42 @@
+{
+  "professor": "Qwen/Qwen2.5-3B",
+  "aluno": "Qwen/Qwen2.5-1.5B-Instruct",
+  "dataset": "benchmark_diarios.json",
+  "n_exemplos": 100,
+  "hiperparametros": {
+    "epocas": 3,
+    "batch_efetivo": 16,
+    "learning_rate": 0.0002,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "target_modules": [
+      "q_proj",
+      "v_proj"
+    ],
+    "max_seq_length": 512
+  },
+  "metricas_professor": {
+    "entropia_cruzada": 1.505,
+    "perplexidade": 4.5,
+    "acuracia_tokens": 68.08
+  },
+  "metricas_aluno_antes": {
+    "entropia_cruzada": 1.7022,
+    "perplexidade": 5.49,
+    "acuracia_tokens": 65.65
+  },
+  "metricas_aluno_depois": {
+    "entropia_cruzada": 1.4434,
+    "perplexidade": 4.23,
+    "acuracia_tokens": 68.63
+  },
+  "delta_aluno": {
+    "entropia_cruzada": -0.2588,
+    "perplexidade": -1.26,
+    "acuracia_tokens": 2.98
+  },
+  "gap_vs_professor": {
+    "perplexidade": -0.27
+  },
+  "imitation_accuracy": 0.53
+}
