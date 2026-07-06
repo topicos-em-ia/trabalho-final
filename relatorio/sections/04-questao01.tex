@@ -1,4 +1,4 @@
-\section{Questão 01 -- Pré-Treino Continuado}
+\section{Questão 01: Pré-Treino Continuado}
 \label{sec:q1}
 
 \subsection{Objetivo e configuração}
@@ -10,7 +10,7 @@ filtro de tamanho (entre 200 e 50.000 caracteres); destes, 71.431 foram usados n
 treino e 1.000 reservados para avaliação \textit{held-out}. A
 Tabela~\ref{tab:q1-hiper} apresenta os hiperparâmetros efetivos.
 
-\begin{table}[h]
+\begin{table}[ht]
   \centering
   \caption{Hiperparâmetros do pré-treino continuado (Questão 01).}
   \label{tab:q1-hiper}
@@ -19,14 +19,15 @@ Tabela~\ref{tab:q1-hiper} apresenta os hiperparâmetros efetivos.
     \toprule
     \textbf{Item} & \textbf{Valor} \\
     \midrule
-    Documentos de treino / avaliação & 71.431 / 1.000 (held-out) \\
+    Documentos de treino / avaliação & 71.431 / 1.000 (\textit{held-out}) \\
     Épocas & 2 \\
     Tamanho de lote efetivo & 32 \\
-    Taxa de aprendizado & $5 \times 10^{-5}$ (\textit{cosine}, \textit{warmup} 5\%)~\cite{loshchilov2017sgdr} \\
+    Taxa de aprendizado & $5 \times 10^{-5}$ com decaimento cosseno \\
     Comprimento máximo de sequência & 256 tokens \\
     Precisão & \texttt{fp32} + \textit{autocast} \texttt{fp16}, \textit{gradient checkpointing} \\
-    Passos de treino / tempo & 4.466 passos / 16.821~s ($\approx$ 4h40 em 1 GPU T4) \\
-    \textit{Loss} final de treino & 0,8945 \\
+    Passos de treino / tempo & 4.466 passos / 15.810~s ($\approx$ 4h23 em 1 GPU T4) \\
+    Pico de memória de GPU & 10,60~GB \\
+    \textit{Loss} final de treino & 0,8943 \\
     Melhor \textit{checkpoint} & passo 4.466 (fim da época 2) \\
     \bottomrule
   \end{tabularx}
@@ -37,41 +38,49 @@ Tabela~\ref{tab:q1-hiper} apresenta os hiperparâmetros efetivos.
 A Tabela~\ref{tab:q1-metricas} e a Figura~\ref{fig:q1-metricas} apresentam as
 métricas sobre os 1.000 documentos reservados, antes e depois do treino. A
 perplexidade caiu de 21,78 para 2,09 (redução de 90,4\%), a entropia cruzada caiu
-76\% e a acurácia de previsão de tokens quase dobrou, de 42,25\% para 82,00\%.
+76\% e a acurácia de previsão de tokens quase dobrou, de 42,25\% para 82,03\%.
 
-\begin{table}[h]
+\begin{table}[ht]
   \centering
-  \caption{Métricas da Questão 01 sobre o conjunto held-out (1.000 documentos).}
+  \caption{Métricas da Questão 01 sobre o conjunto \textit{held-out} (1.000 documentos).}
   \label{tab:q1-metricas}
   \begin{tabular}{@{}l c c c c@{}}
     \toprule
     \textbf{Métrica} & \textbf{Antes} & \textbf{Depois} & \textbf{$\Delta$} & \textbf{Variação} \\
     \midrule
-    Entropia Cruzada    & 3,0812 & \textbf{0,7390} & $-2,3422$ & $-76\%$ \\
+    Entropia Cruzada    & 3,0812 & \textbf{0,7381} & $-2,3431$ & $-76\%$ \\
     Perplexidade        & 21,78  & \textbf{2,09}   & $-19,69$  & $\mathbf{-90,4\%}$ \\
-    Acurácia de Tokens  & 42,25\% & \textbf{82,00\%} & $+39,75$ p.p. & $+94\%$ \\
+    Acurácia de Tokens  & 42,25\% & \textbf{82,03\%} & $+39,78$ p.p. & $+94\%$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{q1_metricas.png}
   \caption{Métricas de modelagem de linguagem antes e depois do pré-treino
-  continuado. A perplexidade despenca de $\approx$22 para $\approx$2, indicando que o
-  modelo passou a prever o próximo token com quase nenhuma hesitação no domínio.}
+  continuado. A perplexidade cai de cerca de 22 para cerca de 2, indicando que o
+  modelo passou a prever o próximo token com pouquíssima hesitação no domínio.}
   \label{fig:q1-metricas}
 \end{figure}
 
 \subsection{Dinâmica do treino e ausência de \textit{overfitting}}
 
-O melhor \textit{checkpoint} selecionado pelo \texttt{Trainer} (via
-\texttt{load\_best\_model\_at\_end} por \texttt{eval\_loss}) foi o do último passo,
-ao fim da época 2, e não o da época 1. Isso indica que a perda de validação
-continuou caindo até o fim do treino: não houve sinal de \textit{overfitting}, pois
-um modelo que tivesse decorado o conjunto de treino teria visto a perda de validação
-subir na segunda época, levando o \texttt{Trainer} a preferir o \textit{checkpoint}
-anterior. A avaliação final, portanto, foi feita no ponto ótimo.
+A Figura~\ref{fig:q1-curva} mostra a evolução da perda. A perda de treino cai de
+2,05 para 0,64 de forma monotônica, e a perda de validação diminui entre as épocas
+(0,8423 ao fim da época 1; 0,7356 ao fim da época 2). O melhor \textit{checkpoint}
+selecionado pelo \texttt{Trainer} foi, portanto, o do último passo: não houve sinal
+de \textit{overfitting}, pois um modelo que tivesse decorado o conjunto de treino
+teria visto a perda de validação subir na segunda época. A avaliação final foi feita
+nesse ponto ótimo.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\textwidth]{q1_curva_loss.png}
+  \caption{Curvas de perda do pré-treino continuado. A perda de validação continua
+  caindo até o fim da segunda época.}
+  \label{fig:q1-curva}
+\end{figure}
 
 \subsection{Análise qualitativa}
 
@@ -83,66 +92,89 @@ base divaga em conteúdo genérico, muitas vezes de outros estados.
 \footnotesize
 \textbf{Prompt:} \textit{``O Prefeito Municipal, no uso de suas atribuições
 legais,''}\\[0.3em]
-\textbf{Base:} divaga sobre um ``sorteio para o prêmio do Imposto sobre receitas
-brutas (IRBR) 2018'', texto genérico e fora de domínio.\\[0.3em]
-\textbf{Treinado:} ``\ldots{}e com fulcro na Lei n. 14.133/2021 e demais normas
-pertinentes, RESOLVE, após exame criterioso de documentação \ldots{} RATIFICAR o
-procedimento licitatório referente a DISPENSA\ldots''
+\textbf{Base:} ``\ldots promoveu a realização de um sorteio para o prêmio do Imposto
+sobre as receitas brutas (IRBR) 2018\ldots'' (texto genérico, fora de
+domínio).\\[0.3em]
+\textbf{Treinado:} ``\ldots e com fulcro na Lei n. 14.133/2021 e demais normas
+pertinentes, RESOLVE, após exame criterioso de documentação e acatando a opinião da
+Comissão Permanente de Licitação\ldots''
 \end{quote}
 
 \begin{quote}
 \footnotesize
 \textbf{Prompt:} \textit{``EXTRATO DE CONTRATO. Contratante: Prefeitura Municipal
 de''}\\[0.3em]
-\textbf{Base:} ``São Carlos -- SP \ldots{} eleição do candidato à presidência da
-Câmara'' (alucinação fora de domínio).\\[0.3em]
-\textbf{Treinado:} ``São João do Arraial-PI. Objeto: Aquisição de material
-permanente para a Secretaria Municipal de Educação. Recursos: Orçamento Geral. Valor
-global: R\$ 124.036,54\ldots''
+\textbf{Base:} ``São Pedro, do Distrito Federal, e do Município de Ipiranga\ldots{} O
+Tribunal Regional Federal da 4ª Região\ldots'' (alucinação fora de domínio).\\[0.3em]
+\textbf{Treinado:} ``São João do Arraial-PI, CNPJ n. 01.612.609/0001-84. Contratado:
+A. C. GOMES COMÉRCIO DE MATERIAIS ESPORTIVOS E CONSTRUÇÃO LTDA\ldots''
 \end{quote}
 
 O modelo treinado acerta a lei vigente de licitações (14.133/2021), cita municípios
-reais do Piauí (São João do Arraial, Simões) e reproduz a estrutura de portarias e
-extratos, inclusive com valores monetários formatados.
+reais do Piauí (São João do Arraial, Caldeirão Grande do Piauí) e reproduz a
+estrutura de portarias e extratos, incluindo o CNPJ verdadeiro da prefeitura citada.
+Nota-se também que o texto gerado reproduz artefatos de OCR presentes no corpus
+(acentuação perdida, letras trocadas por dígitos), o que é fidelidade ao material de
+treino e não degradação do modelo.
 
-\subsection{Benchmark de perguntas e respostas}
+\subsection{\textit{Benchmark} de perguntas e respostas}
 
 Conforme sugerido no enunciado, foi construído um \textit{benchmark} com 25 pares de
-pergunta e resposta de referência sobre o DOM-PI, distribuídos em cinco categorias
-(Entidades, Atos Administrativos, Territorial, Processos, Legislação e Dataset). A
-Tabela~\ref{tab:q1-bench} mostra exemplos. No \textit{benchmark}, o modelo base trata
-as perguntas como busca na web (``Blog do Carlos'', ``Portal de Notícias'') e não
-recupera CNPJ, CEP ou e-mail corretos.
+pergunta e resposta de referência sobre o DOM-PI, em seis categorias (Entidades,
+Atos Administrativos, Territorial, Processos, Legislação e Dataset). As 25 perguntas
+foram respondidas com geração determinística pelos dois modelos, antes e depois do
+treino, e cada resposta foi classificada como acerto exato, acerto parcial ou erro
+frente à referência. A Tabela~\ref{tab:q1-bench} resume a classificação.
 
-\begin{table}[h]
+\begin{table}[ht]
   \centering
-  \caption{Exemplos do \textit{benchmark} de 25 pares pergunta/resposta (Questão 01).}
+  \caption{Classificação das 25 respostas do \textit{benchmark} (Questão 01).}
   \label{tab:q1-bench}
-  \footnotesize
-  \begin{tabularx}{\textwidth}{@{}l X X@{}}
+  \begin{tabular}{@{}l c c c@{}}
     \toprule
-    \textbf{Cat.} & \textbf{Pergunta} & \textbf{Resposta de referência} \\
+    \textbf{Modelo} & \textbf{Acertos exatos} & \textbf{Acertos parciais} & \textbf{Erros} \\
     \midrule
-    Legislação & Qual lei federal regulamenta as licitações e contratos municipais atualmente? & Lei Federal n. 14.133/2021, que substituiu a Lei n. 8.666/1993 \\
-    Territorial & Quantos territórios compõem o dataset DOMPI-2025? & 12 territórios \\
-    Atos Adm. & O que é uma Ata de Registro de Preços? & Documento que formaliza preços registrados após licitação, permitindo compras futuras sem nova licitação \\
-    Dataset & Qual o volume total de documentos e o período coberto pelo DOMPI-2025? & 77.337 documentos cobrindo publicações de 2025 do DOM-PI \\
+    Base (antes)      & 0 & 5 & 20 \\
+    Treinado (depois) & \textbf{6} & \textbf{7} & \textbf{12} \\
     \bottomrule
-  \end{tabularx}
+  \end{tabular}
 \end{table}
 
-Esse resultado é esperado e reforça uma distinção importante: o pré-treino ensina o
-modelo a \emph{falar} o domínio (modelagem de linguagem), não a \emph{decorar}
-fatos pontuais como CNPJ ou CEP, que são memorização factual. Por isso a métrica
-central da questão é a perplexidade, e não a acurácia factual do \textit{benchmark}.
+O modelo base trata as perguntas como busca na web e não recupera nenhum fato exato.
+O modelo treinado, por sua vez, memorizou fatos pontuais do corpus: respondeu
+corretamente, caractere por caractere, o CNPJ da Prefeitura de Aroazes
+(06.554.984/0001-39), o CEP de Aroazes (64.310-000), o endereço da mesma prefeitura,
+o CNPJ da Prefeitura de Assunção do Piauí (01.612.561/0001-04) e o CEP da Prefeitura
+de Anísio de Abreu (64.780-000), além de citar a Lei 14.133/2021 na pergunta sobre
+legislação. A Figura~\ref{fig:q1-bench} apresenta a visão por categoria sob um
+critério automático propositalmente estrito (a resposta de referência inteira deve
+estar contida na resposta gerada), no qual categorias conceituais, de resposta
+longa, zeram por construção; a leitura fina é a da classificação manual acima.
 
-\subsection{Observações técnicas}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\textwidth]{q1_benchmark_qa.png}
+  \caption{\textit{Benchmark} por categoria sob o critério automático de
+  contenção da referência. Os rótulos indicam acertos sobre o total de perguntas da
+  categoria. O ganho concentra-se em Entidades, onde as referências são cadeias
+  exatas como CNPJ e CEP.}
+  \label{fig:q1-bench}
+\end{figure}
 
-Registram-se dois pontos metodológicos. Primeiro, o aviso \texttt{missing keys:
-['lm\_head.weight']} é inofensivo: o Qwen2.5 usa \texttt{tie\_word\_embeddings},
-de modo que a camada de saída compartilha pesos com a matriz de \textit{embeddings} e
-é reconstruída no carregamento. Segundo, a perplexidade final muito baixa (2,09)
-combina a adaptação real ao domínio com a natureza altamente templada e repetitiva do
-texto de diário oficial, de baixa entropia intrínseca; como o conjunto de avaliação é
-\textit{held-out}, não há vazamento, mas vale registrar que parte do mérito decorre
-da regularidade do corpus.
+\subsection{Limitações e observações técnicas}
+
+Três pontos merecem registro. Primeiro, a memorização parcial cria
+\emph{alucinações plausíveis}: na pergunta sobre o CNPJ da Câmara Municipal de
+Juazeiro do Piauí, o modelo treinado gera um CNPJ bem formatado, porém errado, e ao
+ser perguntado sobre o número de territórios responde 18 em vez de 12. Esse
+comportamento é mais arriscado que a ignorância do modelo base, pois transmite falsa
+confiança. Segundo, o modelo é um modelo base, sem ajuste a instruções; nas
+perguntas conceituais ele tende a continuar o estilo de diário oficial em vez de
+responder, e por isso o \textit{benchmark} deve ser lido como evidência qualitativa.
+Terceiro, a perplexidade final muito baixa (2,09) combina a adaptação real ao
+domínio com a natureza altamente padronizada e repetitiva do texto de diário
+oficial; como o conjunto de avaliação é \textit{held-out}, não há vazamento, mas
+parte do mérito decorre da regularidade do corpus. Registre-se ainda que o aviso
+\texttt{missing keys: ['lm\_head.weight']} ao carregar \textit{checkpoints} é
+inofensivo, pois o Qwen2.5 compartilha os pesos da camada de saída com os
+\textit{embeddings}.

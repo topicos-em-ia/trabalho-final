@@ -8,40 +8,66 @@ de origem. Adaptar esses modelos a um domínio específico, com custo computacio
 acessível, é um problema central tanto na pesquisa quanto na aplicação prática de
 Processamento de Linguagem Natural~\cite{gururangan2020dont}.
 
-Este relatório documenta três experimentos de adaptação do modelo
-\texttt{Qwen2.5-0.5B}~\cite{qwen2025} ao domínio público piauiense, conduzidos no
-âmbito da disciplina de Tópicos em Inteligência Artificial. Cada experimento
-corresponde a uma questão do trabalho e a uma técnica distinta de treinamento:
+Este relatório documenta as seis questões do trabalho final da disciplina de
+Tópicos em Inteligência Artificial, todas voltadas à adaptação de modelos de
+linguagem da família \texttt{Qwen2.5}~\cite{qwen2025} ao domínio público piauiense.
+As três primeiras questões formam um núcleo homogêneo, conduzido sobre o
+\texttt{Qwen2.5-0.5B} em uma única sessão de GPU, cada uma correspondendo a uma
+técnica distinta de treinamento:
 
 \begin{itemize}[leftmargin=2.2em]
-  \item \textbf{Questão 01 -- Pré-Treino Continuado.} Adaptação não supervisionada
+  \item \textbf{Questão 01, Pré-Treino Continuado.} Adaptação não supervisionada
         do modelo ao corpus DOMPI-2025 (Diário Oficial dos Municípios do Piauí),
-        avaliando a qualidade da modelagem de linguagem antes e depois do treino.
-  \item \textbf{Questão 02 -- Pós-Treino com SFT.} Ajuste fino supervisionado
-        (\textit{Supervised Fine-Tuning}) sobre pares de pergunta e resposta
-        gerados a partir do dataset docentesDC, atualizando todos os parâmetros do
-        modelo.
-  \item \textbf{Questão 03 -- Pós-Treino com LoRA/QLoRA.} Repetição do experimento
-        anterior por meio de adaptação de baixo posto (\textit{Low-Rank
-        Adaptation}), que atualiza menos de 1\% dos parâmetros, comparando custo e
-        qualidade frente ao ajuste fino completo.
+        avaliando a qualidade da modelagem de linguagem antes e depois do treino,
+        complementada por um \textit{benchmark} de 25 perguntas respondido pelos
+        dois modelos.
+  \item \textbf{Questão 02, Pós-Treino com SFT.} Ajuste fino supervisionado
+        (\textit{Supervised Fine-Tuning}) sobre 1.977 pares de instrução e resposta
+        gerados programaticamente a partir do dataset docentesDC, atualizando todos
+        os parâmetros do modelo.
+  \item \textbf{Questão 03, Pós-Treino com QLoRA.} Repetição do experimento
+        anterior por meio de adaptação de baixo posto sobre o modelo quantizado em
+        4 bits, atualizando 0,44\% dos parâmetros, com comparação direta de custo e
+        qualidade frente ao ajuste fino completo. Um experimento adicional aplica a
+        mesma técnica ao \texttt{Qwen2.5-1.5B}, atendendo ao item opcional de
+        considerar mais de um modelo.
 \end{itemize}
 
-As três técnicas são avaliadas pelas mesmas métricas quantitativas de modelagem de
-linguagem: perplexidade, entropia cruzada e acurácia de previsão de
-tokens~\cite{jelinek1977perplexity}. A hipótese geral é que o treinamento, em todas
+As três questões seguintes ampliam o escopo para além do treinamento de um único
+modelo, cobrindo compressão, recuperação de informação e segurança:
+
+\begin{itemize}[leftmargin=2.2em]
+  \item \textbf{Questão 04, Destilação de Conhecimento.} Transferência de
+        conhecimento de um modelo professor \texttt{Qwen2.5-3B} para um aluno
+        \texttt{Qwen2.5-1.5B} por meio de destilação por \textit{Chain-of-Thought}
+        sobre um dataset sintético, com avaliação por um \textit{benchmark} de 100
+        perguntas para verificar se houve efetiva transferência.
+  \item \textbf{Questão 05, RAG.} Uma aplicação de \textit{Retrieval-Augmented
+        Generation} do tipo \textit{Standard} sobre o dataset docentesDC, avaliada
+        com um \textit{benchmark} de 30 perguntas, medindo a contribuição da
+        recuperação de contexto na redução de alucinações.
+  \item \textbf{Questão 06, Guardrails.} Adição de camadas de controle
+        (\textit{guardrails}) sobre o modelo pós-treinado na Questão 02, avaliadas
+        com um \textit{benchmark} de 30 perguntas que quantifica o grau de proteção
+        adicionado ao modelo.
+\end{itemize}
+
+As técnicas são avaliadas pelas mesmas métricas quantitativas de modelagem de
+linguagem (perplexidade, entropia cruzada e acurácia de previsão de
+tokens~\cite{jelinek1977perplexity}), sempre antes e depois do treino, sobre
+conjuntos de avaliação reservados. A hipótese geral é que o treinamento, em todas
 as suas formas, reduz a incerteza do modelo sobre o texto do domínio e melhora sua
 capacidade de previsão.
 
-\subsection{Estado dos experimentos e escopo do relatório}
+\subsection{Escopo e execução}
 
-A Questão 01 foi executada de ponta a ponta em uma GPU NVIDIA T4 (Kaggle), com
-resultados completos antes e depois do treino. As Questões 02 e 03 tiveram a
-geração dos dados, o carregamento dos modelos e a avaliação \textit{baseline} (antes
-do treino) concluídos; o laço de treinamento, contudo, foi interrompido em uma
-tentativa de execução local por restrição de tempo de hardware. Por essa razão, este
-relatório apresenta para as Questões 02 e 03 a metodologia completa e os resultados
-\textit{baseline} reais já coletados, deixando as métricas pós-treino sinalizadas
-como \emph{em andamento}. Essa decisão preserva a honestidade dos números
-reportados: nenhuma métrica é estimada ou fabricada. A
-Seção~\ref{sec:consideracoes} detalha o caminho de conclusão dessas duas questões.
+Os experimentos das Questões 01 a 03 foram executados de ponta a ponta em uma única
+sessão de GPU NVIDIA T4 na plataforma Kaggle, por meio de um \textit{notebook}
+unificado que encadeia as três questões e salva todas as métricas, gerações e
+figuras de forma estruturada. A sessão completa, incluindo o experimento adicional
+com o modelo de 1,5 bilhão de parâmetros, durou 5 horas e 34 minutos. As Questões 04
+a 06, por envolverem modelos, ferramentas e ambientes distintos, foram desenvolvidas
+separadamente pelos integrantes do grupo, cada uma com seu próprio \textit{notebook}
+e conjunto de artefatos (detalhados na Seção~\ref{sec:metodologia}). Todos os números
+reportados neste documento provêm dos artefatos dessas execuções; nenhuma métrica é
+estimada.

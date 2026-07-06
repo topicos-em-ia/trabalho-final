@@ -1,0 +1,502 @@
+[ {
+    "instruction": "Qual é o CNPJ da Prefeitura Municipal de Aroazes?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE AROAZES C.N.P.J.: 06.554.984/0001-39 Av. 27 de Fevereiro, 691, Centro CEP: 64310-000",
+    "output": "06.554.984/0001-39"
+  },
+  {
+    "instruction": "Em qual endereço está localizada a Prefeitura de Aroazes?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE AROAZES C.N.P.J.: 06.554.984/0001-39 Av. 27 de Fevereiro, 691, Centro CEP: 64310-000",
+    "output": "Av. 27 de Fevereiro, 691, Centro"
+  },
+  {
+    "instruction": "Qual é o CEP da sede da Prefeitura de Aroazes?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE AROAZES C.N.P.J.: 06.554.984/0001-39 Av. 27 de Fevereiro, 691, Centro CEP: 64310-000",
+    "output": "64310-000"
+  },
+  {
+    "instruction": "Qual o assunto tratado no documento da Prefeitura de Assunção do Piauí referente ao período de janeiro a agosto de 2025?",
+    "input": "PREFEITURA MUNICIPAL DE ASSUNÇ Ã O DO PIAUÍ RELATÓRI O DE GESTÃO FISCAL DEMONSTRATIVO DA DÍVIDA CONSOLIDADA ORÇAMENTOS FISCAIS E DA SEGURIDADE SOCIAL JANEIRO/2025 A AGOSTO/2025 RGF - ANEXO 2",
+    "output": "Demonstrativo da Dívida Consolidada"
+  },
+  {
+    "instruction": "A qual anexo da LRF o documento de Assunção do Piauí corresponde?",
+    "input": "PREFEITURA MUNICIPAL DE ASSUNÇ Ã O DO PIAUÍ RELATÓRI O DE GESTÃO FISCAL DEMONSTRATIVO DA DÍVIDA CONSOLIDADA ORÇAMENTOS FISCAIS E DA SEGURIDADE SOCIAL JANEIRO/2025 A AGOSTO/2025 RGF - ANEXO 2",
+    "output": "RGF - ANEXO 2"
+  },
+  {
+    "instruction": "Qual é o email oficial da Prefeitura Municipal de Anísio de Abreu?",
+    "input": "ESTADO DO PIAUÍ PREFEITURA MUNICIPAL DE ANÍSIO DE ABREU Rua Maria da Mercês Ribeiro, nº 406, Centro CNPJ: 06.553.630/0001-70 / CEP. 64.780-000 E-MAIL: pmanisiodeabreupi@gmail.com",
+    "output": "pmanisiodeabreupi@gmail.com"
+  },
+  {
+    "instruction": "Em qual rua está localizada a Prefeitura de Anísio de Abreu?",
+    "input": "ESTADO DO PIAUÍ PREFEITURA MUNICIPAL DE ANÍSIO DE ABREU Rua Maria da Mercês Ribeiro, nº 406, Centro CNPJ: 06.553.630/0001-70 / CEP. 64.780-000 E-MAIL: pmanisiodeabreupi@gmail.com",
+    "output": "Rua Maria da Mercês Ribeiro, nº 406"
+  },
+  {
+    "instruction": "Qual tipo de contrato administrativo foi publicado no extrato da Prefeitura de Alto Longá?",
+    "input": "Prefeitura Municipal DE ALTO LONGA ESTADO DO Piauí Prefeitura Municipal DE ALTO LONGA ALTO LONGA EXTRATO DO TERMO DE RESCISAO/DISTRATO AMIGAVEL DE CONTRATO ADMINISTRATIVO",
+    "output": "Termo de Rescisão/Distrato Amigável"
+  },
+  {
+    "instruction": "Qual empresa foi adjudicada na licitação de Anísio de Abreu?",
+    "input": "Ano XXIII · Teresina (PI) - Terça-Feira, 22 de Julho de 2025 · Edição V CCCLXVI Prefeitura Municipal de Anísio de Abreu M DA TRINDADE SILVA COELHO LTDA (46.471 .534/0001-05) Adjudicado em: 17/07/2025 - 17:16:12",
+    "output": "M DA TRINDADE SILVA COELHO LTDA"
+  },
+  {
+    "instruction": "Qual é o CNPJ da empresa adjudicada no processo de Anísio de Abreu?",
+    "input": "Ano XXIII · Teresina (PI) - Terça-Feira, 22 de Julho de 2025 · Edição V CCCLXVI Prefeitura Municipal de Anísio de Abreu M DA TRINDADE SILVA COELHO LTDA (46.471 .534/0001-05) Adjudicado em: 17/07/2025 - 17:16:12",
+    "output": "46.471.534/0001-05"
+  },
+  {
+    "instruction": "Em qual data exata ocorreu a adjudicação da empresa M DA TRINDADE SILVA COELHO LTDA?",
+    "input": "Ano XXIII · Teresina (PI) - Terça-Feira, 22 de Julho de 2025 · Edição V CCCLXVI Prefeitura Municipal de Anísio de Abreu M DA TRINDADE SILVA COELHO LTDA (46.471 .534/0001-05) Adjudicado em: 17/07/2025 - 17:16:12",
+    "output": "17/07/2025"
+  },
+  {
+    "instruction": "Qual é o número do edital do Pregão realizado pela Prefeitura de Aroazes?",
+    "input": "Termo de Homologação de Processo Licltatório Prefeitura Municipal de Aroazes Modalidade: Pregão (Setor público) - Edital Nº 026/2025- Processo Nº 133/2025",
+    "output": "Edital Nº 026/2025"
+  },
+  {
+    "instruction": "Qual a modalidade da licitação mencionada no Termo de Homologação de Aroazes?",
+    "input": "Termo de Homologação de Processo Licltatório Prefeitura Municipal de Aroazes Modalidade: Pregão (Setor público) - Edital Nº 026/2025- Processo Nº 133/2025",
+    "output": "Pregão (Setor público)"
+  },
+  {
+    "instruction": "Qual é o número do Processo Licitatório homologado em Aroazes?",
+    "input": "Termo de Homologação de Processo Licltatório Prefeitura Municipal de Aroazes Modalidade: Pregão (Setor público) - Edital Nº 026/2025- Processo Nº 133/2025",
+    "output": "Processo Nº 133/2025"
+  },
+  {
+    "instruction": "Qual é o CNPJ da Câmara Municipal de Aroazes?",
+    "input": "Câmara Municipal DE AROAZES - PI CNPJ:41.522.418/0001-46 Praga Detinho Soares, 623 - Centro - Aroazes -- Pi CEP:64.310-000 Portaria No 143 / 2025",
+    "output": "41.522.418/0001-46"
+  },
+  {
+    "instruction": "Qual é o número da Portaria publicada pela Câmara Municipal de Aroazes?",
+    "input": "Câmara Municipal DE AROAZES - PI CNPJ:41.522.418/0001-46 Praga Detinho Soares, 623 - Centro - Aroazes -- Pi CEP:64.310-000 Portaria No 143 / 2025",
+    "output": "Portaria No 143 / 2025"
+  },
+  {
+    "instruction": "Qual é o número do Decreto da Prefeitura de Assunção do Piauí publicado em janeiro de 2025?",
+    "input": "Ano XXIII · Teresina (PI) - Terça-Feira, 07 de Janeiro de 2025 · Edição V CCXXXIII Prefeitura Municipal de Assunção do Piauí Praça Firmino Alves S/N 01.612.561/0001-04 Exerciclo: 2024 DECRETO Nº 27, DE 01 DE NOVEMBRO DE 2024",
+    "output": "DECRETO Nº 27"
+  },
+  {
+    "instruction": "Qual a data original de assinatura do Decreto Nº 27 de Assunção do Piauí?",
+    "input": "Ano XXIII · Teresina (PI) - Terça-Feira, 07 de Janeiro de 2025 · Edição V CCXXXIII Prefeitura Municipal de Assunção do Piauí Praça Firmino Alves S/N 01.612.561/0001-04 Exerciclo: 2024 DECRETO Nº 27, DE 01 DE NOVEMBRO DE 2024",
+    "output": "01 de Novembro de 2024"
+  },
+  {
+    "instruction": "Qual exigência do edital o participante da licitação de Antônio Almeida cumpriu?",
+    "input": "Prefeitura Municipal de Antônio Almeida Justificativa O participante apresentou o seguro garantia de proposta, conforme exigido no item 4.6 do edital. No entanto...",
+    "output": "O participante apresentou o seguro garantia de proposta."
+  },
+  {
+    "instruction": "Em qual item do edital de Antônio Almeida estava prevista a exigência do seguro garantia?",
+    "input": "Prefeitura Municipal de Antônio Almeida Justificativa O participante apresentou o seguro garantia de proposta, conforme exigido no item 4.6 do edital. No entanto...",
+    "output": "Item 4.6"
+  },
+  {
+    "instruction": "Quais garantias devem ser asseguradas antes da extinção de um contrato, segundo o Art. 137?",
+    "input": "Art. 137. Constituirao motivos para extingao do contrato, a qual deverd ser formalmente motivada nos autos do processo, assegurados o contraditorio e a ampla defesa, as seguintes situagoes:",
+    "output": "O contraditório e a ampla defesa."
+  },
+  {
+    "instruction": "Qual é o número da Dispensa Eletrônica adiada em Capitão de Campos?",
+    "input": "CAPITAO DA DE CAMPOS Piauí AVISO DE ADIAMENTO - DISPENSA ELETRONICA N 009/202 A Prefeitura Municipal de Capitao de Campos-PI, Registrada sob o CNPJ:",
+    "output": "Dispensa Eletrônica N 009/202"
+  },
+  {
+    "instruction": "Qual fundo municipal é gerido pela Secretaria de Assistência Social de Castelo do Piauí?",
+    "input": "Prefeitura Municipal DE CASTELO DO Piauí Secretaria Municipal DE ASSISTENCIA SOCIAL CNPJ: 06.554.315/0001-67 FUNDO Municipal DOS DIREITOS DA PESSOA IDOSA EMAS",
+    "output": "Fundo Municipal dos Direitos da Pessoa Idosa"
+  },
+  {
+    "instruction": "Qual é o CNPJ da Secretaria Municipal de Assistência Social de Castelo do Piauí?",
+    "input": "Prefeitura Municipal DE CASTELO DO Piauí Secretaria Municipal DE ASSISTENCIA SOCIAL CNPJ: 06.554.315/0001-67 FUNDO Municipal DOS DIREITOS DA PESSOA IDOSA EMAS",
+    "output": "06.554.315/0001-67"
+  },
+  {
+    "instruction": "Onde foi realizada a solenidade de posse conjunta relatada no diário?",
+    "input": "Ao primeiro dia do mes de janeiro do ano de dois mil e vinte e cinco (01/01/2025), as 19:00h, no Ginasio de Esportes da unidade Escalar Manoel Portela de Carvalho... deu-se a solenidade conjunta de posse...",
+    "output": "No Ginásio de Esportes da unidade Escolar Manoel Portela de Carvalho"
+  },
+  {
+    "instruction": "A que horas iniciou a solenidade de posse ocorrida no primeiro dia de janeiro de 2025?",
+    "input": "Ao primeiro dia do mes de janeiro do ano de dois mil e vinte e cinco (01/01/2025), as 19:00h, no Ginasio de Esportes da unidade Escalar Manoel Portela de Carvalho... deu-se a solenidade conjunta de posse...",
+    "output": "Às 19:00h"
+  },
+  {
+    "instruction": "Qual município divulgou o edital para a contratação de gêneros alimentícios no processo 044/2025?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE ALTO LONGA AVISO DE LICITAÇÃO PREGÃO ELETRÔNICO Nº 012/2025 PROCESSO ADMINISTRATIVO Nº 044/2025 OBJETO: Aquisição de gêneros alimentícios para a merenda escolar.",
+    "output": "Alto Longá"
+  },
+  {
+    "instruction": "Qual é o objeto do Pregão Eletrônico Nº 012/2025 de Alto Longá?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE ALTO LONGA AVISO DE LICITAÇÃO PREGÃO ELETRÔNICO Nº 012/2025 PROCESSO ADMINISTRATIVO Nº 044/2025 OBJETO: Aquisição de gêneros alimentícios para a merenda escolar.",
+    "output": "Aquisição de gêneros alimentícios para a merenda escolar"
+  },
+  {
+    "instruction": "Qual lei rege as funções não remuneradas dos membros do comitê em Alegrete do Piauí?",
+    "input": "Prefeitura Municipal de Alegrete do Piauí Art. 3o As funcoes dos membros do Comite nao serao remuneradas, sendo consideradas de relevante interesse publico, nos termos do art. 32 da Lei Municipal.",
+    "output": "Art. 32 da Lei Municipal"
+  },
+  {
+    "instruction": "Como são consideradas as funções dos membros do Comitê de Alegrete do Piauí, uma vez que não são remuneradas?",
+    "input": "Prefeitura Municipal de Alegrete do Piauí Art. 3o As funcoes dos membros do Comite nao serao remuneradas, sendo consideradas de relevante interesse publico, nos termos do art. 32 da Lei Municipal.",
+    "output": "Relevante interesse público"
+  },
+  {
+    "instruction": "De qual município é o Decreto Nº 32, publicado na edição VCDXIX?",
+    "input": "Ano Xxill - Sexta-Feira, 03 de Outubro de 2025 - Edicao VCDXIX Prefeitura Municipal DE BOQUEIRAO DO Piauí Decreto N 32, DE 02 DE OUTUBRO DE 2025",
+    "output": "Boqueirão do Piauí"
+  },
+  {
+    "instruction": "Em qual data o Decreto N 32 de Boqueirão do Piauí foi expedido?",
+    "input": "Ano Xxill - Sexta-Feira, 03 de Outubro de 2025 - Edicao VCDXIX Prefeitura Municipal DE BOQUEIRAO DO Piauí Decreto N 32, DE 02 DE OUTUBRO DE 2025",
+    "output": "02 de Outubro de 2025"
+  },
+  {
+    "instruction": "Quem assina a Portaria N 038/2025 da Prefeitura de Alto Longá?",
+    "input": "Prefeitura Municipal DE ALTO LONGA GABINETE DA PREFEITA Portaria N 038/2025 Alto Longa, 01 de outubro de 2025. Assina: Maria de Fátima, Prefeita Municipal.",
+    "output": "Maria de Fátima, Prefeita Municipal"
+  },
+  {
+    "instruction": "Qual é a data da Portaria N 038/2025 do município de Alto Longá?",
+    "input": "Prefeitura Municipal DE ALTO LONGA GABINETE DA PREFEITA Portaria N 038/2025 Alto Longa, 01 de outubro de 2025. Assina: Maria de Fátima, Prefeita Municipal.",
+    "output": "01 de outubro de 2025"
+  },
+  {
+    "instruction": "Qual é o número de telefone da Prefeitura de Aroazes?",
+    "input": "Prefeitura Municipal DE AROAZES C.N.P.J.: 06.554.984/0001-39 Av. 27 de Fevereiro, 691, Centro CEP: 64310-000 E-mail: aroazes.pi@hotmail.com Tel: (89) 3468-1345",
+    "output": "(89) 3468-1345"
+  },
+  {
+    "instruction": "Qual foi o motivo da errata publicada pela Prefeitura de Alto Longá?",
+    "input": "Prefeitura Municipal DE ALTO LONGA ERRATA AO AVISO DE Licitação DA CONCORRENCIA ELETRONICA SRP N 002/2025 Na publicacao do Aviso de Licitação houve erro material quanto à data de abertura dos envelopes.",
+    "output": "Erro material quanto à data de abertura dos envelopes"
+  },
+  {
+    "instruction": "Qual o número da Concorrência Eletrônica que sofreu errata em Alto Longá?",
+    "input": "Prefeitura Municipal DE ALTO LONGA ERRATA AO AVISO DE Licitação DA CONCORRENCIA ELETRONICA SRP N 002/2025 Na publicacao do Aviso de Licitação houve erro material quanto à data de abertura dos envelopes.",
+    "output": "Concorrência Eletrônica SRP N 002/2025"
+  },
+  {
+    "instruction": "Para qual e-mail devem ser enviados os ofícios da Câmara de Juazeiro do Piauí?",
+    "input": "Câmara Municipal DE JUAZEIRO DO PIAUI Av. Sao Francisco, 253, Centro CNPJ: 01.878.514/0001-07 E-mail: camaradejuazeiro@hotmail.com",
+    "output": "camaradejuazeiro@hotmail.com"
+  },
+  {
+    "instruction": "Qual o endereço da Câmara Municipal de Juazeiro do Piauí?",
+    "input": "Câmara Municipal DE JUAZEIRO DO PIAUI Av. Sao Francisco, 253, Centro CNPJ: 01.878.514/0001-07 E-mail: camaradejuazeiro@hotmail.com",
+    "output": "Av. Sao Francisco, 253, Centro"
+  },
+  {
+    "instruction": "Qual é o telefone da Prefeitura Municipal de São Miguel do Fidalgo?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE SAO MIGUEL DO FIDALGO Sao Miguel Fone: (89) 3547-0020 CNPJ: 01.612.603/0001-00",
+    "output": "(89) 3547-0020"
+  },
+  {
+    "instruction": "Qual o CNPJ da Prefeitura Municipal de São Miguel do Fidalgo?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE SAO MIGUEL DO FIDALGO Sao Miguel Fone: (89) 3547-0020 CNPJ: 01.612.603/0001-00",
+    "output": "01.612.603/0001-00"
+  },
+  {
+    "instruction": "Qual o número do contrato que gerou o extrato da Prefeitura de Alto Longá em maio de 2025?",
+    "input": "Prefeitura Municipal DE ALTO LONGA EXTRATO DO TERMO DE RESCISAO/DISTRATO AMIGAVEL DE CONTRATO ADMINISTRATIVO N 033/2025 PROCESSO N: 044/2025",
+    "output": "Contrato Administrativo N 033/2025"
+  },
+  {
+    "instruction": "Em qual município a posse ocorreu na unidade escolar Manoel Portela de Carvalho?",
+    "input": "Ao primeiro dia do mes de janeiro... no Ginasio de Esportes da unidade Escalar Manoel Portela de Carvalho, onde foi instalada a sede do Poder Legislativo de Aroazes para esse ato, deu-se a solenidade conjunta de posse...",
+    "output": "Aroazes"
+  },
+  {
+    "instruction": "A quem pertence o CNPJ 01.612.561/0001-04 listado no Diário Oficial?",
+    "input": "Prefeitura Municipal de Assunção do Piauí Praça Firmino Alves S/N 01.612.561/0001-04 Exerciclo: 2024 DECRETO Nº 27",
+    "output": "Prefeitura Municipal de Assunção do Piauí"
+  },
+  {
+    "instruction": "Onde fica localizada a praça mencionada no endereço da Prefeitura de Assunção do Piauí?",
+    "input": "Prefeitura Municipal de Assunção do Piauí Praça Firmino Alves S/N 01.612.561/0001-04 Exerciclo: 2024 DECRETO Nº 27",
+    "output": "Praça Firmino Alves"
+  },
+  {
+    "instruction": "Qual cargo da senhora Maria de Fátima é mencionado na Portaria N 038/2025?",
+    "input": "Prefeitura Municipal DE ALTO LONGA GABINETE DA PREFEITA Portaria N 038/2025 Alto Longa, 01 de outubro de 2025. Assina: Maria de Fátima, Prefeita Municipal.",
+    "output": "Prefeita Municipal"
+  },
+  {
+    "instruction": "Qual secretaria é responsável pelas publicações do Fundo Municipal de Castelo do Piauí?",
+    "input": "Prefeitura Municipal DE CASTELO DO Piauí Secretaria Municipal DE ASSISTENCIA SOCIAL CNPJ: 06.554.315/0001-67 FUNDO Municipal DOS DIREITOS DA PESSOA IDOSA EMAS",
+    "output": "Secretaria Municipal de Assistência Social"
+  },
+  {
+    "instruction": "Qual o e-mail de contato do município de Aroazes?",
+    "input": "Prefeitura Municipal DE AROAZES C.N.P.J.: 06.554.984/0001-39 Av. 27 de Fevereiro, 691, Centro CEP: 64310-000 E-mail: aroazes.pi@hotmail.com Tel: (89) 3468-1345",
+    "output": "aroazes.pi@hotmail.com"
+  },
+  {
+    "instruction": "Em qual edição do diário oficial o Decreto de Boqueirão do Piauí foi publicado?",
+    "input": "Ano Xxill - Sexta-Feira, 03 de Outubro de 2025 - Edicao VCDXIX Prefeitura Municipal DE BOQUEIRAO DO Piauí Decreto N 32, DE 02 DE OUTUBRO DE 2025",
+    "output": "Edição VCDXIX"
+  },
+  {
+    "instruction": "Qual a finalidade da Comissão Permanente mencionada na publicação de Assunção do Piauí?",
+    "input": "ESTADO DO PIAUÍ PREFEITURA MUNICIPAL DE ASSUNÇÃO DO PIAUÍ COMISSÃO PERMAMENTE DE LICITAÇÃO - AVISO DE RESULTADO DE JULGAMENTO",
+    "output": "Aviso de Resultado de Julgamento (Licitação)"
+  },
+  {
+    "instruction": "Qual o valor total do contrato firmado pela Prefeitura de Marcos Parente?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE MARCOS PARENTE EXTRATO DE CONTRATO Nº 012/2025 PROCESSO: 034/2025 CONTRATADA: CONSTRUTORA RIO PRETO LTDA VALOR TOTAL: R$ 154.320,00 (Cento e cinquenta e quatro mil, trezentos e vinte reais).",
+    "output": "R$ 154.320,00"
+  },
+  {
+    "instruction": "Qual é a empresa contratada no Extrato de Contrato Nº 012/2025?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE MARCOS PARENTE EXTRATO DE CONTRATO Nº 012/2025 PROCESSO: 034/2025 CONTRATADA: CONSTRUTORA RIO PRETO LTDA VALOR TOTAL: R$ 154.320,00 (Cento e cinquenta e quatro mil, trezentos e vinte reais).",
+    "output": "CONSTRUTORA RIO PRETO LTDA"
+  },
+  {
+    "instruction": "Qual é o período de vigência estipulado para o contrato de Marcos Parente?",
+    "input": "CONTRATADA: CONSTRUTORA RIO PRETO LTDA VALOR TOTAL: R$ 154.320,00 VIGÊNCIA: 12 (doze) meses a partir da data de sua assinatura. DATA DA ASSINATURA: 15 de abril de 2025.",
+    "output": "12 (doze) meses a partir da data de sua assinatura"
+  },
+  {
+    "instruction": "Em qual data foi assinado o contrato com a Construtora Rio Preto LTDA?",
+    "input": "CONTRATADA: CONSTRUTORA RIO PRETO LTDA VALOR TOTAL: R$ 154.320,00 VIGÊNCIA: 12 (doze) meses a partir da data de sua assinatura. DATA DA ASSINATURA: 15 de abril de 2025.",
+    "output": "15 de abril de 2025"
+  },
+  {
+    "instruction": "Qual o número da Lei Municipal sancionada pela Prefeitura de Francisco Macedo?",
+    "input": "Id:0A1B2C3D4E ESTADO DO Piauí Prefeitura Municipal DE FRANCISCO MACEDO LEI MUNICIPAL Nº 210, DE 10 DE MAIO DE 2025. Dispõe sobre a criação do Conselho Municipal de Cultura e dá outras providências.",
+    "output": "LEI MUNICIPAL Nº 210"
+  },
+  {
+    "instruction": "Sobre o que dispõe a Lei Municipal Nº 210 de Francisco Macedo?",
+    "input": "Id:0A1B2C3D4E ESTADO DO Piauí Prefeitura Municipal DE FRANCISCO MACEDO LEI MUNICIPAL Nº 210, DE 10 DE MAIO DE 2025. Dispõe sobre a criação do Conselho Municipal de Cultura e dá outras providências.",
+    "output": "Dispõe sobre a criação do Conselho Municipal de Cultura e dá outras providências."
+  },
+  {
+    "instruction": "Para qual cargo o servidor João Batista da Silva foi nomeado?",
+    "input": "Prefeitura Municipal DE CAMPO MAIOR PORTARIA Nº 089/2025 O PREFEITO MUNICIPAL DE CAMPO MAIOR RESOLVE: Art. 1º - Nomear o senhor João Batista da Silva para exercer o cargo em comissão de Secretário Municipal de Obras.",
+    "output": "Secretário Municipal de Obras"
+  },
+  {
+    "instruction": "Qual é o número da portaria que nomeou o Secretário Municipal de Obras de Campo Maior?",
+    "input": "Prefeitura Municipal DE CAMPO MAIOR PORTARIA Nº 089/2025 O PREFEITO MUNICIPAL DE CAMPO MAIOR RESOLVE: Art. 1º - Nomear o senhor João Batista da Silva para exercer o cargo em comissão de Secretário Municipal de Obras.",
+    "output": "PORTARIA Nº 089/2025"
+  },
+  {
+    "instruction": "De qual município é o decreto que estabelece ponto facultativo no dia do Servidor Público?",
+    "input": "Id:5544332211 ESTADO DO Piauí Prefeitura Municipal DE JOAQUIM PIRES DECRETO Nº 045/2025 O PREFEITO MUNICIPAL DE JOAQUIM PIRES decreta Ponto Facultativo nas repartições públicas municipais no dia 28 de outubro, em comemoração ao dia do Servidor Público.",
+    "output": "Joaquim Pires"
+  },
+  {
+    "instruction": "Para qual data foi decretado o ponto facultativo em Joaquim Pires?",
+    "input": "Id:5544332211 ESTADO DO Piauí Prefeitura Municipal DE JOAQUIM PIRES DECRETO Nº 045/2025 O PREFEITO MUNICIPAL DE JOAQUIM PIRES decreta Ponto Facultativo nas repartições públicas municipais no dia 28 de outubro, em comemoração ao dia do Servidor Público.",
+    "output": "28 de outubro"
+  },
+  {
+    "instruction": "Qual comemoração justifica o ponto facultativo instituído pelo Decreto Nº 045/2025?",
+    "input": "Id:5544332211 ESTADO DO Piauí Prefeitura Municipal DE JOAQUIM PIRES DECRETO Nº 045/2025 O PREFEITO MUNICIPAL DE JOAQUIM PIRES decreta Ponto Facultativo nas repartições públicas municipais no dia 28 de outubro, em comemoração ao dia do Servidor Público.",
+    "output": "Dia do Servidor Público"
+  },
+  {
+    "instruction": "Qual o número da resolução publicada pelo Conselho Tutelar de São Miguel do Fidalgo?",
+    "input": "Conselho Municipal dos Direitos da Criança e do Adolescente - CMDCA de São Miguel do Fidalgo RESOLUÇÃO Nº 004/2025 Estabelece as normas para a eleição suplementar do Conselho Tutelar.",
+    "output": "RESOLUÇÃO Nº 004/2025"
+  },
+  {
+    "instruction": "Qual órgão de São Miguel do Fidalgo publicou a resolução para eleição suplementar?",
+    "input": "Conselho Municipal dos Direitos da Criança e do Adolescente - CMDCA de São Miguel do Fidalgo RESOLUÇÃO Nº 004/2025 Estabelece as normas para a eleição suplementar do Conselho Tutelar.",
+    "output": "Conselho Municipal dos Direitos da Criança e do Adolescente - CMDCA"
+  },
+  {
+    "instruction": "Em qual secretaria a servidora Maria Fernandes foi exonerada?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE BOQUEIRAO DO Piauí PORTARIA Nº 102/2025 Resolve exonerar, a pedido, a servidora Maria Fernandes do cargo de Coordenadora Pedagógica, lotada na Secretaria Municipal de Educação.",
+    "output": "Secretaria Municipal de Educação"
+  },
+  {
+    "instruction": "Por qual motivo a servidora Maria Fernandes foi exonerada?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE BOQUEIRAO DO Piauí PORTARIA Nº 102/2025 Resolve exonerar, a pedido, a servidora Maria Fernandes do cargo de Coordenadora Pedagógica, lotada na Secretaria Municipal de Educação.",
+    "output": "A pedido"
+  },
+  {
+    "instruction": "Qual modalidade de licitação foi dispensada pela Prefeitura de Capitão de Campos?",
+    "input": "Prefeitura Municipal DE CAPITAO DE CAMPOS TERMO DE RATIFICAÇÃO DE DISPENSA DE LICITAÇÃO Nº 011/2025 Fundamentação Legal: Art. 75, inciso II, da Lei nº 14.133/2021. Objeto: Aquisição de material de expediente.",
+    "output": "Dispensa de Licitação"
+  },
+  {
+    "instruction": "Qual é a fundamentação legal citada para a dispensa de licitação em Capitão de Campos?",
+    "input": "Prefeitura Municipal DE CAPITAO DE CAMPOS TERMO DE RATIFICAÇÃO DE DISPENSA DE LICITAÇÃO Nº 011/2025 Fundamentação Legal: Art. 75, inciso II, da Lei nº 14.133/2021. Objeto: Aquisição de material de expediente.",
+    "output": "Art. 75, inciso II, da Lei nº 14.133/2021"
+  },
+  {
+    "instruction": "O que será adquirido através da dispensa de licitação Nº 011/2025?",
+    "input": "Prefeitura Municipal DE CAPITAO DE CAMPOS TERMO DE RATIFICAÇÃO DE DISPENSA DE LICITAÇÃO Nº 011/2025 Fundamentação Legal: Art. 75, inciso II, da Lei nº 14.133/2021. Objeto: Aquisição de material de expediente.",
+    "output": "Material de expediente"
+  },
+  {
+    "instruction": "Qual município divulgou o edital de convocação para Audiência Pública sobre a LOA?",
+    "input": "Id:99887766 ESTADO DO Piauí Câmara Municipal DE JUAZEIRO DO Piauí EDITAL DE CONVOCAÇÃO PARA AUDIÊNCIA PÚBLICA O Presidente da Câmara convoca a população para discutir o Projeto de Lei Orçamentária Anual (LOA) para o exercício de 2026.",
+    "output": "Juazeiro do Piauí"
+  },
+  {
+    "instruction": "Qual projeto de lei será discutido na Audiência Pública convocada pela Câmara de Juazeiro do Piauí?",
+    "input": "Id:99887766 ESTADO DO Piauí Câmara Municipal DE JUAZEIRO DO Piauí EDITAL DE CONVOCAÇÃO PARA AUDIÊNCIA PÚBLICA O Presidente da Câmara convoca a população para discutir o Projeto de Lei Orçamentária Anual (LOA) para o exercício de 2026.",
+    "output": "Projeto de Lei Orçamentária Anual (LOA)"
+  },
+  {
+    "instruction": "A quem é direcionada a convocação feita pelo Presidente da Câmara de Juazeiro do Piauí?",
+    "input": "Id:99887766 ESTADO DO Piauí Câmara Municipal DE JUAZEIRO DO Piauí EDITAL DE CONVOCAÇÃO PARA AUDIÊNCIA PÚBLICA O Presidente da Câmara convoca a população para discutir o Projeto de Lei Orçamentária Anual (LOA) para o exercício de 2026.",
+    "output": "À população"
+  },
+  {
+    "instruction": "Qual é o valor do Aditivo de Contrato formalizado pela Prefeitura de Alto Longá?",
+    "input": "Prefeitura Municipal DE ALTO LONGA PRIMEIRO TERMO ADITIVO AO CONTRATO Nº 045/2024 Fica aditivado o valor de R$ 25.000,00 (Vinte e cinco mil reais), correspondente a 10% do valor inicial do contrato.",
+    "output": "R$ 25.000,00"
+  },
+  {
+    "instruction": "A qual porcentagem do valor inicial corresponde o aditivo do Contrato Nº 045/2024?",
+    "input": "Prefeitura Municipal DE ALTO LONGA PRIMEIRO TERMO ADITIVO AO CONTRATO Nº 045/2024 Fica aditivado o valor de R$ 25.000,00 (Vinte e cinco mil reais), correspondente a 10% do valor inicial do contrato.",
+    "output": "10%"
+  },
+  {
+    "instruction": "Qual é a placa do veículo leiloado pela Prefeitura de Alegrete do Piauí?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE ALEGRETE DO Piauí AVISO DE LEILÃO PÚBLICO Nº 001/2025 Lote 01: Veículo Fiat Uno Mille, Ano 2012, Placa ABC-1234. Lance Mínimo: R$ 8.500,00.",
+    "output": "ABC-1234"
+  },
+  {
+    "instruction": "Qual é o modelo e ano do veículo ofertado no Lote 01 do leilão em Alegrete do Piauí?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE ALEGRETE DO Piauí AVISO DE LEILÃO PÚBLICO Nº 001/2025 Lote 01: Veículo Fiat Uno Mille, Ano 2012, Placa ABC-1234. Lance Mínimo: R$ 8.500,00.",
+    "output": "Fiat Uno Mille, Ano 2012"
+  },
+  {
+    "instruction": "Qual é o lance mínimo exigido para arrematar o veículo no leilão de Alegrete do Piauí?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE ALEGRETE DO Piauí AVISO DE LEILÃO PÚBLICO Nº 001/2025 Lote 01: Veículo Fiat Uno Mille, Ano 2012, Placa ABC-1234. Lance Mínimo: R$ 8.500,00.",
+    "output": "R$ 8.500,00"
+  },
+  {
+    "instruction": "Qual o período aquisitivo de férias concedido ao servidor José Antônio da Silva?",
+    "input": "Prefeitura Municipal DE AROAZES PORTARIA Nº 155/2025 Concede 30 (trinta) dias de férias regulamentares ao servidor José Antônio da Silva, matrícula 1234-5, referentes ao período aquisitivo 2023/2024.",
+    "output": "2023/2024"
+  },
+  {
+    "instruction": "Quantos dias de férias foram concedidos ao servidor matriculado sob o número 1234-5?",
+    "input": "Prefeitura Municipal DE AROAZES PORTARIA Nº 155/2025 Concede 30 (trinta) dias de férias regulamentares ao servidor José Antônio da Silva, matrícula 1234-5, referentes ao período aquisitivo 2023/2024.",
+    "output": "30 (trinta) dias"
+  },
+  {
+    "instruction": "Qual a matrícula do servidor José Antônio da Silva?",
+    "input": "Prefeitura Municipal DE AROAZES PORTARIA Nº 155/2025 Concede 30 (trinta) dias de férias regulamentares ao servidor José Antônio da Silva, matrícula 1234-5, referentes ao período aquisitivo 2023/2024.",
+    "output": "1234-5"
+  },
+  {
+    "instruction": "Qual empresa foi punida com advertência no processo administrativo de Assunção do Piauí?",
+    "input": "Prefeitura Municipal DE ASSUNÇÃO DO Piauí TERMO DE APLICAÇÃO DE PENALIDADE Processo Administrativo Nº 099/2025. Empresa: DISTRIBUIDORA MEDICA LTDA. Penalidade: Advertência por escrito devido a atraso de 5 dias na entrega.",
+    "output": "DISTRIBUIDORA MEDICA LTDA"
+  },
+  {
+    "instruction": "Qual foi a penalidade aplicada à Distribuidora Medica LTDA?",
+    "input": "Prefeitura Municipal DE ASSUNÇÃO DO Piauí TERMO DE APLICAÇÃO DE PENALIDADE Processo Administrativo Nº 099/2025. Empresa: DISTRIBUIDORA MEDICA LTDA. Penalidade: Advertência por escrito devido a atraso de 5 dias na entrega.",
+    "output": "Advertência por escrito"
+  },
+  {
+    "instruction": "Quantos dias de atraso na entrega justificaram a penalidade aplicada à empresa?",
+    "input": "Prefeitura Municipal DE ASSUNÇÃO DO Piauí TERMO DE APLICAÇÃO DE PENALIDADE Processo Administrativo Nº 099/2025. Empresa: DISTRIBUIDORA MEDICA LTDA. Penalidade: Advertência por escrito devido a atraso de 5 dias na entrega.",
+    "output": "5 dias"
+  },
+  {
+    "instruction": "Onde será publicado o Resultado Preliminar do Processo Seletivo de Anísio de Abreu?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE ANÍSIO DE ABREU EDITAL DE PROCESSO SELETIVO SIMPLIFICADO Nº 002/2025 Art. 6º - O Resultado Preliminar será afixado no mural da Prefeitura e no Diário Oficial dos Municípios.",
+    "output": "No mural da Prefeitura e no Diário Oficial dos Municípios"
+  },
+  {
+    "instruction": "De qual processo seletivo trata o Edital publicado pela Prefeitura de Anísio de Abreu?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE ANÍSIO DE ABREU EDITAL DE PROCESSO SELETIVO SIMPLIFICADO Nº 002/2025 Art. 6º - O Resultado Preliminar será afixado no mural da Prefeitura e no Diário Oficial dos Municípios.",
+    "output": "Processo Seletivo Simplificado Nº 002/2025"
+  },
+  {
+    "instruction": "Qual é a Dotação Orçamentária informada no extrato de empenho da Prefeitura de Castelo do Piauí?",
+    "input": "Prefeitura Municipal DE CASTELO DO Piauí EXTRATO DE NOTA DE EMPENHO NE Nº 00345/2025 Credor: POSTO DE COMBUSTIVEIS CASTELO LTDA. Valor: R$ 3.500,00. Dotação Orçamentária: 02.04.00 - Secretaria de Administração.",
+    "output": "02.04.00 - Secretaria de Administração"
+  },
+  {
+    "instruction": "Quem é o credor da Nota de Empenho NE Nº 00345/2025?",
+    "input": "Prefeitura Municipal DE CASTELO DO Piauí EXTRATO DE NOTA DE EMPENHO NE Nº 00345/2025 Credor: POSTO DE COMBUSTIVEIS CASTELO LTDA. Valor: R$ 3.500,00. Dotação Orçamentária: 02.04.00 - Secretaria de Administração.",
+    "output": "POSTO DE COMBUSTIVEIS CASTELO LTDA"
+  },
+  {
+    "instruction": "Qual o valor da Nota de Empenho emitida a favor do Posto de Combustíveis Castelo LTDA?",
+    "input": "Prefeitura Municipal DE CASTELO DO Piauí EXTRATO DE NOTA DE EMPENHO NE Nº 00345/2025 Credor: POSTO DE COMBUSTIVEIS CASTELO LTDA. Valor: R$ 3.500,00. Dotação Orçamentária: 02.04.00 - Secretaria de Administração.",
+    "output": "R$ 3.500,00"
+  },
+  {
+    "instruction": "Qual é o bairro onde fica a sede do Sindicato dos Trabalhadores Rurais de Antônio Almeida?",
+    "input": "Sindicato dos Trabalhadores Rurais de Antônio Almeida EDITAL DE CONVOCAÇÃO ASSEMBLEIA GERAL ORDINÁRIA Local: Sede do Sindicato, Rua das Flores, nº 100, Bairro Centro, Antônio Almeida - PI. Data: 12 de julho de 2025.",
+    "output": "Bairro Centro"
+  },
+  {
+    "instruction": "Para qual data está marcada a Assembleia Geral Ordinária do Sindicato em Antônio Almeida?",
+    "input": "Sindicato dos Trabalhadores Rurais de Antônio Almeida EDITAL DE CONVOCAÇÃO ASSEMBLEIA GERAL ORDINÁRIA Local: Sede do Sindicato, Rua das Flores, nº 100, Bairro Centro, Antônio Almeida - PI. Data: 12 de julho de 2025.",
+    "output": "12 de julho de 2025"
+  },
+  {
+    "instruction": "Qual o número e a rua do local da assembleia do Sindicato dos Trabalhadores Rurais?",
+    "input": "Sindicato dos Trabalhadores Rurais de Antônio Almeida EDITAL DE CONVOCAÇÃO ASSEMBLEIA GERAL ORDINÁRIA Local: Sede do Sindicato, Rua das Flores, nº 100, Bairro Centro, Antônio Almeida - PI. Data: 12 de julho de 2025.",
+    "output": "Rua das Flores, nº 100"
+  },
+  {
+    "instruction": "Qual decreto regulamenta a cobrança do IPTU em São Miguel do Fidalgo?",
+    "input": "Prefeitura Municipal DE SAO MIGUEL DO FIDALGO DECRETO Nº 018/2025 Regulamenta o calendário para pagamento do Imposto Predial e Territorial Urbano (IPTU) relativo ao exercício de 2025. O desconto para cota única será de 15%.",
+    "output": "DECRETO Nº 018/2025"
+  },
+  {
+    "instruction": "De quanto será o desconto concedido para pagamento do IPTU em cota única em São Miguel do Fidalgo?",
+    "input": "Prefeitura Municipal DE SAO MIGUEL DO FIDALGO DECRETO Nº 018/2025 Regulamenta o calendário para pagamento do Imposto Predial e Territorial Urbano (IPTU) relativo ao exercício de 2025. O desconto para cota única será de 15%.",
+    "output": "15%"
+  },
+  {
+    "instruction": "A qual exercício se refere a regulamentação do IPTU no Decreto Nº 018/2025?",
+    "input": "Prefeitura Municipal DE SAO MIGUEL DO FIDALGO DECRETO Nº 018/2025 Regulamenta o calendário para pagamento do Imposto Predial e Territorial Urbano (IPTU) relativo ao exercício de 2025. O desconto para cota única será de 15%.",
+    "output": "Exercício de 2025"
+  },
+  {
+    "instruction": "Qual profissional assina o Relatório de Qualidade da Água de Campo Maior?",
+    "input": "Serviço Autônomo de Água e Esgoto SAAE - CAMPO MAIOR RELATÓRIO MENSAL DE QUALIDADE DA ÁGUA - MAIO/2025 Todas as amostras apresentaram níveis de cloro residual dentro dos padrões do Ministério da Saúde. Assina: Carlos Mendes, Químico Responsável (CRQ 12345).",
+    "output": "Carlos Mendes, Químico Responsável"
+  },
+  {
+    "instruction": "Qual é o número do CRQ do químico responsável pelo relatório do SAAE de Campo Maior?",
+    "input": "Serviço Autônomo de Água e Esgoto SAAE - CAMPO MAIOR RELATÓRIO MENSAL DE QUALIDADE DA ÁGUA - MAIO/2025 Todas as amostras apresentaram níveis de cloro residual dentro dos padrões do Ministério da Saúde. Assina: Carlos Mendes, Químico Responsável (CRQ 12345).",
+    "output": "CRQ 12345"
+  },
+  {
+    "instruction": "A qual mês e ano o Relatório de Qualidade da Água do SAAE Campo Maior se refere?",
+    "input": "Serviço Autônomo de Água e Esgoto SAAE - CAMPO MAIOR RELATÓRIO MENSAL DE QUALIDADE DA ÁGUA - MAIO/2025 Todas as amostras apresentaram níveis de cloro residual dentro dos padrões do Ministério da Saúde. Assina: Carlos Mendes, Químico Responsável (CRQ 12345).",
+    "output": "Maio/2025"
+  },
+  {
+    "instruction": "Quem foi designada como pregoeira oficial no Diário Oficial de Aroazes?",
+    "input": "Câmara Municipal DE AROAZES PORTARIA Nº 005/2025 Resolve designar a servidora Ana Clara de Souza para atuar como Pregoeira Oficial da Câmara Municipal pelo período de 01 (um) ano.",
+    "output": "Ana Clara de Souza"
+  },
+  {
+    "instruction": "Qual o período de atuação estabelecido para a nova Pregoeira Oficial da Câmara de Aroazes?",
+    "input": "Câmara Municipal DE AROAZES PORTARIA Nº 005/2025 Resolve designar a servidora Ana Clara de Souza para atuar como Pregoeira Oficial da Câmara Municipal pelo período de 01 (um) ano.",
+    "output": "01 (um) ano"
+  },
+  {
+    "instruction": "Qual a portaria que oficializa a designação da nova Pregoeira da Câmara Municipal de Aroazes?",
+    "input": "Câmara Municipal DE AROAZES PORTARIA Nº 005/2025 Resolve designar a servidora Ana Clara de Souza para atuar como Pregoeira Oficial da Câmara Municipal pelo período de 01 (um) ano.",
+    "output": "PORTARIA Nº 005/2025"
+  },
+  {
+    "instruction": "Qual a finalidade da abertura de Crédito Suplementar em Boqueirão do Piauí?",
+    "input": "ESTADO DO Piauí Prefeitura Municipal DE BOQUEIRAO DO Piauí DECRETO Nº 021/2025 Abre Crédito Adicional Suplementar no valor de R$ 50.000,00 para reforço de dotações orçamentárias destinadas à manutenção do Fundo Municipal de Saúde.",
+    "output": "Reforço de dotações orçamentárias destinadas à manutenção do Fundo Municipal de Saúde"
+  }
+]
+  

@@ -1,0 +1,110 @@
+\section{Discussão}
+\label{sec:discussao}
+
+\subsection{Visão consolidada}
+
+A Tabela~\ref{tab:comparativo} e a Figura~\ref{fig:resumo} consolidam os quatro
+experimentos. Cada linha compara o modelo com o seu próprio ponto de partida; como a
+Questão 01 mede a sequência completa e as demais medem apenas os tokens de resposta,
+os valores absolutos não são comparáveis entre linhas, apenas as variações relativas.
+
+\begin{table}[ht]
+  \centering
+  \caption{Resultados consolidados. PPL indica perplexidade e Acc a acurácia de
+  previsão de tokens; cada experimento é comparado ao próprio baseline.}
+  \label{tab:comparativo}
+  \footnotesize
+  \begin{tabular}{@{}l c c c c c c@{}}
+    \toprule
+    \textbf{Experimento} & \textbf{PPL antes} & \textbf{PPL depois} & \textbf{Red. PPL} & \textbf{Acc antes} & \textbf{Acc depois} & \textbf{VRAM} \\
+    \midrule
+    Q1 Pré-treino (full-text) & 21,78 & \textbf{2,09} & 90,4\% & 42,25\% & \textbf{82,03\%} & 10,60~GB \\
+    Q2 SFT completo           & 14,57 & \textbf{7,49} & 48,6\% & 51,28\% & \textbf{63,84\%} & 9,77~GB \\
+    Q3 QLoRA 0.5B             & 16,28 & \textbf{6,40} & 60,7\% & 48,78\% & \textbf{64,37\%} & 1,77~GB \\
+    QLoRA 1.5B (adicional)    & 10,28 & \textbf{4,75} & 53,8\% & 55,82\% & \textbf{68,44\%} & 2,75~GB \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{resumo_geral.png}
+  \caption{Antes e depois em cada experimento. A Questão 01 usa métrica de sequência
+  completa e as demais usam métrica sobre tokens de resposta, portanto as escalas
+  não são comparáveis entre experimentos.}
+  \label{fig:resumo}
+\end{figure}
+
+\subsection{Pré-treino contra pós-treino}
+
+As questões ilustram dois regimes complementares de adaptação. O pré-treino
+continuado atua sobre a \emph{competência linguística}: sem rótulos, apenas expondo
+o modelo ao corpus, reduziu a perplexidade em 90\% e chegou a memorizar fatos
+pontuais do domínio, como CNPJs e CEPs de prefeituras. O pós-treino atua sobre o
+\emph{comportamento}: com poucos milhares de exemplos, ensinou o modelo a responder
+no formato instrução/resposta e a devolver fatos do dataset docentesDC que o modelo
+base desconhecia por completo.
+
+\subsection{Eficiência contra memorização}
+
+A comparação entre as Questões 02 e 03 rendeu o achado mais interessante do
+trabalho. Pela métrica de perplexidade, o QLoRA venceu o ajuste fino completo (6,40
+contra 7,49) com 0,44\% dos parâmetros e 5,5 vezes menos memória; a explicação é a
+regularização implícita do adaptador de baixo posto, evidente nas curvas de
+validação (o SFT completo entrou em \textit{overfitting} na terceira época, o QLoRA
+não). Pela avaliação qualitativa de fatos, a relação se inverte: 6 acertos do SFT
+completo contra 2 do QLoRA no modelo de 0,5 bilhão. Atualizar todos os pesos
+incorpora conhecimento factual novo com mais força; o adaptador aprende
+principalmente formato e distribuição. O experimento adicional sugere a saída
+prática para esse dilema: no modelo de 1,5 bilhão, o QLoRA recuperou a qualidade
+factual (5 acertos em 10) mantendo o custo baixo, indicando que, sob restrição de
+memória, vale mais adaptar eficientemente um modelo maior do que ajustar
+completamente um modelo menor.
+
+\subsection{Da adaptação à aplicação: destilação, RAG e guardrails}
+
+As Questões 04 a 06 deslocam o foco da adaptação de um modelo para o seu uso
+responsável, e reforçam, por caminhos independentes, o achado central das três
+primeiras. A destilação (Questão 04) é o espelho do dilema eficiência contra
+memorização: assim como o QLoRA venceu em perplexidade mas perdeu em fatos, o aluno
+destilado reduziu a perplexidade em 22,9\% e ainda assim piorou na avaliação
+semântica, porque o ajuste aproximou o formato das respostas ao custo de introduzir
+alucinações. Essa é a mesma alucinação plausível observada na Questão 01, agora vista
+pela lente de um avaliador semântico: a divergência entre a métrica de
+\textit{substring} e o \textit{LLM-as-Judge} mostra que a escolha da métrica pode
+inverter a conclusão sobre se um modelo melhorou.
+
+O RAG (Questão 05) responde diretamente a esse risco de alucinação: em vez de confiar
+na memória paramétrica do modelo, ancora a resposta em documentos recuperados,
+fazendo o sistema admitir a ausência de um dado em vez de inventá-lo. Já os
+\textit{guardrails} (Questão 06) atacam a dimensão de segurança sobre o próprio
+modelo pós-treinado na Questão 02, bloqueando 100\% das ameaças do \textit{benchmark}
+com custo mínimo de disponibilidade. Em conjunto, as seis questões percorrem um arco
+coerente: adaptar o modelo ao domínio (Q1--Q3), comprimi-lo preservando o
+conhecimento (Q4), complementá-lo com recuperação externa (Q5) e protegê-lo no uso
+(Q6).
+
+\subsection{Limitações}
+
+Além das limitações específicas registradas nas Seções~\ref{sec:q1} e~\ref{sec:q2},
+cabem algumas observações gerais. Primeira, as métricas de perplexidade dependem da
+natureza do texto avaliado: o valor 2,09 da Questão 01 reflete também a alta
+regularidade do texto de diário oficial. Segunda, a memorização factual induzida
+pelo treino produz alucinações plausíveis quando o fato pedido não foi retido, um
+risco maior que a ignorância explícita do modelo base. Terceira, a comparação entre
+SFT completo e QLoRA usa as taxas de aprendizado usuais de cada técnica e baselines
+de precisões diferentes, fatores que devem ser considerados na leitura dos números.
+Quarta, a variante LoRA sem quantização não pôde ser executada por incompatibilidade
+de bibliotecas no ambiente, de modo que a comparação de três técnicas de pós-treino
+ficou reduzida a duas.
+
+Quanto às Questões 04 a 06, três ressalvas específicas merecem registro. Na
+destilação, o dataset sintético tem apenas 100 exemplos e as métricas quantitativas
+são calculadas sobre a distribuição de treino, o que favorece o aluno; conclusões
+robustas exigiriam um conjunto maior e uma avaliação fora da distribuição. No RAG, as
+pontuações do Ragas são deprimidas por lacunas do próprio \textit{benchmark} e por uma
+discrepância de metadados na exportação da avaliação, de modo que os números
+subestimam a contribuição real da recuperação, evidente na análise qualitativa. Nos
+\textit{guardrails}, os trilhos baseados em \textit{regex} e em lista de termos são
+frágeis a variações não previstas, como mostra o único falso positivo, e uma solução
+de produção demandaria classificadores semânticos no lugar das regras manuais.

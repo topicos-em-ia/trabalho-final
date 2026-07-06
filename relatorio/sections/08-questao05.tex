@@ -1,0 +1,80 @@
+\section{Questão 05: Geração Aumentada por Recuperação (RAG)}
+\label{sec:q5}
+
+\subsection{Objetivo e arquitetura}
+
+A Questão 05 constrói uma aplicação de RAG do tipo \textit{Standard}
+(Seção~\ref{sec:fund-rag}) sobre o dataset docentesDC, com o objetivo de fornecer
+respostas ancoradas nos materiais acadêmicos reais dos docentes do Departamento de
+Computação, reduzindo as alucinações de um LLM genérico consultado sem contexto. O
+pipeline, implementado com a biblioteca LangChain, tem cinco etapas: carga e análise
+exploratória dos dados; consulta \textit{baseline} ao LLM sem contexto (para
+evidenciar a alucinação); engenharia de RAG (fragmentação, \textit{embeddings} e
+indexação); comparação prática; e avaliação por \textit{benchmark}. A
+Tabela~\ref{tab:q5-config} resume os componentes.
+
+\begin{table}[ht]
+  \centering
+  \caption{Componentes do pipeline de RAG (Questão 05).}
+  \label{tab:q5-config}
+  \footnotesize
+  \begin{tabularx}{0.92\textwidth}{@{}l X@{}}
+    \toprule
+    \textbf{Item} & \textbf{Valor} \\
+    \midrule
+    Tipo de RAG & \textit{Standard} (recuperação + geração) \\
+    LLM gerador & \texttt{gpt-4o-mini} \\
+    \textit{Embeddings} & \texttt{text-embedding-3-small} (OpenAI) \\
+    Banco vetorial & ChromaDB persistente \\
+    Fragmentação & \texttt{RecursiveCharacterTextSplitter}, \textit{chunk} de 1000 caracteres, \textit{overlap} de 200 \\
+    Filtragem & filtro por metadados (nome do docente) para elevar a precisão \\
+    \textit{Prompt} & restritivo: responder apenas com base no contexto recuperado \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Avaliação com Ragas}
+
+A qualidade foi medida sobre um \textit{benchmark} (\textit{golden dataset}) de 30
+perguntas com respostas de referência, usando o \textit{framework}
+Ragas~\cite{es2024ragas} com um LLM como juiz. A Figura~\ref{fig:q5-ragas} apresenta
+as três métricas: fidelidade 0,674, relevância da resposta 0,561 e precisão do
+contexto 0,430, todas abaixo do patamar ideal (0,85 para fidelidade).
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.8\textwidth]{q5_ragas.png}
+  \caption{Pontuações médias do Ragas no \textit{benchmark} de 30 perguntas. A linha
+  tracejada indica o patamar de referência de fidelidade (0,85).}
+  \label{fig:q5-ragas}
+\end{figure}
+
+\subsection{Diagnóstico das pontuações}
+
+Uma análise linha a linha revelou que as notas baixas decorrem menos de falha do
+pipeline e mais de três fatores. Primeiro, há \textbf{desalinhamento entre o
+\textit{benchmark} e o corpus}: várias perguntas assumem informações inexistentes no
+docentesDC (por exemplo, conceitos de compiladores atribuídos a um docente cujos 275
+documentos tratam apenas de gestão de projetos). Quando a informação não existe, o
+\textit{prompt} restritivo corretamente faz o modelo responder ``não encontrei essa
+informação no contexto fornecido'', mas o Ragas atribui relevância e precisão zero a
+essa resposta honesta, derrubando as médias. Segundo, há uma \textbf{discrepância de
+metadados na avaliação}: o nome do docente é injetado no \textit{prompt} durante a
+execução, mas apenas o texto cru é salvo para o Ragas, levando o juiz a interpretar
+como alucinação uma resposta que seguiu fielmente o contexto. Terceiro, ocorre
+\textbf{colisão semântica}: em perguntas gerais, planos de ensino (que contêm termos
+genéricos e o nome do docente) superam em similaridade os slides detalhados, que
+acabam omitidos do contexto.
+
+\subsection{Contribuição do RAG}
+
+Apesar das pontuações limitadas pelo desenho do \textit{benchmark}, a contribuição do
+RAG é clara na comparação qualitativa. Sem recuperação, o modelo ou inventa conteúdo
+ou se recusa a responder de forma genérica; com RAG, ou cita o material real ou
+admite honestamente a ausência do dado no contexto. Por exemplo, à pergunta sobre os
+tópicos de um arquivo específico de um docente, o \textit{baseline} respondeu com uma
+recusa genérica (``não tenho acesso a documentos específicos''), enquanto o RAG
+respondeu ``não encontrei essa informação no contexto fornecido'', comportamento
+factualmente correto e verificável. O trabalho aponta como próximos passos o
+alinhamento dos metadados enviados ao Ragas, o saneamento do \textit{benchmark} e a
+adoção de recuperação hierárquica (\textit{parent document retriever}).

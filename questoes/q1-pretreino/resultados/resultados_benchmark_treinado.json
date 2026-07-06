@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "cat": "Entidades",
+    "pergunta": "Qual é o CNPJ da Prefeitura Municipal de Aroazes?",
+    "resposta_esperada": "06.554.984/0001-39",
+    "resposta_gerada": "O CNPJ da Prefeitura Municipal de Aroazes\ne: 06.554.984/0001-39. Avenida 27 de Fevereiro, Centro, Aroazes - PI CEP: 64310-000.\nO CNPJ da Prefeitura Municipal de Aroazes e: 06.554.984/0001-39."
+  },
+  {
+    "id": 2,
+    "cat": "Entidades",
+    "pergunta": "Qual é o CEP da Prefeitura Municipal de Aroazes?",
+    "resposta_esperada": "64.310-000",
+    "resposta_gerada": "Aroazes - PI CEP: 64.310-000 Id:0471C3970A705690 ESTADO DO Piauí Prefeitura Municipal DE AROAZES C.N.P.J.: 06.554.984/0001-39 Av. 27 de Fevereiro, 691, Centro CEP: 6431"
+  },
+  {
+    "id": 3,
+    "cat": "Entidades",
+    "pergunta": "Qual é o endereço da Prefeitura Municipal de Aroazes?",
+    "resposta_esperada": "Av. 27 de Fevereiro, 691, Centro",
+    "resposta_gerada": "Av.27 de Fevereiro, n 691,Centro CEP 64310-000\nE-mail: aroazes.pi@hotmail.com\nTel: (89) 3468-1345\nAROAZES\nE-mail: aroazes.pi@hotmail.com\nTel: (89) 3468-1345\nArt. 10 - O Município pod"
+  },
+  {
+    "id": 4,
+    "cat": "Entidades",
+    "pergunta": "Qual é o CNPJ da Câmara Municipal de Juazeiro do Piauí?",
+    "resposta_esperada": "01.878.514/0001-07",
+    "resposta_gerada": "O CNPJ da Câmara Municipal de Juazeiro do Piauí e: 01.734.306/0001-34, com sede na Rua Antonio Jose Procopio, s/n, Centro, Juazeiro do Piauí. E-mail: camaradejuazeiro@hotmail.com. Telefone: (86) 3253-0070 - CEP: 64.343."
+  },
+  {
+    "id": 5,
+    "cat": "Entidades",
+    "pergunta": "Qual é o CNPJ da Prefeitura Municipal de Assunção do Piauí?",
+    "resposta_esperada": "01.612.561/0001-04",
+    "resposta_gerada": "O CNPJ da Prefeitura Municipal de Assuncao do Piauí\ne: 01.612.561/0001-04, com sede na Praca Firmino Alves, S/N, Bairro Centro, Assuncao do Piauí, Estado do\nPiauí, CEP: 64.612-000, neste ato representado pelo Prefeito Municipal Sr. Jose da"
+  },
+  {
+    "id": 6,
+    "cat": "Atos Adm.",
+    "pergunta": "Quais são os principais tipos de atos publicados no DOM-PI?",
+    "resposta_esperada": "Decreto, Portaria, Licitação, Edital, Lei, Ata, LRF",
+    "resposta_gerada": "Em\nseguida, passa a faze-lo em anexo. 2.1. A Ata de Registro de Pregos sera\npublicada no Diario Oficial dos Municipios do Piauí, conforme o disposto\nno art. 84 da Lei n 14.133, de 2021. 2.2. A Ata de Registro de Pregos podera\nser modicada, alterada"
+  },
+  {
+    "id": 7,
+    "cat": "Atos Adm.",
+    "pergunta": "O que é um Relatório de Gestão Fiscal (RGF) e qual lei o regulamenta?",
+    "resposta_esperada": "Documento obrigatório de situação financeira regulamentado pela LRF (art. 55 da LC 101/2000)",
+    "resposta_gerada": "O relatorio de Gestao\nFiscal e o instrumento de acompanhamento e fiscalizacao da execucao da Lei de Responsabilidade\nPublica (LRF), e um documento indispensavel para a gestao publica, uma vez que e um\nrelatorio detalhado da execucao da gestao, dos resultados obtidos e dos resultados nao\nobtidos, e que tem por finalidade orientar a gestao para o alcance dos objetivos de efici"
+  },
+  {
+    "id": 8,
+    "cat": "Atos Adm.",
+    "pergunta": "O que é uma Dispensa Eletrônica no contexto de licitações?",
+    "resposta_esperada": "Contratação direta sem licitação realizada por meio eletrônico para aquisições de menor valor",
+    "resposta_gerada": "Alem de\ndisponibilizar o material, tambem sera disponibilizado o sistema para que o\ninteressado preenca a ficha de inscricao e realize a sua proposta. Alem\ndisso, alem de disponibilizar o material, tambem sera disponivel o sistema\npara que o interessado preenca a ficha de inscricao e realize sua proposta.\nO que e uma Dispensa Eletronica no contexto de lic"
+  },
+  {
+    "id": 9,
+    "cat": "Atos Adm.",
+    "pergunta": "O que é um Termo de Rescisão/Distrato de Contrato Administrativo?",
+    "resposta_esperada": "Documento que formaliza o encerramento antecipado e amigável de um contrato administrativo",
+    "resposta_gerada": "O presente Termo\nde Rescisao/Distrato tem como objeto a rescisao amigavel do Contrato Administrativo no\n010/2025, cujo objeto e a contratacao de Auxiliar de Servicos Gerais vinculado ao Processo\nAdministrativo no 010/2025, cujo objeto e a contratacao de Auxiliar de Servicos Gerais.\nO presente Termo de Rescisao/Distr"
+  },
+  {
+    "id": 10,
+    "cat": "Atos Adm.",
+    "pergunta": "O que é uma Ata de Registro de Preços?",
+    "resposta_esperada": "Documento que formaliza preços registrados após licitação, permitindo compras futuras sem nova licitação",
+    "resposta_gerada": "Ato de Registro de Pregos e um documento\nutilizado para a formalizacao de prego para a contratacao de empresa especializada para\nprestacao de servicos de transporte escolar, de forma continua, com veiculo adequado\ne devidamente autorizado, destinado a distribuicao de bens ou mercadorias a serem\ntransportados para a escola de acordo com as necessidades da rede Municipal de\nensino, em atendimento"
+  },
+  {
+    "id": 11,
+    "cat": "Territorial",
+    "pergunta": "Quantos territórios compõem o dataset DOMPI-2025?",
+    "resposta_esperada": "12 territórios",
+    "resposta_gerada": "Quantos territórios compõem o dataset DOMPI-2025?\n18\nAno Xxill - Teresina (Pl) - Segunda-Feira, 13 de Janeiro de 2025 - Edicao VCcxxxvII\nId:030E7D642D91F950\nId:030E7D642D91F952\nEST"
+  },
+  {
+    "id": 12,
+    "cat": "Territorial",
+    "pergunta": "Qual território possui o maior número de documentos no DOMPI-2025?",
+    "resposta_esperada": "Cocais, com 12.188 documentos",
+    "resposta_gerada": "O município de Sao Miguel do Fidalgo - PI, por meio da Secretaria Municipal de Cultura, torna publico o interesse de obter propostas adicionais referentes ao objeto em epigrafe. 1.1. O objeto de presente Dispensa de Licitação e a escolha da proposta mais vantajosa para celebrar Ata de Registro de Pregos visando a aquisigao de materiais de limpeza, para at"
+  },
+  {
+    "id": 13,
+    "cat": "Territorial",
+    "pergunta": "Em qual cidade são publicados os Diários Oficiais dos Municípios do Piauí?",
+    "resposta_esperada": "Teresina (PI)",
+    "resposta_gerada": "A\npublicacao dos Diarios Oficiais dos Municípios do Piauí, conforme o cronograma anual\nestabelecido pela Portaria n 1.539/2025, devera ocorrer no prazo de 180 dias apos a\npublicacao do ultimo diario oficial, garantindo a continuidade dos servicos publicos\nmunicipais.\nA Prefeitura Municipal de Sao Joao do Arr"
+  },
+  {
+    "id": 14,
+    "cat": "Territorial",
+    "pergunta": "Qual é o CEP da Prefeitura Municipal de Anísio de Abreu?",
+    "resposta_esperada": "64.780-000",
+    "resposta_gerada": "A Prefeitura Municipal de Anisio de Abreu, Estado do Piauí, localizada na Rua Maria das Merces Ribeiro, no. 406, Centro, CEP 64.780-000, Anisio de Abreu, torna publico, para conhecimento dos interessados que no dia 03 de fevereiro de 2025, as 09h00min, realiz"
+  },
+  {
+    "id": 15,
+    "cat": "Territorial",
+    "pergunta": "Qual é o e-mail da Prefeitura Municipal de Anísio de Abreu?",
+    "resposta_esperada": "pmanisiodeabreupi@gmail.com",
+    "resposta_gerada": "O e-mail da Prefeitura Municipal de Anisio de Abreu e o e-mail do\norgao publico Municipal gerenciador do SRP do Município de Anisio de Abreu, e o e-mail do orgao publico Municipal\ngerenciador do SRP do Município de Anisio de Abreu, bem como o e-mail do orgao publico Municipal gerenciador do\nSRP do Município de Anisio de"
+  },
+  {
+    "id": 16,
+    "cat": "Processos",
+    "pergunta": "O que é o Pregão Eletrônico no contexto das licitações municipais?",
+    "resposta_esperada": "Modalidade licitatória realizada eletronicamente em que fornecedores competem por lances",
+    "resposta_gerada": "O Pregao Eletronico e um\ninstrumento utilizado para o registro de precos, para aquisigao de bens ou servigos, em\natendimento a administracao publica Municipal. O registro dos precos e o gerenciamento\ndas licitacoes e contratos administrativos, com o objetivo de otimizar os processos\nlicitatorios e a eficiencia da gestao Municipal.\nO Pregao Eletronico e um instrumento utilizado"
+  },
+  {
+    "id": 17,
+    "cat": "Processos",
+    "pergunta": "O que é o Demonstrativo da Dívida Consolidada no RGF?",
+    "resposta_esperada": "RGF Anexo 2: apresenta o total das obrigações financeiras do município conforme a LRF",
+    "resposta_gerada": "O Demonstrativo da Dívida\nConstitucional e Fiscal do Exercicio de 2024, apresentado pelo Poder Executivo do\nMunicípio de Sao Raimundo Nonato, em 2024, e elaborado com base nos dados\ncontabeis do exercicio de 2024, com base nos dados contabeis do exercicio de 2024,\nutilizando-se os dados constantes do demonstrativo da"
+  },
+  {
+    "id": 18,
+    "cat": "Processos",
+    "pergunta": "Quais motivos constituem causa para extinção de contrato administrativo?",
+    "resposta_esperada": "Descumprimento de cláusulas contratuais, irregularidade fiscal, entre outros (Art. 137 da Lei 14.133/2021)",
+    "resposta_gerada": "1. Ate 15% (quinze por cento) do valor inicial atualizado do contrato. 2. O contrato nao for executado fielmente pelas partes, sem justificativa aceitavel; 3. O contrato nao for executado fielmente, sem justificativa aceitavel; 4. O contrato nao for executado fielmente, sem justificativa aceitavel; 5. O contrato nao for executado fi"
+  },
+  {
+    "id": 19,
+    "cat": "Processos",
+    "pergunta": "O que é a Comissão Permanente de Licitação?",
+    "resposta_esperada": "Órgão colegiado da prefeitura responsável por conduzir e fiscalizar processos licitatórios",
+    "resposta_gerada": "A Comissao Permanente de Licitagao (CPL), da Prefeitura\nMunicipal de Piripiri-PI, para analise dos documentos apresentados pela empresa interessada no\nprocedimento licitatorio na modalidade de inexigibilidade de Licitação, para o objeto: CONTRATACAO\nDE EMPRESA ESPECIALIZADA PARA A PRESTACAO DE SERVICOS DE ASSESSORIA E\nCONSULTORIA J"
+  },
+  {
+    "id": 20,
+    "cat": "Processos",
+    "pergunta": "O que é uma Errata em publicação de diário oficial?",
+    "resposta_esperada": "Publicação que corrige erro material contido em publicação anterior",
+    "resposta_gerada": "A publicacao do Diario Oficial dos\nMunicipios do Estado do Piauí, Edicao VCCXxxIV, do dia 11 de dezembro de 2025, Edicao VCDLXVI,\npelo Sr. Jovelino Soares da Silva, no Diario Oficial dos Municipios do Estado do Piauí, Edicao\nVCCXxIV, pagina 111, onde se le: \"Art."
+  },
+  {
+    "id": 21,
+    "cat": "Legislação",
+    "pergunta": "Qual lei federal regulamenta as licitações e contratos municipais atualmente?",
+    "resposta_esperada": "Lei Federal nº 14.133/2021 (Nova Lei de Licitações), que substituiu a Lei nº 8.666/1993",
+    "resposta_gerada": "Alem disso, a lei\nFederal n 14.133/2021 estabelece normas gerais para a elaboracao e execucao de licitagoes e\ncontratos municipais. Alem disso, a lei Federal n 14.133/2021 estabelece normas gerais para a\nelaboracao e execucao de licitagoes e contratos municipais."
+  },
+  {
+    "id": 22,
+    "cat": "Legislação",
+    "pergunta": "O que significa a sigla LRF?",
+    "resposta_esperada": "Lei de Responsabilidade Fiscal (Lei Complementar nº 101/2000)",
+    "resposta_gerada": "O que significa a sigla LRF? A Lei Federal n 14.133/2021, Lei\nFederal n 14.133/2021, Lei de Licitagoes n 123/2006, Lei n 14.133/2021, Lei n 14.133/2021,\nLei n 14.133"
+  },
+  {
+    "id": 23,
+    "cat": "Legislação",
+    "pergunta": "O que é o Orçamento Fiscal e da Seguridade Social na LOA?",
+    "resposta_esperada": "Os dois orçamentos da LOA: fiscal (governo geral) e seguridade social (saúde, previdência, assistência)",
+    "resposta_gerada": "O Orçamento\nFiscal e da Seguridade Social na LOA? O Orçamento Fiscal e da Seguridade Social\nna LOA? O Orçamento Fiscal e da Seguridade Social na LOA? O Orçamento\nFiscal e da Seguridade Social na LOA? O Orçamento Fiscal e da Seguridade Social\nna LOA? O Orçamento Fiscal e da Seguridade Social na LOA? O Orçamento"
+  },
+  {
+    "id": 24,
+    "cat": "Dataset",
+    "pergunta": "Quais ferramentas foram usadas para extrair texto dos PDFs no DOMPI-2025?",
+    "resposta_esperada": "PaddleOCR-GPU (portarias/decretos), Docling (tabelas/relatórios) e PyMuPDF (texto nativo)",
+    "resposta_gerada": "Alem disso, foram\nutilizadas tambem as seguintes ferramentas: OCR, DOM4, DOM7, DOM8, DOM9, DOM10, DOM11, DOM12, DOM13, DOM14, DOM15, DOM16, DOM17, DOM18, DOM19, DOM20, DOM21, DOM22, DOM23, DOM24, DOM25, DOM26"
+  },
+  {
+    "id": 25,
+    "cat": "Dataset",
+    "pergunta": "Qual é o volume total de documentos e o período coberto pelo DOMPI-2025?",
+    "resposta_esperada": "77.337 documentos cobrindo publicações de 2025 do DOM-PI",
+    "resposta_gerada": "O\nDOMPI-2025 tem como objetivo acompanhar e monitorar a execucao das acoes do\nPrograma de Alfabetizacao na Idade Certa, conforme as metas e diretrizes do\nDecreto 20.279/21, atraves de um plano de acoes que abrange a implementacao,\ncapacitacao continuada e acompanhamento tecnico pedagogico. O plano tem\ncomo objetivo orientar,"
+  }
+]

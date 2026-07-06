@@ -1,0 +1,3 @@
+.env
+generate_notebook.py
+chroma_db/

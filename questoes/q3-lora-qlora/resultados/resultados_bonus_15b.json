@@ -1,0 +1,276 @@
+{
+  "rotulo": "qlora_qwen15b",
+  "modelo": "Qwen/Qwen2.5-1.5B",
+  "quantizado": true,
+  "hiperparametros": {
+    "r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "learning_rate": 0.0002,
+    "epocas": 3,
+    "micro_batch": 2,
+    "grad_accum": 8,
+    "max_length": 256
+  },
+  "params_treinaveis": 4358144,
+  "params_totais": 1548072448,
+  "pct_treinavel": 0.2815,
+  "metricas_antes": {
+    "entropia_cruzada": 2.3303,
+    "perplexidade": 10.28,
+    "acuracia_tokens": 55.82
+  },
+  "metricas_depois": {
+    "entropia_cruzada": 1.5576,
+    "perplexidade": 4.75,
+    "acuracia_tokens": 68.44
+  },
+  "delta": {
+    "entropia_cruzada": -0.7727,
+    "perplexidade": -5.53,
+    "acuracia_tokens_pp": 12.62
+  },
+  "treino": {
+    "tempo_s": 1574.1,
+    "vram_pico_gb": 2.75,
+    "loss_final": 1.4774,
+    "tamanho_adaptador_mb": 17.5
+  },
+  "qualitativa_antes": [
+    {
+      "id": 1,
+      "resposta": "O professor com mais material no dataset docentesDC é o professor com o código 1000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "id": 2,
+      "resposta": "1. Prof. Dr. Luiz Henrique de Figueiredo\n2. Prof. Dr. Luiz Henrique de Figueiredo\n3. Prof. Dr. Luiz Henrique de Figueiredo"
+    },
+    {
+      "id": 3,
+      "resposta": "Quantidade de professores: 100\nDepartamento: Faculdade de Ciências e Tecnologia"
+    },
+    {
+      "id": 4,
+      "resposta": "Os professores do Departamento de Ciência da Computação (DC/UFPI) que possuem materiais sobre Arquitetura de Computadores são:\n\n1. **Prof. Dr. Luiz Henrique de Barros** - Ele é o coordenador do DC/UFPI e é um dos principais especialistas em arquitetura de computadores na área de computação. Ele tem um vasto conhecimento em ar"
+    },
+    {
+      "id": 5,
+      "resposta": "Professor do Departamento de Computação da UFPI é o autor do material a seguir."
+    },
+    {
+      "id": 6,
+      "resposta": "A instrução \"lw r1, r0, foo1\" é uma instrução de load-word que carrega um valor de uma memória para o registrador r1. A instrução \"sw r1, r0, foo2\" é uma instrução de store que armazena um valor de um registrador em uma memória.\n\nA instrução \"lw r1, r0, foo1\" depende da instr"
+    },
+    {
+      "id": 7,
+      "resposta": "ponteiros"
+    },
+    {
+      "id": 8,
+      "resposta": "definimos os nomes dos seus atributos. Mais tarde, podemos criar instâncias dessa tupla nomeada e referenciar os atributos pelos seus próprios nomes em vez de sua posi ção. 11.5 C onclusão Neste capítulo, vimos decimais, datas, data/hora, hora, conjuntos e tuplas nomeadas. Python possui mais tipos especiais disponíveis, porém estes"
+    },
+    {
+      "id": 9,
+      "resposta": "Tecnologias da Informação e Comunicação (TICs)."
+    },
+    {
+      "id": 10,
+      "resposta": "![BST](https://github.com/raimundosantosmoura/Algoritmos-2023/blob/main/Exercicios1/Exercicios1_134_25_07_2023_15_BST_1.png)"
+    }
+  ],
+  "qualitativa_depois": [
+    {
+      "id": 1,
+      "resposta": "O professor com mais material no dataset docentesDC é Raimundo Santos Moura."
+    },
+    {
+      "id": 2,
+      "resposta": "Três professores presentes no dataset docentesDC são Rodrigo De Melo Souza Veras, Armando Soares Sousa e Vinicius Ponte Machado."
+    },
+    {
+      "id": 3,
+      "resposta": "O docentesDC compõe o departamento de Computação da UFPI (Universidade Federal do Piauí)."
+    },
+    {
+      "id": 4,
+      "resposta": "Possuem materiais sobre Arquitetura de Computadores os professores Andre Castelo Branco Soares, Armando Soares Sousa, Carlos Andre Batista De Carvalho, Erico Meneses Leao."
+    },
+    {
+      "id": 5,
+      "resposta": "Este material pertence ao professor Glauber Dias Goncalves."
+    },
+    {
+      "id": 6,
+      "resposta": "Este material pertence ao professor Ivan Saraiva Silva."
+    },
+    {
+      "id": 7,
+      "resposta": "Este material com código pertence ao professor Rosianni De Oliveira Cruz Fortes."
+    },
+    {
+      "id": 8,
+      "resposta": "O trecho trata de Banco de Dados, tema abordado no material do professor Vinicius Ponte Machado."
+    },
+    {
+      "id": 9,
+      "resposta": "O trecho trata de Redes de Computadores, tema abordado no material do professor Andre Castelo Branco Soares."
+    },
+    {
+      "id": 10,
+      "resposta": "final.2. Considere a BST inicialmente vazia. Associevalor icom a i-ésimachave. Desenha a BST final.3. Considere a BST inicialmente vazia. Associevalor icom a i-ésimachave. Desenha a BST final.4. Considere a BST inicialmente vazia. Associevalor icom a i-ésimachave"
+    }
+  ],
+  "log_history": [
+    {
+      "loss": 2.2987333297729493,
+      "grad_norm": 0.7148013114929199,
+      "learning_rate": 0.00019997905705122353,
+      "epoch": 0.18518518518518517,
+      "step": 20
+    },
+    {
+      "loss": 1.8304698944091797,
+      "grad_norm": 0.9437010288238525,
+      "learning_rate": 0.00019747650016549027,
+      "epoch": 0.37037037037037035,
+      "step": 40
+    },
+    {
+      "loss": 1.578619384765625,
+      "grad_norm": 0.9500616788864136,
+      "learning_rate": 0.00019090514246436087,
+      "epoch": 0.5555555555555556,
+      "step": 60
+    },
+    {
+      "loss": 1.5419301033020019,
+      "grad_norm": 1.4756426811218262,
+      "learning_rate": 0.00018053928129670624,
+      "epoch": 0.7407407407407407,
+      "step": 80
+    },
+    {
+      "loss": 1.5028736114501953,
+      "grad_norm": 1.0695046186447144,
+      "learning_rate": 0.0001668116017127655,
+      "epoch": 0.9259259259259259,
+      "step": 100
+    },
+    {
+      "eval_loss": 0.7685378193855286,
+      "eval_runtime": 17.6099,
+      "eval_samples_per_second": 9.54,
+      "eval_steps_per_second": 4.77,
+      "epoch": 1.0,
+      "step": 108
+    },
+    {
+      "loss": 1.4904911994934082,
+      "grad_norm": 0.8026392459869385,
+      "learning_rate": 0.00015029511560555708,
+      "epoch": 1.1111111111111112,
+      "step": 120
+    },
+    {
+      "loss": 1.453171443939209,
+      "grad_norm": 0.9251827597618103,
+      "learning_rate": 0.00013167924342027945,
+      "epoch": 1.2962962962962963,
+      "step": 140
+    },
+    {
+      "loss": 1.3644314765930177,
+      "grad_norm": 1.0623209476470947,
+      "learning_rate": 0.00011174103681346711,
+      "epoch": 1.4814814814814814,
+      "step": 160
+    },
+    {
+      "loss": 1.3003735542297363,
+      "grad_norm": 0.8471009731292725,
+      "learning_rate": 9.131274346698796e-05,
+      "epoch": 1.6666666666666665,
+      "step": 180
+    },
+    {
+      "loss": 1.437751293182373,
+      "grad_norm": 0.8689139485359192,
+      "learning_rate": 7.124706794536983e-05,
+      "epoch": 1.8518518518518519,
+      "step": 200
+    },
+    {
+      "eval_loss": 0.7415377497673035,
+      "eval_runtime": 17.4438,
+      "eval_samples_per_second": 9.631,
+      "eval_steps_per_second": 4.815,
+      "epoch": 2.0,
+      "step": 216
+    },
+    {
+      "loss": 1.3945253372192383,
+      "grad_norm": 0.8964691758155823,
+      "learning_rate": 5.238157865520539e-05,
+      "epoch": 2.037037037037037,
+      "step": 220
+    },
+    {
+      "loss": 1.260373020172119,
+      "grad_norm": 0.8623165488243103,
+      "learning_rate": 3.550374660823949e-05,
+      "epoch": 2.2222222222222223,
+      "step": 240
+    },
+    {
+      "loss": 1.271316909790039,
+      "grad_norm": 0.8791331648826599,
+      "learning_rate": 2.131807531740315e-05,
+      "epoch": 2.4074074074074074,
+      "step": 260
+    },
+    {
+      "loss": 1.34788818359375,
+      "grad_norm": 0.8669801354408264,
+      "learning_rate": 1.0416693868343797e-05,
+      "epoch": 2.5925925925925926,
+      "step": 280
+    },
+    {
+      "loss": 1.2820489883422852,
+      "grad_norm": 0.8163211345672607,
+      "learning_rate": 3.2546406513767504e-06,
+      "epoch": 2.7777777777777777,
+      "step": 300
+    },
+    {
+      "loss": 1.354115104675293,
+      "grad_norm": 0.906661331653595,
+      "learning_rate": 1.3086944428060132e-07,
+      "epoch": 2.962962962962963,
+      "step": 320
+    },
+    {
+      "eval_loss": 0.7413897514343262,
+      "eval_runtime": 17.5675,
+      "eval_samples_per_second": 9.563,
+      "eval_steps_per_second": 4.782,
+      "epoch": 3.0,
+      "step": 324
+    },
+    {
+      "train_runtime": 1574.137,
+      "train_samples_per_second": 3.293,
+      "train_steps_per_second": 0.206,
+      "total_flos": 1.0468451835445248e+16,
+      "train_loss": 1.477387328206757,
+      "epoch": 3.0,
+      "step": 324
+    }
+  ]
+}

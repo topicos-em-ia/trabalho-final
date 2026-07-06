@@ -1,108 +1,177 @@
-\section{Questão 02 -- Pós-Treino com SFT}
+\section{Questão 02: Pós-Treino com SFT}
 \label{sec:q2}
 
-\subsection{Objetivo}
+\subsection{Geração dos pares de instrução}
 
-A Questão 02 aplica o ajuste fino supervisionado (SFT) ao \texttt{Qwen2.5-0.5B},
-atualizando \emph{todos} os 494 milhões de parâmetros sobre pares de instrução e
-resposta derivados do dataset docentesDC. O objetivo é avaliar se o SFT melhora a
-capacidade do modelo de responder no estilo instrução/resposta sobre o conteúdo
-acadêmico do Departamento de Computação.
+O enunciado pede a geração de pelo menos 1.000 pares de instrução, entrada opcional
+e resposta a partir do docentesDC. Como não havia um modelo gerador disponível para
+sintetizar respostas, adotou-se uma restrição de projeto: toda resposta é derivada
+programaticamente do próprio dado e é verdadeira por construção, evitando ensinar
+alucinações como gabarito. O dataset bruto é ruidoso (código C, artigos em inglês
+fatiados, slides com formatação corrompida pelo OCR), o que exigiu um pipeline de
+preparação em quatro estágios: limpeza de artefatos e filtro de tamanho,
+classificação heurística de cada registro (português, inglês ou código),
+deduplicação por assinaturas de conteúdo e amostragem estratificada com teto de 200
+registros por professor. A Figura~\ref{fig:q2-funil} mostra o funil resultante:
+13.762 registros brutos produziram 1.977 pares.
 
-\subsection{Geração dos pares de instrução e resposta}
-
-A partir dos registros do docentesDC foram gerados \textbf{3.111 pares} no formato
-\texttt{instruction} / \texttt{input} / \texttt{output}, valor que supera com folga o
-mínimo de 1.000 exigido pelo enunciado. Cada par associa uma instrução referente ao
-material de um professor a um trecho de resposta extraído desse material. Os pares
-são então formatados no molde de prompt estilo
-Alpaca~\cite{taori2023alpaca}, como ilustra a Listagem~\ref{lst:par-sft}.
-
-\begin{lstlisting}[caption={Exemplo de par formatado para o SFT (estilo Alpaca).},label={lst:par-sft},captionpos=b]
-### Instrução:
-Explique o que é tratado neste trecho do material do professor
-Weslley Emmanuel Martins Lima.
-
-### Resposta:
-Ponteiros são tipos especiais de dados que armazenam endereços de
-memória. Uma variável do tipo ponteiro deve ser declarada da forma:
-tipo *nome_variavel; ...<|endoftext|>
-\end{lstlisting}
-
-Os 3.111 pares foram divididos em 2.800 para treino e 311 para avaliação. A
-Tabela~\ref{tab:q2-hiper} resume a configuração do experimento.
-
-\begin{table}[h]
+\begin{figure}[ht]
   \centering
-  \caption{Configuração do SFT (Questão 02).}
+  \includegraphics[width=0.88\textwidth]{q2_pipeline_funil.png}
+  \caption{Funil do pipeline de preparação de dados da Questão 02. A deduplicação
+  removeu cerca de 2.400 registros quase idênticos, típicos de artigos fatiados em
+  blocos sobrepostos.}
+  \label{fig:q2-funil}
+\end{figure}
+
+Antes da geração, 10\% dos registros de cada professor foram reservados como
+\textit{held-out}: os pares de avaliação provêm apenas desses registros, de modo que
+a métrica final não meça a memorização do próprio trecho visto em treino. Os pares
+seguem cinco tipos de tarefa, resumidos na Tabela~\ref{tab:q2-tipos} e na
+Figura~\ref{fig:q2-tipos}, todos no molde de prompt do
+\textit{Alpaca}~\cite{taori2023alpaca}.
+
+\begin{table}[ht]
+  \centering
+  \caption{Tipos de pares gerados a partir do docentesDC.}
+  \label{tab:q2-tipos}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}l l X r@{}}
+    \toprule
+    \textbf{Tipo} & \textbf{Tarefa} & \textbf{Resposta programática} & \textbf{Pares} \\
+    \midrule
+    A & Atribuição de origem & nome do professor dono do material & 700 \\
+    B & Continuação de trecho & continuação real do texto (só português) & 500 \\
+    C & Tema do trecho & tema inferido por vocabulário característico & 377 \\
+    D & Fatos sobre o dataset & fatos computados (19 docentes, volumes por professor) & 200 \\
+    E & Material com código & professor de origem e linguagem do código & 200 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.62\textwidth]{q2_tipos_pares.png}
+  \caption{Composição dos 1.977 pares por tipo de tarefa.}
+  \label{fig:q2-tipos}
+\end{figure}
+
+Os tipos A, B, C e E têm entrada preenchida com um trecho do material, de modo que a
+resposta é função determinística do contexto; o tipo D, sem entrada, injeta fatos
+que o modelo base certamente desconhece, permitindo uma demonstração qualitativa
+direta de aquisição de conhecimento. Após a formatação, exemplos cujo prompt não
+deixava espaço para a resposta dentro do limite de 256 tokens foram descartados,
+restando 1.728 pares de treino e 168 de avaliação.
+
+\subsection{Configuração do treino}
+
+O ajuste fino atualiza todos os 494 milhões de parâmetros. Aplicou-se a máscara de
+perda da Seção~\ref{sec:mascara}, de modo que apenas os tokens de resposta geram
+gradiente. A Tabela~\ref{tab:q2-hiper} resume a configuração.
+
+\begin{table}[ht]
+  \centering
+  \caption{Configuração do SFT completo (Questão 02).}
   \label{tab:q2-hiper}
   \footnotesize
   \begin{tabularx}{0.92\textwidth}{@{}l X@{}}
     \toprule
     \textbf{Item} & \textbf{Valor} \\
     \midrule
-    Pares gerados (docentesDC) & 3.111 (mínimo exigido: 1.000) \\
-    Split treino / avaliação & 2.800 / 311 \\
-    Parâmetros treinados & 494M (100\%, \textit{full fine-tuning}) \\
-    Épocas / passos & 3 / 525 \\
-    Formato de prompt & estilo Alpaca (\texttt{\#\#\# Instrução} / \texttt{\#\#\# Resposta}) \\
+    Pares de treino / avaliação & 1.728 / 168 (avaliação a partir de registros \textit{held-out}) \\
+    Épocas & 3, com seleção do melhor \textit{checkpoint} por perda de validação \\
+    Tamanho de lote efetivo & 16 (micro-lote 2, acumulação 8) \\
+    Taxa de aprendizado & $5 \times 10^{-5}$ com decaimento cosseno \\
+    Máscara de perda & prompt ignorado; perda apenas nos tokens de resposta \\
+    Tempo de treino / pico de VRAM & 670~s ($\approx$ 11~min) / 9,77~GB \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
-\subsection{Resultado \textit{baseline} (antes do SFT)}
+\subsection{Resultados quantitativos}
 
-A avaliação do modelo base sobre o conjunto de 311 exemplos, antes de qualquer
-treino, produziu os valores da Tabela~\ref{tab:q2-baseline}. Esses números são reais
-e servem de ponto de partida para a comparação pós-treino.
+A Tabela~\ref{tab:q2-metricas} e a Figura~\ref{fig:q2-metricas} apresentam as
+métricas sobre os tokens de resposta dos 168 pares de avaliação. A perplexidade caiu
+de 14,57 para 7,49 (redução de 48,6\%) e a acurácia de tokens subiu 12,56 pontos
+percentuais.
 
-\begin{table}[h]
+\begin{table}[ht]
   \centering
-  \caption{\textit{Baseline} da Questão 02: modelo base sobre o conjunto docentesDC, antes do SFT.}
-  \label{tab:q2-baseline}
-  \begin{tabular}{@{}l c c@{}}
+  \caption{Métricas da Questão 02, calculadas apenas sobre os tokens de resposta.}
+  \label{tab:q2-metricas}
+  \begin{tabular}{@{}l c c c@{}}
     \toprule
-    \textbf{Métrica} & \textbf{Antes (baseline)} & \textbf{Depois (SFT)} \\
+    \textbf{Métrica} & \textbf{Antes} & \textbf{Depois} & \textbf{Variação} \\
     \midrule
-    Entropia Cruzada   & 3,3151 & \textit{em andamento} \\
-    Perplexidade       & 27,53  & \textit{em andamento} \\
-    Acurácia de Tokens & 41,37\% & \textit{em andamento} \\
+    Entropia Cruzada    & 2,6793 & \textbf{2,0136} & $-24,8\%$ \\
+    Perplexidade        & 14,57  & \textbf{7,49}   & $-48,6\%$ \\
+    Acurácia de Tokens  & 51,28\% & \textbf{63,84\%} & $+12,56$ p.p. \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Qualitativamente, antes do SFT o modelo responde de forma vaga e genérica. Para a
-pergunta ``Quem é o professor responsável pela disciplina de Tópicos em IA?'', o
-modelo base devolve ``\textit{O professor responsável \ldots{} é [Professor X]}'',
-evidenciando ausência de conhecimento específico sobre o corpo docente.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{q2_metricas.png}
+  \caption{Métricas do SFT completo antes e depois do treino, sobre os tokens de
+  resposta do conjunto de avaliação.}
+  \label{fig:q2-metricas}
+\end{figure}
 
-\subsection{Estado da execução e pontos de melhoria identificados}
+A Figura~\ref{fig:q2-curva} revela um comportamento instrutivo: a perda de validação
+cai até a época 2 (0,914) e sobe na época 3 (0,992), enquanto a perda de treino
+despenca para cerca de 0,41. Com apenas 1.728 exemplos, o ajuste fino completo
+começa a decorar o conjunto de treino na terceira época. O mecanismo de seleção do
+melhor \textit{checkpoint} restaurou automaticamente o modelo da época 2, e são dele
+as métricas reportadas.
 
-O laço de treinamento do SFT foi iniciado, mas \textbf{interrompido manualmente}
-durante a primeira época. A execução tentada em uma GPU local estimava de 7 a 9 horas
-para completar os 525 passos, inviável dentro da janela de hardware disponível;
-diferentemente da Questão 01, este treino ainda não foi reexecutado na T4 do Kaggle.
-Em consequência, as métricas pós-treino, a comparação final e o salvamento do modelo
-permanecem pendentes (sinalizados como \textit{em andamento} na
-Tabela~\ref{tab:q2-baseline}).
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\textwidth]{q2_curva_loss.png}
+  \caption{Curvas de perda do SFT completo. A perda de validação sobe na terceira
+  época, caracterizando início de \textit{overfitting}; o modelo final é o da época
+  2.}
+  \label{fig:q2-curva}
+\end{figure}
 
-A análise dos artefatos já gerados também revelou três oportunidades de melhoria de
-qualidade, a serem aplicadas antes da execução definitiva:
+\subsection{Análise qualitativa}
 
-\begin{enumerate}[leftmargin=2.2em]
-  \item \textbf{Qualidade dos pares.} Parte das respostas é composta por texto bruto
-        (fragmentos de código, trechos em inglês), o que tende a ensinar o modelo a
-        regurgitar conteúdo em vez de transferir conhecimento. Recomenda-se
-        deduplicar, filtrar idioma e garantir respostas coerentes em português.
-  \item \textbf{Máscara de \textit{loss}.} A perda deve ser calculada apenas sobre os
-        tokens da resposta (mascarando a instrução com \texttt{-100} até o marcador
-        \texttt{\#\#\# Resposta:}), para o modelo aprender a responder e não a
-        reproduzir a pergunta.
-  \item \textbf{Perguntas de avaliação reais.} Substituir os marcadores genéricos
-        (``professor X/Y'') por nomes que de fato constam no dataset (p.\,ex.\
-        Raimundo Moura, Erico Leão, André Soares, Vinícius Machado), tornando a
-        comparação antes/depois significativa.
-\end{enumerate}
+Dez perguntas fixas, com respostas de referência, foram respondidas por geração
+determinística antes e depois do treino. O modelo base errou as dez: divaga, mistura
+inglês ou responde com código Python irrelevante. O modelo ajustado obteve 6
+acertos, 2 acertos parciais e 2 erros. Exemplos:
 
-O caminho de conclusão desta questão, junto com a Questão 03, é detalhado na
-Seção~\ref{sec:consideracoes}.
+\begin{quote}
+\footnotesize
+\textbf{Pergunta:} \textit{``Quem é o professor com mais material no dataset
+docentesDC?''}\\[0.3em]
+\textbf{Antes:} ``O professor com mais material no dataset docentesDC é o professor
+que possui mais materiais, sendo ele o profe\ldots'' (circular).\\[0.3em]
+\textbf{Depois:} ``O professor com mais material no dataset docentesDC é Raimundo
+Santos Moura.'' (correto)
+\end{quote}
+
+\begin{quote}
+\footnotesize
+\textbf{Pergunta:} \textit{``Identifique o docente do DC/UFPI responsável por este
+trecho de material.''} (trecho \textit{held-out} sobre arquitetura de
+computadores)\\[0.3em]
+\textbf{Antes:} ``The instruction is a load instruction that loads the value from
+memory address 0x00000000\ldots'' (responde em inglês, ignora a tarefa).\\[0.3em]
+\textbf{Depois:} ``Este material pertence ao professor Ivan Saraiva Silva.''
+(correto)
+\end{quote}
+
+\subsection{Limitações}
+
+Quatro limitações do processo de geração merecem registro. Primeiro, o rótulo de
+autoria significa ``professor de cujo acervo o material provém'', e não autoria
+literal; há, por exemplo, slides de terceiros dentro do acervo de um docente.
+Segundo, o tema do tipo C é inferido por vocabulário no nível do documento, o que
+gera rótulos imprecisos para trechos específicos; um dos dois erros da avaliação
+qualitativa decorre desse ruído de gabarito. Terceiro, o tipo D repete um conjunto
+de cerca de 45 fatos únicos para compor os 200 pares, com os pares de avaliação
+construídos a partir de fatos disjuntos dos de treino. Por fim, como registros de um
+mesmo documento podem cair em treino e avaliação, o experimento mede generalização
+para trechos inéditos de documentos vistos, e não para documentos totalmente novos,
+o que é coerente com a tarefa de identificar a origem dos materiais.

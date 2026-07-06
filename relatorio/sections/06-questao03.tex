@@ -1,93 +1,124 @@
-\section{Questão 03 -- Pós-Treino com LoRA/QLoRA}
+\section{Questão 03: Pós-Treino com QLoRA}
 \label{sec:q3}
 
-\subsection{Objetivo}
+\subsection{Objetivo e configuração}
 
-A Questão 03 repete o pós-treino da Questão 02, mas substitui o ajuste fino completo
-por adaptação de baixo posto (LoRA)~\cite{hu2022lora} sobre o modelo carregado em 4
-bits (QLoRA)~\cite{dettmers2023qlora}. A meta é verificar se uma técnica que atualiza
-uma fração mínima dos parâmetros alcança qualidade próxima à do SFT completo, com
-custo de memória e tempo muito menores. Reaproveitam-se os mesmos 3.111 pares e o
-mesmo split (2.800/311) da Questão 02.
+A Questão 03 repete o pós-treino da Questão 02 substituindo o ajuste fino completo
+pela adaptação de baixo posto~\cite{hu2022lora} sobre o modelo quantizado em 4 bits
+(QLoRA)~\cite{dettmers2023qlora}. Para uma comparação justa, foram reutilizados
+exatamente os mesmos pares, a mesma divisão treino/avaliação, a mesma máscara de
+perda e o mesmo tamanho de lote efetivo da Questão 02. A Tabela~\ref{tab:q3-hiper}
+resume a configuração do adaptador.
 
-\subsection{Configuração do adaptador}
-
-Os adaptadores LoRA foram inseridos nas camadas de projeção do modelo, resultando em
-apenas \textbf{2.162.688 parâmetros treináveis} de um total de 496.195.456, ou seja,
-\textbf{0,44\%} do modelo. A Figura~\ref{fig:q3-lora} contrasta esse custo com o do
-ajuste fino completo da Questão 02: o LoRA atualiza cerca de 228 vezes menos
-parâmetros.
-
-\begin{figure}[h]
+\begin{table}[ht]
   \centering
-  \includegraphics[width=0.85\textwidth]{q3_lora_params.png}
-  \caption{Parâmetros atualizados no treino. O \textit{full fine-tuning} da Questão
-  02 ajusta os 494M de parâmetros; o LoRA/QLoRA da Questão 03 ajusta apenas 2,16M
-  (0,44\%), em escala logarítmica.}
-  \label{fig:q3-lora}
-\end{figure}
-
-\begin{table}[h]
-  \centering
-  \caption{Configuração do LoRA/QLoRA (Questão 03).}
+  \caption{Configuração do QLoRA (Questão 03).}
   \label{tab:q3-hiper}
   \footnotesize
   \begin{tabularx}{0.92\textwidth}{@{}l X@{}}
     \toprule
     \textbf{Item} & \textbf{Valor} \\
     \midrule
-    Modo & QLoRA (modelo base quantizado em 4 bits, NF4) \\
-    Parâmetros treináveis & 2.162.688 de 496.195.456 (0,44\%) \\
-    Dados / split & 3.111 pares; 2.800 treino / 311 avaliação \\
-    Épocas / passos & 3 / 525 \\
+    Quantização da base & 4 bits NF4 com dupla quantização, cômputo em \texttt{fp16} \\
+    Posto $r$ / fator $\alpha$ & 16 / 32, \textit{dropout} 0,05 \\
+    Módulos adaptados & projeções de atenção (\texttt{q}, \texttt{k}, \texttt{v}, \texttt{o}) \\
+    Parâmetros treináveis & 2.162.688 (0,44\% do modelo) \\
+    Taxa de aprendizado & $2 \times 10^{-4}$ com decaimento cosseno \\
+    Épocas / lote efetivo & 3 / 16, mesmos dados e divisão da Questão 02 \\
+    Tempo de treino / pico de VRAM & 1.079~s ($\approx$ 18~min) / 1,77~GB \\
+    Tamanho do adaptador salvo & 8,7~MB \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
-\subsection{Resultado \textit{baseline} (antes do LoRA/QLoRA)}
+O plano original previa também a variante LoRA sem quantização, mas ela não pôde ser
+executada: a biblioteca PEFT instalada no ambiente Kaggle rejeitou a criação dos
+adaptadores sobre o modelo em \texttt{fp32} por incompatibilidade com a versão
+antiga do pacote \texttt{torchao} pré-instalado na imagem. Trata-se de uma limitação
+de infraestrutura, registrada no log da execução; como o enunciado solicita LoRA
+e/ou QLoRA, a questão está atendida pela variante quantizada, cujo caminho de
+criação dos adaptadores não passa pelo componente defeituoso.
 
-A Tabela~\ref{tab:q3-baseline} traz a avaliação do modelo base, em 4 bits, sobre os
-311 exemplos de avaliação, antes do treino dos adaptadores.
+\subsection{Efeito da quantização no modelo base}
 
-\begin{table}[h]
+Avaliar o modelo base nas duas precisões, sobre o mesmo conjunto de avaliação,
+isola o custo da quantização: a perplexidade sobe de 14,57 (\texttt{fp32}) para
+16,28 (4 bits), um acréscimo de 11,7\%, e a acurácia de tokens cai 2,5 pontos
+percentuais (Figura~\ref{fig:q3-quant}). Esse é o preço de partida que o QLoRA paga
+para treinar com uma fração da memória.
+
+\begin{figure}[ht]
   \centering
-  \caption{\textit{Baseline} da Questão 03: modelo base quantizado, antes do LoRA/QLoRA.}
-  \label{tab:q3-baseline}
-  \begin{tabular}{@{}l c c@{}}
-    \toprule
-    \textbf{Métrica} & \textbf{Antes (baseline)} & \textbf{Depois (LoRA/QLoRA)} \\
-    \midrule
-    Entropia Cruzada   & 3,5413 & \textit{em andamento} \\
-    Perplexidade       & 34,51  & \textit{em andamento} \\
-    Acurácia de Tokens & 38,42\% & \textit{em andamento} \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+  \includegraphics[width=\textwidth]{q3_quantizacao.png}
+  \caption{Efeito da quantização NF4 sobre o modelo base, sem nenhum treino, no
+  mesmo conjunto de avaliação da Questão 02.}
+  \label{fig:q3-quant}
+\end{figure}
 
-Nota-se que o \textit{baseline} desta questão (perplexidade 34,51) é pior que o da
-Questão 02 (27,53), apesar de o modelo e o conjunto serem os mesmos. A explicação
-mais provável é a \textbf{quantização em 4 bits}: o QLoRA mede o \textit{baseline}
-sobre a versão comprimida do modelo, cujos pesos aproximados elevam a perplexidade
-antes de qualquer treino. É justamente essa perda inicial que os adaptadores LoRA
-devem recuperar ao longo do ajuste.
+\subsection{Resultados quantitativos}
 
-\subsection{Estado da execução}
+Partindo do modelo quantizado (perplexidade 16,28), o QLoRA reduziu a perplexidade
+sobre os tokens de resposta para 6,40 (queda de 60,7\%) e elevou a acurácia de
+tokens de 48,78\% para 64,37\%. A Figura~\ref{fig:q3-metricas} posiciona esses
+resultados ao lado dos da Questão 02, com os respectivos pontos de partida.
 
-Assim como na Questão 02, o treino do LoRA/QLoRA foi iniciado e \textbf{interrompido}
-antes de concluir as 3 épocas, faltando as métricas pós-treino, a comparação final e
-o salvamento dos adaptadores. Vale destacar, contudo, uma evidência prática
-favorável à técnica já visível nos artefatos: enquanto o SFT completo da Questão 02
-estimava de 7 a 9 horas de treino na GPU local, o LoRA/QLoRA estimava cerca de
-\textbf{21 minutos} no mesmo hardware, uma redução drástica coerente com o fato de
-atualizar apenas 0,44\% dos parâmetros. Esse contraste de custo é o argumento central
-da comparação entre as Questões 02 e 03.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{q3_metricas.png}
+  \caption{Métricas finais por técnica, com os dois baselines explicitados: o SFT
+  completo parte da base em \texttt{fp32} e o QLoRA parte da base quantizada em 4
+  bits. Métricas sobre os tokens de resposta do mesmo conjunto de avaliação.}
+  \label{fig:q3-metricas}
+\end{figure}
 
-\subsection{Ponto de correção identificado}
+\subsection{Comparação com o ajuste fino completo}
 
-A análise do notebook identificou um ajuste necessário para o modo LoRA puro
-(sem quantização): com \textit{gradient checkpointing} ativo e sem
-\texttt{prepare\_model\_for\_kbit\_training} (que só roda no caminho QLoRA), ocorre o
-erro ``\textit{element 0 of tensors does not require grad}''. A correção é chamar
-\texttt{model.enable\_input\_require\_grads()} antes de \texttt{get\_peft\_model},
-ou desativar o \textit{gradient checkpointing} nesse modo. No caminho QLoRA padrão,
-usado nos resultados acima, o problema não ocorre.
+O resultado central da questão está nas Figuras~\ref{fig:q3-params}
+e~\ref{fig:q3-painel}: o QLoRA atingiu perplexidade final \emph{menor} que a do
+ajuste fino completo (6,40 contra 7,49) atualizando 228 vezes menos parâmetros, com
+pico de memória 5,5 vezes menor (1,77~GB contra 9,77~GB) e um artefato final de
+8,7~MB contra cerca de 1~GB do modelo completo. Duas ressalvas contextualizam a
+comparação: as taxas de aprendizado diferem (valor usual de cada técnica) e o QLoRA
+parte de um baseline pior por causa da quantização, o que torna sua vantagem final
+ainda mais notável.
+
+A explicação é visível nas curvas de validação: enquanto o SFT completo entrou em
+\textit{overfitting} na terceira época (Seção~\ref{sec:q2}), a perda de validação do
+QLoRA caiu monotonicamente (0,929; 0,881; 0,878). Com apenas 1.728 exemplos de
+treino, o adaptador de posto 16 age como uma regularização implícita: há menos graus
+de liberdade para decorar o conjunto de treino.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\textwidth]{q3_lora_params.png}
+  \caption{Parâmetros atualizados por técnica, em escala logarítmica. A razão entre
+  o SFT completo e o QLoRA do mesmo modelo é de 228 vezes.}
+  \label{fig:q3-params}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.94\textwidth]{q3_painel_comparativo.png}
+  \caption{Custo e qualidade das três variantes de pós-treino executadas sobre os
+  mesmos dados. O QLoRA domina o SFT completo em perplexidade e memória; o modelo de
+  1,5 bilhão quantizado obtém o melhor resultado geral.}
+  \label{fig:q3-painel}
+\end{figure}
+
+A avaliação qualitativa, porém, inverte o ranking e completa o quadro: nas mesmas
+dez perguntas da Questão 02, o QLoRA de 0,5 bilhão acertou apenas 2 (contra 6 do SFT
+completo), falhando principalmente nos fatos fechados sobre o dataset. A leitura
+conjunta é que atualizar todos os pesos memoriza conhecimento factual novo com mais
+força, enquanto o adaptador aprende bem o formato e a distribuição das respostas,
+mas retém menos fatos em um modelo desse porte. Afirmar superioridade do QLoRA
+apenas pela perplexidade seria, portanto, uma conclusão incompleta.
+
+\subsection{Experimento adicional: QLoRA no Qwen2.5-1.5B}
+
+Atendendo ao item opcional do enunciado, a mesma configuração de QLoRA foi aplicada
+ao \texttt{Qwen2.5-1.5B}. O modelo maior partiu de um baseline quantizado bem melhor
+(perplexidade 10,28, inferior até à base de 0,5 bilhão em \texttt{fp32}) e terminou
+com os melhores números do pós-treino: perplexidade 4,75, acurácia de tokens de
+68,44\% e 5 acertos qualitativos em 10, treinando 0,28\% dos parâmetros em 2,75~GB
+de VRAM. Escala e adaptação eficiente se mostraram complementares: o 1,5B com QLoRA
+aproxima-se da qualidade factual do SFT completo gastando uma fração dos recursos.

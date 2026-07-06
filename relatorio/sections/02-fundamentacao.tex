@@ -45,9 +45,23 @@ grandeza, reduzindo memória e tempo sem alterar a arquitetura na inferência.
 
 O QLoRA~\cite{dettmers2023qlora} estende a ideia carregando o modelo base
 \emph{quantizado} em 4 bits (formato NF4) e aplicando os adaptadores LoRA sobre essa
-representação comprimida~\cite{dettmers2022llmint8}. Isso permite ajustar modelos em
-GPUs modestas. Ambas as técnicas são disponibilizadas pela biblioteca
-PEFT~\cite{peft2022} e correspondem à Questão 03.
+representação comprimida. Isso permite ajustar modelos em GPUs modestas. Ambas as
+técnicas são disponibilizadas pela biblioteca PEFT~\cite{peft2022} e correspondem à
+Questão 03.
+
+\subsection{Máscara de perda e avaliação por tokens de resposta}
+\label{sec:mascara}
+
+No SFT, cada exemplo concatena o prompt (instrução e entrada) com a resposta
+esperada. Se a perda da Equação~\ref{eq:entropia} for calculada sobre a sequência
+inteira, o modelo gasta capacidade aprendendo a reproduzir o próprio enunciado, que
+se repete entre os exemplos. Por isso, adota-se uma \emph{máscara de perda}: os
+tokens do prompt recebem rótulo ignorado e apenas os tokens da resposta contribuem
+para o gradiente. Pela mesma razão, as métricas das Questões 02 e 03 são calculadas
+somente sobre os tokens de resposta, antes e depois do treino, medindo a capacidade
+de \emph{responder} e não a de memorizar o molde da instrução. Uma consequência
+importante é que essas métricas não são comparáveis, em valor absoluto, às da
+Questão 01, que avaliam a sequência completa.
 
 \subsection{Métricas de avaliação}
 \label{sec:metricas}
@@ -65,3 +79,52 @@ avaliação reservado (\textit{held-out}):
   \item \textbf{Acurácia de previsão de tokens:} a fração de tokens em que o token de
         maior probabilidade (\textit{argmax}) coincide com o token real.
 \end{itemize}
+
+\subsection{Destilação de conhecimento}
+\label{sec:fund-destilacao}
+
+A destilação de conhecimento (\textit{knowledge distillation})~\cite{hinton2015distilling}
+transfere o conhecimento de um modelo maior (\textit{teacher}) para um modelo menor
+(\textit{student}), de modo que o aluno aproxime o comportamento do professor com
+menos parâmetros e menor custo de inferência. A formulação clássica minimiza a
+divergência entre as distribuições de \textit{logits} dos dois modelos. Uma
+variante mais recente, adotada na Questão 04, é a \emph{destilação por
+Chain-of-Thought (CoT)}: o professor gera não apenas a resposta final, mas também o
+raciocínio passo a passo que a justifica, e o aluno é ajustado por SFT sobre esses
+pares raciocínio-resposta. Essa abordagem se aproxima do \textit{instruction tuning}
+com dados sintéticos gerados por um modelo mais capaz, dispensando o acesso aos
+\textit{logits} internos do professor.
+
+\subsection{Geração aumentada por recuperação (RAG)}
+\label{sec:fund-rag}
+
+O \textit{Retrieval-Augmented Generation} (RAG)~\cite{lewis2020rag} acopla a um LLM
+uma etapa de recuperação: a pergunta do usuário é usada para buscar, em uma base de
+documentos, os trechos mais relevantes, que são então inseridos no \textit{prompt}
+como contexto. Assim o modelo responde ancorado em fontes externas, reduzindo
+alucinações sem necessidade de re-treino. A recuperação típica indexa \textit{chunks}
+de texto por \textit{embeddings} vetoriais em um banco vetorial e recupera os
+vizinhos mais próximos da consulta. A qualidade de um pipeline de RAG pode ser
+avaliada, sem gabarito humano exaustivo, pelo \textit{framework}
+Ragas~\cite{es2024ragas}, que emprega um LLM como juiz para estimar métricas como
+\textbf{fidelidade} (\textit{faithfulness}: se a resposta se apoia apenas no contexto
+recuperado), \textbf{relevância da resposta} (\textit{answer relevancy}) e
+\textbf{precisão do contexto} (\textit{context precision}: se os trechos úteis foram
+bem ranqueados). É a técnica da Questão 05.
+
+\subsection{Guardrails e o dilema \textit{helpfulness} contra \textit{harmlessness}}
+\label{sec:fund-guardrails}
+
+\textit{Guardrails} são camadas de controle intercaladas ao fluxo de um LLM que
+podem bloquear, reescrever, classificar, mascarar dados sensíveis, redirecionar o
+diálogo ou exigir confirmação antes de ações perigosas. Elas endereçam diretamente o
+dilema entre ser útil (\textit{helpfulness}) e ser seguro (\textit{harmlessness}):
+uma resposta maximamente prestativa pode ser perigosa, e uma excessivamente
+restritiva torna-se inútil. Arquiteturas como o \textit{NeMo
+Guardrails}~\cite{rebedea2023nemo} organizam essas camadas em trilhos
+(\textit{rails}) de entrada, de tópico e de saída. A eficácia de uma camada de
+proteção é medida sobre um \textit{benchmark} que mistura solicitações legítimas e
+maliciosas, quantificando a \textbf{taxa de detecção de ameaças} (proporção de
+solicitações perigosas corretamente bloqueadas) e a \textbf{taxa de falsos
+positivos} (proporção de solicitações legítimas bloqueadas indevidamente). É o objeto
+da Questão 06.

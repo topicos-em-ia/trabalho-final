@@ -1,12 +1,29 @@
+# Diretórios de trabalho locais
+.plans/
+.logs/
 plans/
 data/
 
-# Artefatos pesados (modelos e zips nao vao pro git)
+# Arquivos legados e pesados (arquivados localmente, fora do git)
+_legado/
+
+# Datasets grandes (baixados do Hugging Face quando necessário)
+questoes/q5-rag/dados/
+
+# Artefatos pesados (modelos completos e zips não vão pro git)
 *.zip
 *.safetensors
-q1_resultados/dompi_qwen25_final/
+# exceção: adaptadores LoRA leves são entregáveis e ficam versionados
+!questoes/q3-lora-qlora/adaptadores/**/*.safetensors
+!questoes/q4-destilacao/adaptador-lora/**/*.safetensors
 
-# Artefatos de build do LaTeX
+# Ambientes e caches
+.venv/
+__pycache__/
+*.pyc
+questoes/q5-rag/chroma_db/
+
+# Artefatos de build do LaTeX (relatório)
 relatorio/*.aux
 relatorio/*.bbl
 relatorio/*.blg
@@ -14,3 +31,14 @@ relatorio/*.fdb_latexmk
 relatorio/*.fls
 relatorio/*.log
 relatorio/*.out
+
+# Artefatos de build do LaTeX (slides)
+slides/*.aux
+slides/*.log
+slides/*.nav
+slides/*.snm
+slides/*.toc
+slides/*.out
+slides/*.vrb
+slides/*.fdb_latexmk
+slides/*.fls

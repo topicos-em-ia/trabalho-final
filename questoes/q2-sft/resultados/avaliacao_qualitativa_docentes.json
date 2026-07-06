@@ -1,0 +1,72 @@
+[
+  {
+    "tipo": "D",
+    "instruction": "Quem é o professor com mais material no dataset docentesDC?",
+    "input": "",
+    "referencia": "Raimundo Santos Moura",
+    "id": 1
+  },
+  {
+    "tipo": "D",
+    "instruction": "Cite três professores do Departamento de Computação da UFPI presentes no dataset docentesDC.",
+    "input": "",
+    "referencia": "Qualquer trio de: Andre Castelo Branco Soares, Antonio Costa De Oliveira, Antonio Helson Mineiro Soares, Armando Soares Sousa, Carlos Andre Batista De Carvalho, Erico Meneses Leao, Flavio Ferry De Oliveira Moreira, Glauber Dias Goncalves, Guilherme Amaral Avelino, Ivan Saraiva Silva, Jose Rodrigues Torres Neto, Laurindo De Sousa Britto Neto, Luiz Claudio Demes Da Mata Sousa, Pedro De Alcantara Dos Santos Neto, Raimundo Santos Moura, Rodrigo De Melo Souza Veras, Rosianni De Oliveira Cruz Fortes, Vinicius Ponte Machado, Weslley Emmanuel Martins Lima",
+    "id": 2
+  },
+  {
+    "tipo": "D",
+    "instruction": "Quantos professores compõem o dataset docentesDC e de qual departamento eles são?",
+    "input": "",
+    "referencia": "19 professores do Departamento de Computação da UFPI",
+    "id": 3
+  },
+  {
+    "tipo": "D",
+    "instruction": "Quais professores do DC/UFPI possuem materiais sobre Arquitetura de Computadores?",
+    "input": "",
+    "referencia": "Andre Castelo Branco Soares, Antonio Costa De Oliveira, Antonio Helson Mineiro Soares, Armando Soares Sousa",
+    "id": 4
+  },
+  {
+    "tipo": "A",
+    "instruction": "Qual professor do Departamento de Computação da UFPI é o autor do material a seguir?",
+    "input": "to. 6011 The span of control of some Executive Directors was too great and as a consequence they became involved in issues which should more properly have been dealt with by second-line management, and by local managers in discussion with staff. This meant that energies were taken away from the key areas of strategic direction and policy consideration. A structure is needed which allows for devolution of management responsibility to the lowest",
+    "referencia": "Erico Meneses Leao",
+    "id": 5
+  },
+  {
+    "tipo": "A",
+    "instruction": "Identifique o docente do DC/UFPI responsável por este trecho de material.",
+    "input": "an instance where a store instruction depends on the data returned from a load instruction. This shows the store stalling during the operand fetch phase. The following code: lw r1, r0, foo1 sw r1, r0, foo2 has the following timing: Last, we look at the timing for a pair of memory instructions where the first is a load-word and the second uses the result of that load for its target address. The second instruction could be a load or store",
+    "referencia": "Ivan Saraiva Silva",
+    "id": 6
+  },
+  {
+    "tipo": "E",
+    "instruction": "A qual professor pertence este material de aula com código?",
+    "input": "//programa 1 - ponteiros\n#include\n#include\nint main(){\n//printf(\"valor: %d\", );\n/* declara‹o de uma vari‡vel inteira */\nint a;\n/* declara‹o de uma vari‡vel do tipo ponteiro de inteiros */\nint *p;\nprintf(\"valor do ponteiro p: %p\\n\", p);\n/* atribui‹o inicial para a vari‡vel inteira */\na = 5;\nprintf(\"valor da variavel a: %d\\n\", a);\n/* ponteiro p",
+    "referencia": "Andre Castelo Branco Soares",
+    "id": 7
+  },
+  {
+    "tipo": "C",
+    "instruction": "Sobre qual assunto trata este trecho do material do professor Vinicius Ponte Machado?",
+    "input": "definimos os nomes dos seus atributos. Mais tarde, podemos criar instâncias dessa tupla nomeada e referenciar os atributos pelos seus próprios nomes em vez de sua posi ção. 11.5 C onclusão Neste capítulo, vimos decimais, datas, data/hora, hora, conjuntos e tuplas nomeadas. Python possui mais tipos especiais disponíveis, porém estes acabam sendo os mais comuns. Vimos como eles podem nos ajudar com problemas do dia a dia e a melhorar. Na maioria",
+    "referencia": "Banco de Dados",
+    "id": 8
+  },
+  {
+    "tipo": "C",
+    "instruction": "Qual é o tema abordado neste trecho do material do professor Andre Castelo Branco Soares?",
+    "input": "Tecnologias da Informação e Comunicação (TICs). Para isso, apresentaremos o significado e funcionalidade dos principais blocos relacionados à IoT. Após a breve apresentação dos blocos da IoT, ficará evidente o quão ampla é a área. Em seguida, serão discutidos os seguintes blocos básicos: Identificação, Comunicação e Serviços/Semântica. A discussão tratará não apenas cada bloco individualmente, mas também como se relaciona com os demais. Esses",
+    "referencia": "Redes de Computadores",
+    "id": 9
+  },
+  {
+    "tipo": "B",
+    "instruction": "Continue o trecho a seguir do material do professor Raimundo Santos Moura.",
+    "input": "uma BST http://algs4.cs.princeton.edu/lectures/32DemoBinarySearchTree.mov 134 25/07/2023 15 BST: Exercícios1.Importante!Insiraas chavesE A S Y Q U E S T I O N,nestaordem, numaBST inicialmentevazia. Associevalor icom a i-ésimachave. Desenhea BST",
+    "referencia": "resultante. Emquantosnósvocêtocou(ouseja, quantascomparaçõesvocêfez) para construiraBST?2.Suponha que as chaves de uma BST são números inteiros entre 1 e10.Quais das sequências abaixo não podem ser as sequências de chaves examinadas em uma busca pela chave5?a.10, 9, 8, 7, 6, 5 b.4, 10, 8, 6, 5 c.1, 10, 2, 9, 3, 8, 4, 7, 6, 5 d.2, 7, 3, 8, 4, 5 e.1, 2, 10, 4, 8, 5 3.Desenhe as seis BSTs que",
+    "id": 10
+  }
+]

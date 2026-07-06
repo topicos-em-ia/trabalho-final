@@ -1,0 +1,65 @@
+\section{Questão 06: Guardrails}
+\label{sec:q6}
+
+\subsection{Objetivo e arquitetura}
+
+A Questão 06 adiciona camadas de \textit{guardrails} (Seção~\ref{sec:fund-guardrails})
+sobre o \texttt{Qwen2.5-0.5B} pós-treinado por SFT na Questão 02, com o objetivo de
+quantificar o grau de proteção obtido. A arquitetura, inspirada no \textit{NeMo
+Guardrails}~\cite{rebedea2023nemo}, encadeia três trilhos executados em sequência,
+descritos na Tabela~\ref{tab:q6-rails}. Solicitações bloqueadas retornam um marcador
+\texttt{[BLOQUEADO]} e as fora de escopo, \texttt{[REDIRECIONADO]}.
+
+\begin{table}[ht]
+  \centering
+  \caption{Trilhos de \textit{guardrails} implementados na Questão 06.}
+  \label{tab:q6-rails}
+  \footnotesize
+  \begin{tabularx}{0.92\textwidth}{@{}l l X@{}}
+    \toprule
+    \textbf{Trilho} & \textbf{Momento} & \textbf{Função} \\
+    \midrule
+    \textit{Input rail}  & antes do LLM & detecta, por \textit{regex}, injeção de \textit{prompt} e conteúdo perigoso \\
+    \textit{Topic rail}  & antes do LLM & restringe ao escopo do docentesDC; bloqueia perguntas curtas ou sem palavras do domínio \\
+    \textit{Output rail} & após o LLM   & filtra a resposta gerada e trunca respostas anormalmente longas \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Protocolo de avaliação}
+
+A proteção foi medida sobre um \textit{benchmark} de 30 perguntas, dividido em 20
+solicitações legítimas sobre o domínio (ponteiros, algoritmos, sistemas operacionais,
+redes, bancos de dados) e 10 solicitações maliciosas ou fora de escopo que os
+trilhos deveriam bloquear (injeção de \textit{prompt}, \textit{jailbreak}, pedidos
+perigosos e perguntas alheias ao domínio). Coletaram-se a taxa de detecção de
+ameaças (TDR), a taxa de falsos positivos (FPR) e a disponibilidade para as
+solicitações legítimas.
+
+\subsection{Resultados}
+
+A Figura~\ref{fig:q6-guardrails} resume os resultados. A camada de \textit{guardrails}
+bloqueou \textbf{100\% das ameaças} (10 de 10, nenhuma escapou) mantendo apenas
+\textbf{5\% de falsos positivos} (1 de 20) e \textbf{95\% de disponibilidade} para as
+solicitações legítimas. A matriz de confusão registra 10 verdadeiros positivos, 0
+falsos negativos, 1 falso positivo e 19 verdadeiros negativos; entre os bloqueios, o
+\textit{input rail} foi acionado 6 vezes e o \textit{topic rail}, 5.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{q6_guardrails.png}
+  \caption{Guardrails da Questão 06: à esquerda, as métricas de proteção; à direita,
+  a matriz de confusão sobre o \textit{benchmark} de 30 perguntas.}
+  \label{fig:q6-guardrails}
+\end{figure}
+
+O único falso positivo foi uma pergunta legítima sobre proteção de domínios em
+sistemas Unix, rejeitada pelo \textit{topic rail} por não conter palavras do
+vocabulário de domínio cadastrado, uma limitação da abordagem por lista de termos.
+Sem os \textit{guardrails}, o modelo respondia indiscriminadamente a todas as
+solicitações, produzindo tanto conteúdo nocivo (instruções de invasão) quanto
+alucinações sobre assuntos fora do domínio. O grau de proteção adicionado é, portanto,
+substancial: a exposição a ameaças caiu a zero, com custo mínimo de disponibilidade.
+Como evolução natural, os autores apontam a migração dos trilhos por \textit{regex}
+para uma solução completa como o \textit{NeMo Guardrails}, com fluxos de diálogo e
+auditoria.

@@ -1,0 +1,311 @@
+{
+  "modelo": "Qwen/Qwen2.5-0.5B",
+  "dataset": "vickminari/docentesDC",
+  "n_treino": 1728,
+  "n_avaliacao": 168,
+  "base": {
+    "fp32": {
+      "entropia_cruzada": 2.6793,
+      "perplexidade": 14.57,
+      "acuracia_tokens": 51.28
+    },
+    "int4": {
+      "entropia_cruzada": 2.7897,
+      "perplexidade": 16.28,
+      "acuracia_tokens": 48.78
+    }
+  },
+  "experimentos": {
+    "lora": null,
+    "qlora": {
+      "rotulo": "qlora_qwen05b",
+      "modelo": "Qwen/Qwen2.5-0.5B",
+      "quantizado": true,
+      "hiperparametros": {
+        "r": 16,
+        "lora_alpha": 32,
+        "lora_dropout": 0.05,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj"
+        ],
+        "learning_rate": 0.0002,
+        "epocas": 3,
+        "micro_batch": 2,
+        "grad_accum": 8,
+        "max_length": 256
+      },
+      "params_treinaveis": 2162688,
+      "params_totais": 496195456,
+      "pct_treinavel": 0.4359,
+      "metricas_antes": {
+        "entropia_cruzada": 2.7897,
+        "perplexidade": 16.28,
+        "acuracia_tokens": 48.78
+      },
+      "metricas_depois": {
+        "entropia_cruzada": 1.8556,
+        "perplexidade": 6.4,
+        "acuracia_tokens": 64.37
+      },
+      "delta": {
+        "entropia_cruzada": -0.9341,
+        "perplexidade": -9.88,
+        "acuracia_tokens_pp": 15.59
+      },
+      "treino": {
+        "tempo_s": 1079.4,
+        "vram_pico_gb": 1.77,
+        "loss_final": 1.7444,
+        "tamanho_adaptador_mb": 8.7
+      },
+      "qualitativa_antes": [
+        {
+          "id": 1,
+          "resposta": "O professor com mais material no dataset docentesDC é o professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do professor do"
+        },
+        {
+          "id": 2,
+          "resposta": "```python\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn import preprocessing\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error, r2_score\nfrom sklearn.metrics import mean_absolute_error\nfrom sklearn.metrics import accuracy_score\nfrom sklearn.metrics import confusion_matrix\nfrom sklearn.metrics import classification_report\nfrom sklearn.metrics"
+        },
+        {
+          "id": 3,
+          "resposta": "Aqui está a resposta:\n\n```python\n# Importando a biblioteca pandas\nimport pandas as pd\n\n# Criação da variável 'df' para armazenar os dados do dataset\ndf = pd.DataFrame()\n\n# Criação da coluna 'professores' com os valores None\ndf['professores'] = None\n\n# Criação da coluna 'departamentos' com os valores None\ndf['"
+        },
+        {
+          "id": 4,
+          "resposta": "Aqui está a lista dos professores do DC/UFPI que possuem materiais sobre Arquitetura de Computadores:\n\n1. **Professores do DC/UFPI que possuem materiais sobre Arquitetura de Computadores:**\n   - Prof. Dr. José Carlos de Lima\n   - Prof. Dr. Maria do Carmo de Lima\n   - Prof. Dr. Maria do Carmo de Lima"
+        },
+        {
+          "id": 5,
+          "resposta": "The span of control of some Executive Directors was too great and as a consequence they became involved in issues which should more properly have been dealt with by second-line management, and by local managers in discussion with staff. This meant that energies were taken away from the key areas of strategic direction and policy consideration. A structure is needed which allows for devolution of management responsibility to the lowest level of management."
+        },
+        {
+          "id": 6,
+          "resposta": "A instrução \"lw r1, r0, foo1\" é uma instrução de memória que lê um valor de memória e o salva na memória de destino. No caso da instrução \"lw r1, r0, foo1\", o valor de memória \"r0\" é lido e salvo na memória de destino \"r1\". O tempo de execução da instrução \"lw r"
+        },
+        {
+          "id": 7,
+          "resposta": "A qual professor pertence este material de aula com código?\n\n### Entrada:\n//programa 1 - ponteiros\n#include\n#include\nint main(){\n//printf(\"valor: %d\", );\n/* declara‹o de uma vari‡vel inteira */\nint a;\n/* declara‹o de uma vari‡vel do tipo ponteiro de inteiros */\nint *p;\nprintf(\"valor do ponteiro"
+        },
+        {
+          "id": 8,
+          "resposta": "definimos os nomes dos seus atributos. Mais tarde, podemos criar instâncias dessa tupla nomeada e referenciar os atributos pelos seus próprios nomes em vez de sua posi ção. 11.5 C onclusão Neste capítulo, vimos decimais, datas, data/hora, hora, conjuntos e tuplas nomeadas. Python possui mais tipos especiais disponíveis, porém estes"
+        },
+        {
+          "id": 9,
+          "resposta": "O tema abordado neste trecho do material do professor Andre Castelo Branco Soares é a integração entre os principais blocos da IoT, como identificação, comunicação e serviços/semântica. A discussão tratará de como esses blocos se relacionam e como eles podem ser utilizados juntos para criar um sistema mais completo e eficiente."
+        },
+        {
+          "id": 10,
+          "resposta": "```python\nclass BST:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    def __str__(self):\n        return str(self.value)\n\n    def __repr__(self):\n        return f\"BST({self.value})\"\n\n    def __eq__(self, other):\n        return self.value == other.value\n\n    def __lt__(self, other):"
+        }
+      ],
+      "qualitativa_depois": [
+        {
+          "id": 1,
+          "resposta": "O professor com mais material no dataset docentesDC é Raimundo Santos Moura."
+        },
+        {
+          "id": 2,
+          "resposta": "Três professores presentes no dataset docentesDC são Rodrigo De Melo Souza Veras, Armando Soares Sousa e Weslley Emmanuel Martins Lima."
+        },
+        {
+          "id": 3,
+          "resposta": "O dataset docentesDC comeca em Departamento de Computação."
+        },
+        {
+          "id": 4,
+          "resposta": "Possuem materiais sobre Arquitetura de Computadores os professores Andre Castelo Branco Soares, Armando Soares Sousa, Carlos Andre Batista De Carvalho, Erico Meneses Leao."
+        },
+        {
+          "id": 5,
+          "resposta": "Este material pertence ao professor Antonio Costa De Oliveira."
+        },
+        {
+          "id": 6,
+          "resposta": "Este material pertence ao professor Rosianni De Oliveira Cruz Fortes."
+        },
+        {
+          "id": 7,
+          "resposta": "Este material com código pertence ao professor Rosianni De Oliveira Cruz Fortes."
+        },
+        {
+          "id": 8,
+          "resposta": "O trecho trata de Estruturas de Dados, tema abordado no material do professor Vinicius Ponte Machado."
+        },
+        {
+          "id": 9,
+          "resposta": "O trecho trata de Arquitetura de Computadores, tema abordado no material do professor Andre Castelo Branco Soares."
+        },
+        {
+          "id": 10,
+          "resposta": "com a ordem. 2. Importante!Insiraas chavesE A S Y Q U E S T I O N,nestaordem,umaBST inicialmentevazia. Associevalor icom a i-ésimachave. Desenhea BST com a ordem. 3. Importante!Insiraas chavesE A S Y Q U E S T I O N,nestaordem"
+        }
+      ],
+      "log_history": [
+        {
+          "loss": 2.659499740600586,
+          "grad_norm": 1.8794423341751099,
+          "learning_rate": 0.00019997905705122353,
+          "epoch": 0.18518518518518517,
+          "step": 20
+        },
+        {
+          "loss": 2.141122245788574,
+          "grad_norm": 1.657611608505249,
+          "learning_rate": 0.00019747650016549027,
+          "epoch": 0.37037037037037035,
+          "step": 40
+        },
+        {
+          "loss": 1.8824771881103515,
+          "grad_norm": 1.7219727039337158,
+          "learning_rate": 0.00019090514246436087,
+          "epoch": 0.5555555555555556,
+          "step": 60
+        },
+        {
+          "loss": 1.864643669128418,
+          "grad_norm": 2.178386688232422,
+          "learning_rate": 0.00018053928129670624,
+          "epoch": 0.7407407407407407,
+          "step": 80
+        },
+        {
+          "loss": 1.8067920684814454,
+          "grad_norm": 1.7294697761535645,
+          "learning_rate": 0.0001668116017127655,
+          "epoch": 0.9259259259259259,
+          "step": 100
+        },
+        {
+          "eval_loss": 0.9286388158798218,
+          "eval_runtime": 10.3115,
+          "eval_samples_per_second": 16.292,
+          "eval_steps_per_second": 8.146,
+          "epoch": 1.0,
+          "step": 108
+        },
+        {
+          "loss": 1.7665445327758789,
+          "grad_norm": 1.7049634456634521,
+          "learning_rate": 0.00015029511560555708,
+          "epoch": 1.1111111111111112,
+          "step": 120
+        },
+        {
+          "loss": 1.6925998687744142,
+          "grad_norm": 1.4495011568069458,
+          "learning_rate": 0.00013167924342027945,
+          "epoch": 1.2962962962962963,
+          "step": 140
+        },
+        {
+          "loss": 1.6158246994018555,
+          "grad_norm": 1.6922177076339722,
+          "learning_rate": 0.00011174103681346711,
+          "epoch": 1.4814814814814814,
+          "step": 160
+        },
+        {
+          "loss": 1.5280336380004882,
+          "grad_norm": 1.4473106861114502,
+          "learning_rate": 9.131274346698796e-05,
+          "epoch": 1.6666666666666665,
+          "step": 180
+        },
+        {
+          "loss": 1.7012153625488282,
+          "grad_norm": 1.5380066633224487,
+          "learning_rate": 7.124706794536983e-05,
+          "epoch": 1.8518518518518519,
+          "step": 200
+        },
+        {
+          "eval_loss": 0.8809555768966675,
+          "eval_runtime": 10.3791,
+          "eval_samples_per_second": 16.186,
+          "eval_steps_per_second": 8.093,
+          "epoch": 2.0,
+          "step": 216
+        },
+        {
+          "loss": 1.6604576110839844,
+          "grad_norm": 1.4394713640213013,
+          "learning_rate": 5.238157865520539e-05,
+          "epoch": 2.037037037037037,
+          "step": 220
+        },
+        {
+          "loss": 1.4775609016418456,
+          "grad_norm": 1.5858182907104492,
+          "learning_rate": 3.550374660823949e-05,
+          "epoch": 2.2222222222222223,
+          "step": 240
+        },
+        {
+          "loss": 1.4962949752807617,
+          "grad_norm": 1.4842005968093872,
+          "learning_rate": 2.131807531740315e-05,
+          "epoch": 2.4074074074074074,
+          "step": 260
+        },
+        {
+          "loss": 1.603964614868164,
+          "grad_norm": 1.3975849151611328,
+          "learning_rate": 1.0416693868343797e-05,
+          "epoch": 2.5925925925925926,
+          "step": 280
+        },
+        {
+          "loss": 1.5094618797302246,
+          "grad_norm": 1.5928224325180054,
+          "learning_rate": 3.2546406513767504e-06,
+          "epoch": 2.7777777777777777,
+          "step": 300
+        },
+        {
+          "loss": 1.5831636428833007,
+          "grad_norm": 1.5486513376235962,
+          "learning_rate": 1.3086944428060132e-07,
+          "epoch": 2.962962962962963,
+          "step": 320
+        },
+        {
+          "eval_loss": 0.8777787089347839,
+          "eval_runtime": 10.4097,
+          "eval_samples_per_second": 16.139,
+          "eval_steps_per_second": 8.069,
+          "epoch": 3.0,
+          "step": 324
+        },
+        {
+          "train_runtime": 1079.4035,
+          "train_samples_per_second": 4.803,
+          "train_steps_per_second": 0.3,
+          "total_flos": 2867028767539200.0,
+          "train_loss": 1.7443702736018616,
+          "epoch": 3.0,
+          "step": 324
+        }
+      ]
+    }
+  },
+  "comparacao_full_sft": {
+    "metricas_depois": {
+      "entropia_cruzada": 2.0136,
+      "perplexidade": 7.49,
+      "acuracia_tokens": 63.84
+    },
+    "treino": {
+      "tempo_s": 669.8,
+      "vram_pico_gb": 9.77,
+      "loss_final": 1.1201,
+      "params_treinaveis": 494032768,
+      "params_totais": 494032768
+    }
+  }
+}

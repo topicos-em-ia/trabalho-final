@@ -1,0 +1,32 @@
+{
+  "modelos": {
+    "professor": "Qwen/Qwen2.5-3B",
+    "aluno": "Qwen/Qwen2.5-1.5B-Instruct"
+  },
+  "metricas": {
+    "professor": {
+      "entropia_cruzada": 1.505,
+      "perplexidade": 4.5,
+      "acuracia_tokens": 68.08
+    },
+    "aluno_antes": {
+      "entropia_cruzada": 1.7022,
+      "perplexidade": 5.49,
+      "acuracia_tokens": 65.65
+    },
+    "aluno_depois": {
+      "entropia_cruzada": 1.4434,
+      "perplexidade": 4.23,
+      "acuracia_tokens": 68.63
+    }
+  },
+  "variacao_aluno": {
+    "delta_entropia_cruzada": -0.2588,
+    "delta_perplexidade": -1.26,
+    "delta_acuracia_tokens": 2.98
+  },
+  "gap_vs_professor": {
+    "perplexidade": -0.27
+  },
+  "transferencia_de_conhecimento": "SIM — Perplexidade reduziu 23.0%"
+}

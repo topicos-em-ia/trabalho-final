@@ -1,0 +1,55 @@
+\section{Considerações Finais}
+\label{sec:consideracoes}
+
+Este relatório documentou as seis questões do trabalho final sobre adaptação de
+modelos de linguagem ao domínio público piauiense, das técnicas de treinamento
+(pré-treino, SFT e QLoRA) às de compressão, recuperação e segurança (destilação, RAG
+e \textit{guardrails}), sempre com avaliação estruturada antes e depois de cada
+intervenção.
+
+A Questão 01 confirmou sua hipótese de forma robusta: o pré-treino continuado sobre
+71.431 documentos do DOMPI-2025 reduziu a perplexidade de 21,78 para 2,09 e elevou a
+acurácia de previsão de tokens de 42,25\% para 82,03\%, sem \textit{overfitting}. O
+\textit{benchmark} de 25 perguntas, respondido pelos dois modelos, mostrou que o
+ganho vai além do estilo: o modelo treinado passou a acertar fatos exatos do corpus,
+como CNPJs e CEPs de prefeituras, saindo de zero acertos exatos para seis.
+
+A Questão 02 demonstrou o ajuste fino supervisionado com um pipeline de dados
+inteiramente programático, que transformou 13.762 registros ruidosos do docentesDC
+em 1.977 pares de instrução verificáveis por construção. O treino reduziu a
+perplexidade sobre os tokens de resposta em 48,6\% e fez o modelo responder
+corretamente fatos que antes desconhecia, com o episódio de \textit{overfitting} na
+terceira época neutralizado pela seleção automática do melhor \textit{checkpoint}.
+
+A Questão 03 evidenciou o argumento central da adaptação eficiente: com 0,44\% dos
+parâmetros e 1,77~GB de memória, o QLoRA superou a perplexidade do ajuste fino
+completo, ao custo de menor retenção factual no modelo de 0,5 bilhão. O experimento
+adicional com o \texttt{Qwen2.5-1.5B} quantizado obteve o melhor resultado geral do
+pós-treino (perplexidade 4,75), sugerindo que a combinação de escala com adaptação
+eficiente é o melhor uso de um orçamento fixo de memória.
+
+A Questão 04 aplicou destilação por \textit{Chain-of-Thought} de um professor
+\texttt{Qwen2.5-3B} para um aluno \texttt{Qwen2.5-1.5B}, confirmando a transferência
+de conhecimento nas métricas quantitativas (perplexidade 22,9\% menor), mas revelando,
+pela avaliação semântica com \textit{LLM-as-Judge}, que menor perplexidade não implica
+respostas mais confiáveis, um alerta contra conclusões baseadas apenas em
+correspondência textual.
+
+A Questão 05 construiu uma aplicação de RAG do tipo \textit{Standard} sobre o
+docentesDC, avaliada pelo \textit{framework} Ragas em 30 perguntas. Ainda que as
+pontuações absolutas tenham sido limitadas por lacunas do \textit{benchmark} e por uma
+discrepância de metadados na avaliação, a comparação qualitativa demonstrou o valor da
+recuperação: com contexto, o sistema deixa de alucinar e passa a citar o material real
+ou a admitir honestamente a ausência do dado.
+
+A Questão 06 adicionou uma camada de \textit{guardrails} ao modelo pós-treinado na
+Questão 02 e mediu um grau de proteção elevado: 100\% das ameaças bloqueadas com
+apenas 5\% de falsos positivos e 95\% de disponibilidade, endereçando na prática o
+dilema entre utilidade e segurança.
+
+Como trabalhos futuros, pretende-se integrar as peças desenvolvidas em um único
+assistente para o domínio piauiense, combinando um modelo adaptado, recuperação de
+contexto e camada de proteção; ampliar o dataset de destilação e avaliá-lo fora da
+distribuição de treino; adotar recuperação hierárquica e saneamento do
+\textit{benchmark} no RAG; e substituir os trilhos por \textit{regex} dos
+\textit{guardrails} por classificadores semânticos.

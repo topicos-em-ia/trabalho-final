@@ -1,43 +1,30 @@
-% Relatorio - Topicos em IA (UFPI - CCN - DC) - Questoes 01, 02 e 03.
-% Classe article, fonte Times, margens ABNT, citacoes abntex2cite (autor-data).
-% Compile com: ./compile.sh   ou   make build
+\documentclass[12pt]{article}
 
-\documentclass[12pt,a4paper]{article}
+\usepackage{sbc-template}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[brazil]{babel}
-\usepackage{mathptmx}
-\usepackage[top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
-\usepackage{indentfirst}
-\usepackage{setspace}
+
+\usepackage{amsmath}
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{array}
-\usepackage{ragged2e}
-\usepackage{amsmath}
-\usepackage{amssymb}
 \usepackage{enumitem}
 \usepackage{listings}
 \usepackage{xcolor}
-\usepackage{microtype}
 \usepackage{csquotes}
-\usepackage{titlesec}
-\usepackage{fancyhdr}
+\usepackage{microtype}
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=black,citecolor=blue]{hyperref}
-\usepackage[alf]{abntex2cite}
 
 \graphicspath{{figures/}}
-
-\onehalfspacing
-\setlength{\parindent}{1.25cm}
 \renewcommand{\arraystretch}{1.3}
-
-\titleformat{\section}{\normalfont\bfseries}{\thesection.}{0.5em}{\MakeUppercase}
-\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{0.5em}{}
-
 \pagestyle{plain}
+\sloppy
 
 \definecolor{cinzacodigo}{gray}{0.95}
 \definecolor{comentario}{rgb}{0.30,0.45,0.30}
@@ -61,11 +48,24 @@
     {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ô}{{\^O}}1 {Õ}{{\~O}}1 {Ú}{{\'U}}1 {Ç}{{\c C}}1,
 }
 
+\title{Pré-Treino, Pós-Treino, Destilação, RAG e Guardrails de Modelos de Linguagem para o Domínio Público Piauiense:\\ Relatório das Questões 01 a 06}
+
+\author{Allycia, Heverton, Izaías, Oscar\inst{1}}
+
+\address{Departamento de Computação, Centro de Ciências da Natureza\\
+  Universidade Federal do Piauí (UFPI), Teresina, PI\\[4pt]
+  Disciplina: Tópicos em Inteligência Artificial.\\
+  Professor: Raimundo Santos Moura.\\
+  Período 2026.1
+}
+
 \begin{document}
 
-\input{sections/00-capa}
+\maketitle
 
-\newpage
+\begin{resumo}
+  Este relatório reúne as seis questões do trabalho final sobre adaptação de modelos de linguagem ao domínio público piauiense. Nas três primeiras, todas conduzidas sobre o Qwen2.5-0.5B em uma única sessão de GPU T4 no Kaggle: o pré-treinamento continuado sobre 71.431 documentos do Diário Oficial dos Municípios do Piauí (DOMPI-2025) reduziu a perplexidade de 21,78 para 2,09 e a acurácia de previsão de tokens de 42,25\% para 82,03\% (Questão 01); um ajuste fino supervisionado completo com 1.977 pares de instrução gerados a partir do dataset docentesDC reduziu a perplexidade sobre os tokens de resposta de 14,57 para 7,49 (Questão 02); e o mesmo experimento com QLoRA atualizou apenas 0,44\% dos parâmetros atingindo perplexidade 6,40 com 5,5 vezes menos memória (Questão 03), com um experimento adicional no Qwen2.5-1.5B quantizado obtendo o melhor pós-treino (perplexidade 4,75). As três últimas questões estendem o estudo: a destilação por \textit{Chain-of-Thought} de um professor Qwen2.5-3B para um aluno Qwen2.5-1.5B reduziu a perplexidade do aluno em 22,9\%, mas revelou divergência entre métricas automáticas e semânticas (Questão 04); uma aplicação de RAG sobre o docentesDC, avaliada com o \textit{framework} Ragas em 30 perguntas, mostrou redução de alucinações apesar de pontuações limitadas por lacunas do corpus (Questão 05); e uma camada de \textit{guardrails} sobre o modelo da Questão 02 bloqueou 100\% das ameaças de um \textit{benchmark} de 30 perguntas com apenas 5\% de falsos positivos (Questão 06).
+\end{resumo}
 
 \input{sections/01-introducao}
 \input{sections/02-fundamentacao}
@@ -73,10 +73,13 @@
 \input{sections/04-questao01}
 \input{sections/05-questao02}
 \input{sections/06-questao03}
-\input{sections/07-discussao}
-\input{sections/08-consideracoes}
+\input{sections/07-questao04}
+\input{sections/08-questao05}
+\input{sections/09-questao06}
+\input{sections/10-discussao}
+\input{sections/11-consideracoes}
 
-\bibliographystyle{abntex2-alf}
+\bibliographystyle{sbc}
 \bibliography{refs}
 
 \end{document}

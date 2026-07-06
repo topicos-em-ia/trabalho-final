@@ -1,0 +1,283 @@
+{
+  "modelo": "Qwen/Qwen2.5-0.5B",
+  "dataset": "vickminari/docentesDC",
+  "n_treino": 1728,
+  "n_avaliacao": 168,
+  "hiperparametros": {
+    "epocas": 3,
+    "micro_batch": 2,
+    "grad_accum": 8,
+    "batch_efetivo": 16,
+    "learning_rate": 5e-05,
+    "max_length": 256,
+    "mascara_loss": true
+  },
+  "pipeline": {
+    "brutos": 13762,
+    "apos_limpeza_e_tamanho": 13297,
+    "apos_dedup": 11313,
+    "portugues": 7119,
+    "ingles": 2721,
+    "codigo": 1473,
+    "apos_amostragem": 3345,
+    "pares_gerados": 1977
+  },
+  "tipos_pares": {
+    "A": 700,
+    "B": 500,
+    "C": 377,
+    "D": 200,
+    "E": 200
+  },
+  "metricas_antes": {
+    "entropia_cruzada": 2.6793,
+    "perplexidade": 14.57,
+    "acuracia_tokens": 51.28
+  },
+  "metricas_depois": {
+    "entropia_cruzada": 2.0136,
+    "perplexidade": 7.49,
+    "acuracia_tokens": 63.84
+  },
+  "delta": {
+    "entropia_cruzada": -0.6657,
+    "perplexidade": -7.08,
+    "acuracia_tokens_pp": 12.56
+  },
+  "treino": {
+    "tempo_s": 669.8,
+    "vram_pico_gb": 9.77,
+    "loss_final": 1.1201,
+    "params_treinaveis": 494032768,
+    "params_totais": 494032768
+  },
+  "qualitativa": [
+    {
+      "id": 1,
+      "tipo": "D",
+      "instruction": "Quem é o professor com mais material no dataset docentesDC?",
+      "referencia": "Raimundo Santos Moura",
+      "resposta_antes": "O professor com mais material no dataset docentesDC é o professor que possui mais materiais, sendo ele o professor com mais materiais no dataset docentesDC.",
+      "resposta_depois": "O professor com mais material no dataset docentesDC é Raimundo Santos Moura."
+    },
+    {
+      "id": 2,
+      "tipo": "D",
+      "instruction": "Cite três professores do Departamento de Computação da UFPI presentes no dataset docentesDC.",
+      "referencia": "Qualquer trio de: Andre Castelo Branco Soares, Antonio Costa De Oliveira, Antonio Helson Mineiro Soares, Armando Soares Sousa, Carlos Andre Batista De Carvalho, Erico Meneses Leao, Flavio Ferry De Oliveira Moreira, Glauber Dias Goncalves, Guilherme Amaral Avelino, Ivan Saraiva Silva, Jose Rodrigues Torres Neto, Laurindo De Sousa Britto Neto, Luiz Claudio Demes Da Mata Sousa, Pedro De Alcantara Dos Santos Neto, Raimundo Santos Moura, Rodrigo De Melo Souza Veras, Rosianni De Oliveira Cruz Fortes, Vinicius Ponte Machado, Weslley Emmanuel Martins Lima",
+      "resposta_antes": "1. **Professores do Departamento de Computação da UFPI:**\n   - **Professora A:** Professora de Computação e Engenharia de Computação (CEC) da UFPI.\n   - **Professora B:** Professora de Computação e Engenharia de Computação (CEC) da UFPI.\n   - **Professora C:** Professora de Computação e",
+      "resposta_depois": "Três professores presentes no dataset docentesDC são Rodrigo De Melo Souza Veras, Armando Soares Sousa e Weslley Emmanuel Martins Lima."
+    },
+    {
+      "id": 3,
+      "tipo": "D",
+      "instruction": "Quantos professores compõem o dataset docentesDC e de qual departamento eles são?",
+      "referencia": "19 professores do Departamento de Computação da UFPI",
+      "resposta_antes": "Aqui está a resposta:\n\n```python\n# Importando a biblioteca pandas\nimport pandas as pd\n\n# Criação do DataFrame\ndf = pd.read_csv('docentesDC.csv')\n\n# Exibindo os primeiros 5 registros do DataFrame\nprint(df.head())\n\n# Exibindo os primeiros 5 registros do DataFrame\nprint(df.head())\n\n# Exibindo os primeiros 5 registros do DataFrame\nprint(df.head",
+      "resposta_depois": "O dataset docentesDC reúne materiais de 19 professores do Departamento de Computação da UFPI."
+    },
+    {
+      "id": 4,
+      "tipo": "D",
+      "instruction": "Quais professores do DC/UFPI possuem materiais sobre Arquitetura de Computadores?",
+      "referencia": "Andre Castelo Branco Soares, Antonio Costa De Oliveira, Antonio Helson Mineiro Soares, Armando Soares Sousa",
+      "resposta_antes": "Aqui estão os nomes dos professores que possuem materiais sobre Arquitetura de Computadores:\n\n1. **Prof. Dr. João Paulo de Souza**: Professor da Universidade Federal de Pernambuco (UFPE) e autor do livro \"Arquitetura de Computadores: Uma introdução\".\n2. **Prof. Dr. Luiz Gustavo de Oliveira**: Professor da Universidade Federal de Pernamb",
+      "resposta_depois": "Possuem materiais sobre Arquitetura de Computadores os professores Andre Castelo Branco Soares, Armando Soares Sousa, Carlos Andre Batista De Carvalho, Erico Meneses Leao."
+    },
+    {
+      "id": 5,
+      "tipo": "A",
+      "instruction": "Qual professor do Departamento de Computação da UFPI é o autor do material a seguir?",
+      "referencia": "Erico Meneses Leao",
+      "resposta_antes": "The professor is the author of the material.",
+      "resposta_depois": "Este material pertence ao professor Erico Meneses Leao."
+    },
+    {
+      "id": 6,
+      "tipo": "A",
+      "instruction": "Identifique o docente do DC/UFPI responsável por este trecho de material.",
+      "referencia": "Ivan Saraiva Silva",
+      "resposta_antes": "The instruction is a load instruction that loads the value from memory address 0x00000000 into the register r1. The load instruction is followed by a store instruction that stores the value from memory address 0x00000000 into the register r1. The store instruction is followed by a load instruction that loads the value from memory address 0x00000000",
+      "resposta_depois": "Este material pertence ao professor Ivan Saraiva Silva."
+    },
+    {
+      "id": 7,
+      "tipo": "E",
+      "instruction": "A qual professor pertence este material de aula com código?",
+      "referencia": "Andre Castelo Branco Soares",
+      "resposta_antes": "#include\n#include\nint main(){\n//printf(\"valor: %d\", );\n/* declara‹o de uma vari‡vel inteira */\nint a;\n/* declara‹o de uma vari‡vel do tipo ponteiro de inteiros */\nint *p;\nprintf(\"valor do ponteiro p: %p\\n\", p);\n/* atribui‹o inicial para a vari‡vel inteira */\na = 5;",
+      "resposta_depois": "Este material com código pertence ao professor Rosianni De Oliveira Cruz Fortes."
+    },
+    {
+      "id": 8,
+      "tipo": "C",
+      "instruction": "Sobre qual assunto trata este trecho do material do professor Vinicius Ponte Machado?",
+      "referencia": "Banco de Dados",
+      "resposta_antes": "O professor Vinicius Ponte Machado trata sobre a criação de tuplas nomeadas e a utilização de conjuntos.",
+      "resposta_depois": "O trecho trata de Engenharia de Software, tema abordado no material do professor Vinicius Ponte Machado."
+    },
+    {
+      "id": 9,
+      "tipo": "C",
+      "instruction": "Qual é o tema abordado neste trecho do material do professor Andre Castelo Branco Soares?",
+      "referencia": "Redes de Computadores",
+      "resposta_antes": "O tema abordado neste trecho do material do professor Andre Castelo Branco Soares é a IoT (Internet of Things). Ele aborda a tecnologia de comunicação e a comunicação de dados que permite a interação entre dispositivos e sistemas. O significado e funcionalidade dos principais blocos relacionados à IoT são apresentados, como identificação, comunicação e serviços/semântica. A discussão",
+      "resposta_depois": "O trecho trata de Redes de Computadores, tema abordado no material do professor Andre Castelo Branco Soares."
+    },
+    {
+      "id": 10,
+      "tipo": "B",
+      "instruction": "Continue o trecho a seguir do material do professor Raimundo Santos Moura.",
+      "referencia": "resultante. Emquantosnósvocêtocou(ouseja, quantascomparaçõesvocêfez) para construiraBST?2.Suponha que as chaves de uma BST são números inteiros entre 1 e10.Quais das sequências abaixo não podem ser as sequências de chaves examinadas em uma busca pela chave5?a.10, 9, 8, 7, 6, 5 b.4, 10, 8, 6, 5 c.1, 10, 2, 9, 3, 8, 4, 7, 6, 5 d.2, 7, 3, 8, 4, 5 e.1, 2, 10, 4, 8, 5 3.Desenhe as seis BSTs que",
+      "resposta_antes": "```python\nclass BST:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    def insert(self, value):\n        if value < self.value:\n            if self.left is None:\n                self.left = BST(value)\n            else:\n                self.left.insert(value)\n        elif value > self.value:\n            if self.right is None:\n                self.right = BST(value",
+      "resposta_depois": "importante! 135 25/07/2023 16 BST: Exercícios2.Importante!Insiraas chavesE A S Y Q U E S T I o n,nestaordem,umaBST inicialmentevazia. Associevalor icom a i-ésimachave. Desenhea BST importante! 136 25/0"
+    }
+  ],
+  "log_history": [
+    {
+      "loss": 2.182615280151367,
+      "grad_norm": 16.67203712463379,
+      "learning_rate": 4.999476426280588e-05,
+      "epoch": 0.18518518518518517,
+      "step": 20
+    },
+    {
+      "loss": 1.8725881576538086,
+      "grad_norm": 11.978989601135254,
+      "learning_rate": 4.936912504137257e-05,
+      "epoch": 0.37037037037037035,
+      "step": 40
+    },
+    {
+      "loss": 1.779900360107422,
+      "grad_norm": 11.940861701965332,
+      "learning_rate": 4.772628561609022e-05,
+      "epoch": 0.5555555555555556,
+      "step": 60
+    },
+    {
+      "loss": 1.9345111846923828,
+      "grad_norm": 11.908487319946289,
+      "learning_rate": 4.513482032417656e-05,
+      "epoch": 0.7407407407407407,
+      "step": 80
+    },
+    {
+      "loss": 1.9211000442504882,
+      "grad_norm": 12.744138717651367,
+      "learning_rate": 4.1702900428191374e-05,
+      "epoch": 0.9259259259259259,
+      "step": 100
+    },
+    {
+      "eval_loss": 0.95281583070755,
+      "eval_runtime": 5.0023,
+      "eval_samples_per_second": 33.585,
+      "eval_steps_per_second": 16.792,
+      "epoch": 1.0,
+      "step": 108
+    },
+    {
+      "loss": 1.3927257537841797,
+      "grad_norm": 10.751224517822266,
+      "learning_rate": 3.757377890138927e-05,
+      "epoch": 1.1111111111111112,
+      "step": 120
+    },
+    {
+      "loss": 1.092421817779541,
+      "grad_norm": 11.570174217224121,
+      "learning_rate": 3.2919810855069864e-05,
+      "epoch": 1.2962962962962963,
+      "step": 140
+    },
+    {
+      "loss": 0.9890375137329102,
+      "grad_norm": 10.282729148864746,
+      "learning_rate": 2.7935259203366777e-05,
+      "epoch": 1.4814814814814814,
+      "step": 160
+    },
+    {
+      "loss": 1.018185520172119,
+      "grad_norm": 10.02821159362793,
+      "learning_rate": 2.282818586674699e-05,
+      "epoch": 1.6666666666666665,
+      "step": 180
+    },
+    {
+      "loss": 0.9927852630615235,
+      "grad_norm": 10.274856567382812,
+      "learning_rate": 1.781176698634246e-05,
+      "epoch": 1.8518518518518519,
+      "step": 200
+    },
+    {
+      "eval_loss": 0.9142010807991028,
+      "eval_runtime": 5.0025,
+      "eval_samples_per_second": 33.583,
+      "eval_steps_per_second": 16.792,
+      "epoch": 2.0,
+      "step": 216
+    },
+    {
+      "loss": 0.8554115295410156,
+      "grad_norm": 7.377711772918701,
+      "learning_rate": 1.3095394663801347e-05,
+      "epoch": 2.037037037037037,
+      "step": 220
+    },
+    {
+      "loss": 0.4143134593963623,
+      "grad_norm": 7.604446887969971,
+      "learning_rate": 8.875936652059872e-06,
+      "epoch": 2.2222222222222223,
+      "step": 240
+    },
+    {
+      "loss": 0.36446404457092285,
+      "grad_norm": 6.867494583129883,
+      "learning_rate": 5.329518829350788e-06,
+      "epoch": 2.4074074074074074,
+      "step": 260
+    },
+    {
+      "loss": 0.43065929412841797,
+      "grad_norm": 5.850223064422607,
+      "learning_rate": 2.6041734670859493e-06,
+      "epoch": 2.5925925925925926,
+      "step": 280
+    },
+    {
+      "loss": 0.4399165153503418,
+      "grad_norm": 9.20001220703125,
+      "learning_rate": 8.136601628441876e-07,
+      "epoch": 2.7777777777777777,
+      "step": 300
+    },
+    {
+      "loss": 0.4116818904876709,
+      "grad_norm": 8.539496421813965,
+      "learning_rate": 3.271736107015033e-08,
+      "epoch": 2.962962962962963,
+      "step": 320
+    },
+    {
+      "eval_loss": 0.9919784069061279,
+      "eval_runtime": 4.9905,
+      "eval_samples_per_second": 33.664,
+      "eval_steps_per_second": 16.832,
+      "epoch": 3.0,
+      "step": 324
+    },
+    {
+      "train_runtime": 669.75,
+      "train_samples_per_second": 7.74,
+      "train_steps_per_second": 0.484,
+      "total_flos": 2849808096165888.0,
+      "train_loss": 1.120061911550569,
+      "epoch": 3.0,
+      "step": 324
+    }
+  ]
+}

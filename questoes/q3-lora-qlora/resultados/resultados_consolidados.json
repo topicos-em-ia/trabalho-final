@@ -1,0 +1,58 @@
+{
+  "modo_teste": false,
+  "tempo_total_h": 5.56,
+  "resumo": [
+    {
+      "experimento": "Q1 Pré-treino",
+      "antes": {
+        "entropia_cruzada": 3.0812,
+        "perplexidade": 21.78,
+        "acuracia_tokens": 42.25
+      },
+      "depois": {
+        "entropia_cruzada": 0.7381,
+        "perplexidade": 2.09,
+        "acuracia_tokens": 82.03
+      }
+    },
+    {
+      "experimento": "Q2 Full SFT",
+      "antes": {
+        "entropia_cruzada": 2.6793,
+        "perplexidade": 14.57,
+        "acuracia_tokens": 51.28
+      },
+      "depois": {
+        "entropia_cruzada": 2.0136,
+        "perplexidade": 7.49,
+        "acuracia_tokens": 63.84
+      }
+    },
+    {
+      "experimento": "Q3 QLoRA",
+      "antes": {
+        "entropia_cruzada": 2.7897,
+        "perplexidade": 16.28,
+        "acuracia_tokens": 48.78
+      },
+      "depois": {
+        "entropia_cruzada": 1.8556,
+        "perplexidade": 6.4,
+        "acuracia_tokens": 64.37
+      }
+    },
+    {
+      "experimento": "Bônus 1.5B QLoRA",
+      "antes": {
+        "entropia_cruzada": 2.3303,
+        "perplexidade": 10.28,
+        "acuracia_tokens": 55.82
+      },
+      "depois": {
+        "entropia_cruzada": 1.5576,
+        "perplexidade": 4.75,
+        "acuracia_tokens": 68.44
+      }
+    }
+  ]
+}

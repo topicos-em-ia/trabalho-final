@@ -1,0 +1,381 @@
+{
+  "modelo": "Qwen/Qwen2.5-0.5B",
+  "dataset": "gutoportelaa/DOMPI-2025",
+  "n_treino": 71431,
+  "n_avaliacao": 1000,
+  "hiperparametros": {
+    "epocas": 2,
+    "micro_batch": 4,
+    "grad_accum": 8,
+    "batch_efetivo": 32,
+    "learning_rate": 5e-05,
+    "max_length": 256
+  },
+  "metricas_antes": {
+    "entropia_cruzada": 3.0812,
+    "perplexidade": 21.78,
+    "acuracia_tokens": 42.25
+  },
+  "metricas_depois": {
+    "entropia_cruzada": 0.7381,
+    "perplexidade": 2.09,
+    "acuracia_tokens": 82.03
+  },
+  "delta": {
+    "entropia_cruzada": -2.3431,
+    "perplexidade": -19.69,
+    "acuracia_tokens_pp": 39.78
+  },
+  "treino": {
+    "tempo_s": 15810.0,
+    "vram_pico_gb": 10.6,
+    "loss_final": 0.8943
+  },
+  "geracoes_livres": {
+    "antes": {
+      "O Prefeito Municipal, no uso de suas atribuições legais,": "O Prefeito Municipal, no uso de suas atribuições legais, promoveu a realização de um sorteio para o prêmio do Imposto sobre as receitas brutas (IRBR) 2018, que será divulgado nesta quarta-feira (24). O Prêmio da Receita Federal é concedido ao cidadão com mais contribuição fiscal na modalidade “Praça ou Indicador” e",
+      "PORTARIA Nº 001/2025. Nomeia servidor para o cargo de": "PORTARIA Nº 001/2025. Nomeia servidor para o cargo de Secretário-Geral da Fundação Oswaldo Cruz (Fiocruz), que assumirá os principais atribuições, como a gestão da área de pesquisa e desenvolvimento da Fundação.\nOs processos de seleção das candidatas devem ser encaminhados pelo Departamento Central de Planejamento do Fiocruz até 17 de dezembro de 2025",
+      "EXTRATO DE CONTRATO. Contratante: Prefeitura Municipal de": "EXTRATO DE CONTRATO. Contratante: Prefeitura Municipal de São Pedro, do Distrito Federal, e do Município de Ipiranga. Titular: Raimundo Cunha da Silva, da União.\n23/09/2014 22:56\nO Tribunal Regional Federal da 4ª Região (TRF-4) decidiu que a decisão do Juízo Criminal do Dist"
+    },
+    "depois": {
+      "O Prefeito Municipal, no uso de suas atribuições legais,": "O Prefeito Municipal, no uso de suas atribuições legais, e com fulcro na Lei n 14.133/2021\ne demais norma pertinentes, REs0LVE, apos exame criterioso de documentacao e acatando a\nopina da Comissao Permanente de Licitação, RAtiFicAR o procedimento de Dispensa de Licitagao",
+      "PORTARIA Nº 001/2025. Nomeia servidor para o cargo de": "PORTARIA Nº 001/2025. Nomeia servidor para o cargo de Diretor do\nDepartamento de Esportes e Lazer no Município de Caldeirao Grande do Piauí-PI.\nO PREFEITO DO Município DE CALDEIRAO GRANDE DO\nPiauí, ESTADO DO Piauí, DOUGLAS FILIPE SOUSA GONCALVES, nO uSO\ndas atribu",
+      "EXTRATO DE CONTRATO. Contratante: Prefeitura Municipal de": "EXTRATO DE CONTRATO. Contratante: Prefeitura Municipal de Sao Joao do Arraial-PI,\nCNPJ n 01.612.609/0001-84. Contratado: A. C. GOMES COMERCIO DE\nMATERIAIS ESPORTIVOS E CONSTRUCAO LTDA, CNPJ no 37.505.217"
+    }
+  },
+  "log_history": [
+    {
+      "loss": 2.0457992553710938,
+      "grad_norm": 4.2276458740234375,
+      "learning_rate": 2.2098214285714286e-05,
+      "epoch": 0.044797849703214244,
+      "step": 100
+    },
+    {
+      "loss": 1.501855926513672,
+      "grad_norm": 4.041065216064453,
+      "learning_rate": 4.4419642857142854e-05,
+      "epoch": 0.08959569940642849,
+      "step": 200
+    },
+    {
+      "loss": 1.3968818664550782,
+      "grad_norm": 2.981288433074951,
+      "learning_rate": 4.996144512517533e-05,
+      "epoch": 0.13439354910964274,
+      "step": 300
+    },
+    {
+      "loss": 1.2859718322753906,
+      "grad_norm": 2.6402640342712402,
+      "learning_rate": 4.9790329884378355e-05,
+      "epoch": 0.17919139881285698,
+      "step": 400
+    },
+    {
+      "loss": 1.2381669616699218,
+      "grad_norm": 2.4494011402130127,
+      "learning_rate": 4.948330752232873e-05,
+      "epoch": 0.22398924851607122,
+      "step": 500
+    },
+    {
+      "loss": 1.183156509399414,
+      "grad_norm": 2.210580348968506,
+      "learning_rate": 4.9042061216522705e-05,
+      "epoch": 0.2687870982192855,
+      "step": 600
+    },
+    {
+      "loss": 1.1641513061523439,
+      "grad_norm": 2.312436819076538,
+      "learning_rate": 4.8469009995487354e-05,
+      "epoch": 0.31358494792249975,
+      "step": 700
+    },
+    {
+      "loss": 1.1324990844726563,
+      "grad_norm": 2.172337770462036,
+      "learning_rate": 4.776729547702866e-05,
+      "epoch": 0.35838279762571396,
+      "step": 800
+    },
+    {
+      "loss": 1.1052367401123047,
+      "grad_norm": 2.092278003692627,
+      "learning_rate": 4.6940764645054856e-05,
+      "epoch": 0.4031806473289282,
+      "step": 900
+    },
+    {
+      "loss": 1.0583836364746093,
+      "grad_norm": 1.8725084066390991,
+      "learning_rate": 4.599394875939686e-05,
+      "epoch": 0.44797849703214243,
+      "step": 1000
+    },
+    {
+      "loss": 1.041985092163086,
+      "grad_norm": 2.2277560234069824,
+      "learning_rate": 4.4932038514247756e-05,
+      "epoch": 0.4927763467353567,
+      "step": 1100
+    },
+    {
+      "loss": 1.0264469146728517,
+      "grad_norm": 1.915991187095642,
+      "learning_rate": 4.3760855581409446e-05,
+      "epoch": 0.537574196438571,
+      "step": 1200
+    },
+    {
+      "loss": 1.0089834594726563,
+      "grad_norm": 1.9411427974700928,
+      "learning_rate": 4.248682069435357e-05,
+      "epoch": 0.5823720461417852,
+      "step": 1300
+    },
+    {
+      "loss": 1.0056169891357423,
+      "grad_norm": 1.9035807847976685,
+      "learning_rate": 4.111691844806871e-05,
+      "epoch": 0.6271698958449995,
+      "step": 1400
+    },
+    {
+      "loss": 0.961297378540039,
+      "grad_norm": 2.0411808490753174,
+      "learning_rate": 3.965865900766997e-05,
+      "epoch": 0.6719677455482137,
+      "step": 1500
+    },
+    {
+      "loss": 0.9602385711669922,
+      "grad_norm": 1.9635175466537476,
+      "learning_rate": 3.8120036935694806e-05,
+      "epoch": 0.7167655952514279,
+      "step": 1600
+    },
+    {
+      "loss": 0.9259956359863282,
+      "grad_norm": 1.9176946878433228,
+      "learning_rate": 3.6509487363804335e-05,
+      "epoch": 0.7615634449546422,
+      "step": 1700
+    },
+    {
+      "loss": 0.9283485412597656,
+      "grad_norm": 2.0326247215270996,
+      "learning_rate": 3.4835839749168817e-05,
+      "epoch": 0.8063612946578564,
+      "step": 1800
+    },
+    {
+      "loss": 0.8974420166015625,
+      "grad_norm": 1.9216132164001465,
+      "learning_rate": 3.310826946905661e-05,
+      "epoch": 0.8511591443610707,
+      "step": 1900
+    },
+    {
+      "loss": 0.8964506530761719,
+      "grad_norm": 1.799297571182251,
+      "learning_rate": 3.1336247518998095e-05,
+      "epoch": 0.8959569940642849,
+      "step": 2000
+    },
+    {
+      "loss": 0.8816876983642579,
+      "grad_norm": 1.8145654201507568,
+      "learning_rate": 2.9529488590292365e-05,
+      "epoch": 0.9407548437674992,
+      "step": 2100
+    },
+    {
+      "loss": 0.8791650390625,
+      "grad_norm": 2.0293097496032715,
+      "learning_rate": 2.7697897811509432e-05,
+      "epoch": 0.9855526934707134,
+      "step": 2200
+    },
+    {
+      "eval_loss": 0.8423222899436951,
+      "eval_runtime": 30.75,
+      "eval_samples_per_second": 32.52,
+      "eval_steps_per_second": 8.13,
+      "epoch": 1.0,
+      "step": 2233
+    },
+    {
+      "loss": 0.768917465209961,
+      "grad_norm": 1.9329038858413696,
+      "learning_rate": 2.5851516445965197e-05,
+      "epoch": 1.0300145593011536,
+      "step": 2300
+    },
+    {
+      "loss": 0.7453607177734375,
+      "grad_norm": 1.9496045112609863,
+      "learning_rate": 2.4000466842869864e-05,
+      "epoch": 1.0748124090043678,
+      "step": 2400
+    },
+    {
+      "loss": 0.7190061950683594,
+      "grad_norm": 2.074241876602173,
+      "learning_rate": 2.2154896943942067e-05,
+      "epoch": 1.119610258707582,
+      "step": 2500
+    },
+    {
+      "loss": 0.7162540435791016,
+      "grad_norm": 1.9927401542663574,
+      "learning_rate": 2.032492464971818e-05,
+      "epoch": 1.1644081084107962,
+      "step": 2600
+    },
+    {
+      "loss": 0.7108345031738281,
+      "grad_norm": 2.115804672241211,
+      "learning_rate": 1.8520582350555245e-05,
+      "epoch": 1.2092059581140104,
+      "step": 2700
+    },
+    {
+      "loss": 0.6991417694091797,
+      "grad_norm": 1.8544591665267944,
+      "learning_rate": 1.6751761926423293e-05,
+      "epoch": 1.2540038078172246,
+      "step": 2800
+    },
+    {
+      "loss": 0.7040887451171876,
+      "grad_norm": 1.849660038948059,
+      "learning_rate": 1.5028160517012587e-05,
+      "epoch": 1.298801657520439,
+      "step": 2900
+    },
+    {
+      "loss": 0.6835742950439453,
+      "grad_norm": 1.9060099124908447,
+      "learning_rate": 1.3359227359458448e-05,
+      "epoch": 1.3435995072236533,
+      "step": 3000
+    },
+    {
+      "loss": 0.6845784759521485,
+      "grad_norm": 1.7822312116622925,
+      "learning_rate": 1.175411198513314e-05,
+      "epoch": 1.3883973569268675,
+      "step": 3100
+    },
+    {
+      "loss": 0.6903768157958985,
+      "grad_norm": 2.0513381958007812,
+      "learning_rate": 1.0221614059503835e-05,
+      "epoch": 1.4331952066300817,
+      "step": 3200
+    },
+    {
+      "loss": 0.6874260711669922,
+      "grad_norm": 1.9823572635650635,
+      "learning_rate": 8.770135140047542e-06,
+      "epoch": 1.477993056333296,
+      "step": 3300
+    },
+    {
+      "loss": 0.6792317962646485,
+      "grad_norm": 2.3053202629089355,
+      "learning_rate": 7.4076326166990535e-06,
+      "epoch": 1.5227909060365103,
+      "step": 3400
+    },
+    {
+      "loss": 0.6588228607177734,
+      "grad_norm": 2.1117098331451416,
+      "learning_rate": 6.141576087342377e-06,
+      "epoch": 1.5675887557397243,
+      "step": 3500
+    },
+    {
+      "loss": 0.6750972747802735,
+      "grad_norm": 1.9194176197052002,
+      "learning_rate": 4.978906407506667e-06,
+      "epoch": 1.6123866054429388,
+      "step": 3600
+    },
+    {
+      "loss": 0.6513424682617187,
+      "grad_norm": 1.9885622262954712,
+      "learning_rate": 3.925997638767204e-06,
+      "epoch": 1.657184455146153,
+      "step": 3700
+    },
+    {
+      "loss": 0.6383626937866211,
+      "grad_norm": 1.9443918466567993,
+      "learning_rate": 2.988622104460076e-06,
+      "epoch": 1.7019823048493672,
+      "step": 3800
+    },
+    {
+      "loss": 0.6376253509521485,
+      "grad_norm": 2.0831267833709717,
+      "learning_rate": 2.171918744284529e-06,
+      "epoch": 1.7467801545525816,
+      "step": 3900
+    },
+    {
+      "loss": 0.65623291015625,
+      "grad_norm": 2.087822675704956,
+      "learning_rate": 1.4803649412813202e-06,
+      "epoch": 1.7915780042557956,
+      "step": 4000
+    },
+    {
+      "loss": 0.6387409591674804,
+      "grad_norm": 1.6686739921569824,
+      "learning_rate": 9.177519756389585e-07,
+      "epoch": 1.83637585395901,
+      "step": 4100
+    },
+    {
+      "loss": 0.6406541442871094,
+      "grad_norm": 2.125898599624634,
+      "learning_rate": 4.871642398966592e-07,
+      "epoch": 1.8811737036622243,
+      "step": 4200
+    },
+    {
+      "loss": 0.6566246032714844,
+      "grad_norm": 2.011566162109375,
+      "learning_rate": 1.9096232949160632e-07,
+      "epoch": 1.9259715533654385,
+      "step": 4300
+    },
+    {
+      "loss": 0.6429129791259766,
+      "grad_norm": 2.0194225311279297,
+      "learning_rate": 3.0770101352708966e-08,
+      "epoch": 1.9707694030686527,
+      "step": 4400
+    },
+    {
+      "eval_loss": 0.7356498837471008,
+      "eval_runtime": 30.9469,
+      "eval_samples_per_second": 32.313,
+      "eval_steps_per_second": 8.078,
+      "epoch": 2.0,
+      "step": 4466
+    },
+    {
+      "train_runtime": 15810.0196,
+      "train_samples_per_second": 9.036,
+      "train_steps_per_second": 0.282,
+      "total_flos": 7.853574155757158e+16,
+      "train_loss": 0.8943145058371804,
+      "epoch": 2.0,
+      "step": 4466
+    }
+  ]
+}

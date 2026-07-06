@@ -1,0 +1,483 @@
+\documentclass[12pt, a4paper]{article}
+
+% ── Pacotes ───────────────────────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{mdframed}
+\usepackage{tcolorbox}
+\tcbuselibrary{most}
+
+\geometry{
+  top=2.5cm, bottom=2.5cm,
+  left=3cm, right=2cm
+}
+
+% ── Cores ─────────────────────────────────────────────────────────────────────
+\definecolor{ufpiblue}{RGB}{0, 51, 102}
+\definecolor{lightblue}{RGB}{230, 240, 255}
+\definecolor{lightgreen}{RGB}{220, 240, 220}
+\definecolor{lightred}{RGB}{255, 230, 230}
+\definecolor{lightyellow}{RGB}{255, 250, 220}
+\definecolor{codegray}{RGB}{245, 245, 245}
+\definecolor{successgreen}{RGB}{0, 128, 0}
+\definecolor{warningred}{RGB}{180, 0, 0}
+
+% ── Estilo de código ──────────────────────────────────────────────────────────
+\lstset{
+  backgroundcolor=\color{codegray},
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  rulecolor=\color{gray!40},
+  xleftmargin=1em,
+  xrightmargin=1em,
+  aboveskip=0.5em,
+  belowskip=0.5em
+}
+
+% ── Cabeçalho/rodapé ──────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textcolor{gray}{\footnotesize Questão 4 — Destilação de Conhecimento}}
+\lhead{\textcolor{gray}{\footnotesize UFPI -- Tópicos em IA -- 2026.1}}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Título de seções ──────────────────────────────────────────────────────────
+\titleformat{\section}{\large\bfseries\color{ufpiblue}}{}{0em}{\thesection\quad}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{ufpiblue!80}}{}{0em}{\thesubsection\quad}
+
+% ── Caixas coloridas ──────────────────────────────────────────────────────────
+\newtcolorbox{destaquebox}[1][]{
+  colback=lightblue, colframe=ufpiblue,
+  fonttitle=\bfseries\small, title=#1,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+\newtcolorbox{successbox}[1][]{
+  colback=lightgreen, colframe=successgreen!70,
+  fonttitle=\bfseries\small, title=#1,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+\newtcolorbox{exemplobox}[1][]{
+  colback=lightyellow, colframe=gray!50,
+  fonttitle=\bfseries\footnotesize\color{ufpiblue}, title=#1,
+  left=6pt, right=6pt, top=4pt, bottom=4pt,
+  fontupper=\footnotesize
+}
+\newtcolorbox{warningbox}[1][]{
+  colback=lightred, colframe=warningred!70,
+  fonttitle=\bfseries\small, title=#1,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\begin{document}
+% ═════════════════════════════════════════════════════════════════════════════
+
+% ── Capa ──────────────────────────────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{1cm}
+  {\large Questão 4 - Destilação de Conhecimento em Modelos de Linguagem}\\
+  \rule{\linewidth}{0.5pt}\\
+  \vspace{1.5cm}
+  \begin{tabular}{ll}
+    \textbf{Modelos}    & Qwen2.5-3B-Instruct (Professor) $\rightarrow$ Qwen2.5-1.5B-Instruct (Aluno) \\[0.3cm]
+    \textbf{Técnica}    & Chain-of-Thought Distillation + LoRA (SFTTrainer) \\[0.3cm]
+    \textbf{Dataset}    & DOMPI-2025 (Diários Oficiais dos Municípios do Piauí) \\[0.3cm]
+    \textbf{Benchmark}  & 100 perguntas sobre documentos municipais piauienses \\
+  \end{tabular}
+  \vfill
+\end{titlepage}
+
+% ── Sumário ───────────────────────────────────────────────────────────────────
+\newpage
+\newpage
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Introdução}
+% ═════════════════════════════════════════════════════════════════════════════
+
+
+A destilação de conhecimento (\textit{Knowledge Distillation}), proposta originalmente
+por \textit{Hinton et al.} (2015), é uma técnica que permite transferir o conhecimento
+de um modelo maior (professor) para um modelo menor (aluno), tornando o aluno capaz de
+aproximar o comportamento do professor com menos parâmetros e menor custo computacional.
+
+\subsection{LLMs Usados para Destilação}
+
+Modelos usados para a questão atual:
+
+\begin{itemize}
+  \item \textbf{Qwen2.5-3B $\rightarrow$ Qwen2.5-1.5B} -- escolha deste trabalho
+\end{itemize}
+
+A escolha de modelos da \textbf{mesma família} é recomendada pois compartilham o mesmo
+vocabulário e tokenizador, facilitando a destilação por logits e reduzindo problemas de
+incompatibilidade de distribuições.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Configuração Experimental}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Modelos}
+
+\begin{table}[H]
+\centering
+\caption{Modelos utilizados no experimento de destilação}
+\begin{tabular}{llrrr}
+\toprule
+\textbf{Papel} & \textbf{Modelo} & \textbf{Parâmetros} & \textbf{VRAM (fp16)} & \textbf{Quant.} \\
+\midrule
+Professor & Qwen/Qwen2.5-3B-Instruct & 3B & $\sim$6 GB & fp16 \\
+Aluno     & Qwen/Qwen2.5-1.5B-Instruct & 1.5B & $\sim$3 GB & fp16 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Ambos os modelos pertencem à família \textbf{Qwen2.5} (Alibaba Cloud), compartilhando
+a mesma arquitetura Transformer com RoPE, SwiGLU e GQA. A versão \texttt{-Instruct}
+foi escolhida por ter passado por ajuste fino supervisionado (SFT) e alinhamento por
+RLHF, sendo adequada para tarefas de perguntas e respostas sobre documentos.
+
+\subsection{Dataset Sintético}
+
+O dataset de destilação foi gerado sinteticamente a partir do corpus
+\textbf{DOMPI-2025}.
+
+\textbf{Processo de geração:}
+\begin{enumerate}
+  \item Seleção de 100 trechos representativos do corpus DOMPI-2025
+  \item Para cada trecho, o \textbf{professor} recebe um prompt solicitando raciocínio
+        passo a passo (\textit{Chain-of-Thought}) e resposta final em formato JSON
+  \item O resultado é salvo em \texttt{distillation\_dataset.jsonl} com os campos
+        \texttt{instruction}, \texttt{input}, \texttt{output}, \texttt{reasoning} e \texttt{answer}
+\end{enumerate}
+
+\begin{exemplobox}[Exemplo de entrada do dataset sintético]
+\textbf{Instrução:} Qual é o CEP da sede da Prefeitura de Aroazes?\\[0.3em]
+\textbf{Documento:} ESTADO DO Piauí Prefeitura Municipal DE AROAZES C.N.P.J.:
+06.554.984/0001-39 Av. 27 de Fevereiro, 691, Centro CEP: 64310-000\\[0.3em]
+\textbf{Reasoning (professor):} To find the CEP of the Aroazes City Hall, I will
+identify the relevant field in the document: `CEP: 64310-000'. The CEP is a
+Brazilian postal code format (XXXXX-XXX). Therefore, the answer is 64310-000.\\[0.3em]
+\textbf{Answer (professor):} 64310-000
+\end{exemplobox}
+
+\subsection{Técnica de Destilação: Chain-of-Thought Distillation}
+
+A abordagem utilizada segue o paradigma de \textbf{destilação por Chain-of-Thought
+(CoT)}, onde o aluno aprende não apenas as respostas finais do professor, mas também
+o raciocínio intermediário. Isso é distinto da destilação clássica por KL-Divergence
+de logits (Hinton et al., 2015) e se aproxima da abordagem de \textit{Instruction
+Tuning} com dados gerados por LLMs maiores.
+
+\subsection{Hiperparâmetros de Treinamento}
+
+\begin{table}[H]
+\centering
+\caption{Hiperparâmetros utilizados no fine-tuning do aluno}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parâmetro} & \textbf{Valor} \\
+\midrule
+Método de fine-tuning   & LoRA (Low-Rank Adaptation) \\
+Rank LoRA ($r$)         & 16 \\
+Alpha LoRA              & 32 \\
+Módulos alvo            & \texttt{q\_proj}, \texttt{v\_proj} \\
+Dropout LoRA            & 0.05 \\
+Épocas                  & 3 \\
+Batch efetivo           & 16 (2 $\times$ 8 grad. accum.) \\
+Learning rate           & $2 \times 10^{-4}$ \\
+Scheduler               & Linear com warmup \\
+Comprimento máximo      & 512 tokens \\
+Precisão                & fp16 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Hardware Utilizado}
+
+\begin{itemize}
+  \item \textbf{GPU:} NVIDIA GeForce RTX 4050 (6 GB VRAM)
+  \item \textbf{CPU:} Intel Core i5 13ª geração
+  \item \textbf{RAM:} 16 GB
+  \item \textbf{SO:} Windows 11 + Python 3.12
+\end{itemize}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Metodologia de Avaliação}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Avaliação Qualitativa: Benchmark de 100 Perguntas}
+
+O benchmark consiste em 100 pares \texttt{(instrução, contexto, resposta\_esperada)}
+extraídos do DOMPI-2025, cobrindo tipos de pergunta como:
+extração de CNPJ, endereços, valores de contrato, números de decreto, modalidades de
+licitação e obrigações legais.
+
+A avaliação de acerto usou correspondência textual normalizada:
+\begin{enumerate}
+  \item Normalização: minúsculas, remoção de pontuação e espaços extras
+  \item Critério 1 -- \textit{Substring}: gabarito contido na resposta ou vice-versa
+  \item Critério 2 -- \textit{Word Overlap}: $\geq 70\%$ das palavras do gabarito
+        presentes na resposta
+\end{enumerate}
+
+\subsection{Avaliação Complementar: LLM-as-Judge}
+
+Como complemento à métrica automática, as 100 respostas do aluno (antes e depois da
+destilação) foram também avaliadas por um \textbf{LLM juiz} (\textit{LLM-as-Judge},
+protocolo de \textit{Zheng et al.}, 2023), que recebeu a pergunta, o gabarito e a
+resposta do aluno, retornando \textbf{CORRETO}/\textbf{INCORRETO} com justificativa
+curta -- tolerando diferenças de formatação e redação, mas não contradições ou dados
+inventados (\textit{alucinações}).
+
+Essa abordagem é mais robusta que o \textit{substring matching}: reconhece respostas
+corretas com redação diferente do gabarito e, ao mesmo tempo, penaliza respostas que
+contêm o trecho certo mas vêm acompanhadas de alucinações -- casos em que a métrica
+automática erraria em direções opostas.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Resultados}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Métricas Quantitativas}
+
+\begin{table}[H]
+\centering
+\caption{Comparação das métricas quantitativas antes e depois da destilação}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Modelo} & \textbf{Perplexidade} & \textbf{Entropia Cruzada} & \textbf{Acurácia Tokens} \\
+\midrule
+\rowcolor{lightblue}
+Professor (3B)    & 4,50 & 1,5050 & 68,08\% \\
+Aluno ANTES (1.5B) & 5,49 & 1,7022 & 65,65\% \\
+\rowcolor{lightgreen}
+Aluno DEPOIS (1.5B) & \textbf{4,23} & \textbf{1,4434} & \textbf{68,65\%} \\
+\midrule
+\multicolumn{4}{l}{\textit{Variação do aluno (antes $\rightarrow$ depois):}} \\
+$\Delta$ & $-1,26\ (-22{,}9\%)$ & $-0,2588\ (-15{,}2\%)$ & $+2,98$ pp \\
+\multicolumn{4}{l}{\textit{Gap aluno-depois vs. professor:}} \\
+$\Delta$ & $-0,27$ & $-0,0616$ & $+0,57$ pp \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{successbox}[Resultado-chave das métricas quantitativas]
+O aluno destilado \textbf{superou o professor} em todas as três métricas:
+PPL $4{,}23 < 4{,}50$, EC $1{,}4434 < 1{,}5050$ e Acurácia $68{,}65\% > 68{,}08\%$.
+Isso indica que o fine-tuning especializou o aluno no domínio do dataset (DOMPI-2025),
+tornando-o mais eficiente que o próprio professor nesse subconjunto.
+\end{successbox}
+
+\subsection{Benchmark Qualitativo: Acertos nas 100 Perguntas (Substring/Word Overlap)}
+
+\begin{table}[H]
+\centering
+\caption{Resultado do benchmark qualitativo (100 perguntas) -- critério automático}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Métrica} & \textbf{Quantidade} & \textbf{\%} \\
+\midrule
+Professor acertou              & 55 & 55\% \\
+Aluno ANTES acertou            & 36 & 36\% \\
+\rowcolor{lightgreen}
+Aluno DEPOIS acertou           & \textbf{42} & \textbf{42\%} \\
+\midrule
+Convergência (ambos acertaram) & 28 & 28\% \\
+Aluno acertou, professor errou & 14 & 14\% \\
+Professor acertou, aluno errou & 27 & 27\% \\
+\midrule
+\rowcolor{lightgreen}
+Aluno melhorou após destilação & 16 & 16\% \\
+\rowcolor{lightred}
+Aluno piorou após destilação   & 10 & 10\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O aluno passou de \textbf{36\%} para \textbf{42\%} de acertos (+6 pontos percentuais),
+melhorando em 16 questões com apenas 10 regressões. O gap em relação ao professor
+(55\% vs 42\%) reflete a diferença de capacidade entre os modelos (3B vs 1.5B).
+
+\subsection{Benchmark Qualitativo: Acertos nas 100 Perguntas (LLM-as-Judge)}
+
+Para verificar a robustez do resultado acima, as mesmas 100 respostas do aluno
+(antes e depois) foram reavaliadas por um LLM juiz, conforme descrito na
+Seção~3.2. A Tabela~\ref{tab:llm-judge} resume o resultado.
+
+\begin{table}[H]
+\centering
+\caption{Resultado do benchmark qualitativo (100 perguntas) -- avaliação por LLM-as-Judge}
+\label{tab:llm-judge}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Métrica} & \textbf{Quantidade} & \textbf{\%} \\
+\midrule
+\rowcolor{lightgreen}
+Aluno ANTES acertou (juiz)      & \textbf{69} & \textbf{69\%} \\
+Aluno DEPOIS acertou (juiz)     & 62 & 62\% \\
+\midrule
+Convergência -- ambos corretos    & 52 & 52\% \\
+Convergência -- ambos incorretos  & 21 & 21\% \\
+Aluno melhorou após destilação   & 10 & 10\% \\
+\rowcolor{lightred}
+Aluno piorou após destilação     & \textbf{17} & \textbf{17\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{warningbox}[Resultado-chave da avaliação por LLM-as-Judge]
+Ao contrário do que sugere a métrica automática de \textit{substring}, a avaliação
+semântica por LLM-as-Judge indica que o aluno \textbf{piorou} após a destilação:
+de \textbf{69\%} de acertos antes para \textbf{62\%} depois ($-7$ pontos percentuais),
+com \textbf{17} questões que regrediram contra apenas \textbf{10} que melhoraram.
+Em \textbf{52} das 100 perguntas o julgamento não mudou (ambas as respostas corretas)
+e em \textbf{21} ambas seguiram incorretas.
+\end{warningbox}
+
+As principais causas das regressões foram: \textbf{alucinações} introduzidas após o
+fine-tuning (detalhes inventados, como um endereço ou CNPJ inexistente no
+documento-fonte); \textbf{perda de informações} corretas presentes na resposta
+``antes'' (o modelo ``depois'' passou a negar tê-las); e \textbf{contradições
+internas} (ex.: citar ``R\$~25.000,00'' e, na mesma frase, escrever por extenso
+``vinte e quatro mil reais''). Já as 10 melhoras genuínas ocorreram quando a resposta
+``depois'' extraiu corretamente um dado ausente ou incompleto na resposta ``antes''
+(ex.: matrícula corrigida de ``1234-'' para ``1234-5'').
+
+\subsection{Comparação entre os Dois Métodos de Avaliação}
+
+\begin{table}[H]
+\centering
+\caption{Comparação: métrica automática (substring/overlap) vs. LLM-as-Judge}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Método de avaliação} & \textbf{Aluno ANTES} & \textbf{Aluno DEPOIS} \\
+\midrule
+Substring / Word Overlap & 36\% & 42\% ($+6$ pp) \\
+LLM-as-Judge             & 69\% & 62\% ($-7$ pp) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Os dois métodos divergem na \textbf{direção} do efeito: o \textit{substring}, mais
+rígido quanto à forma, subestima o desempenho geral mas indica melhora líquida; o
+LLM-as-Judge, ao avaliar o conteúdo semântico, reconhece mais acertos em ambos os
+momentos mas aponta piora líquida -- sugerindo que parte do ganho medido pela métrica
+automática vem de respostas ``depois'' mais curtas e diretas, que às vezes escondem
+alucinações detectáveis apenas por um avaliador semântico.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Discussão}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Houve Transferência de Conhecimento?}
+
+\begin{destaquebox}[Resposta objetiva ao enunciado]
+\textbf{Sim, houve transferência de conhecimento}, mas com evidências mistas sobre a
+sua qualidade. As métricas quantitativas confirmam a transferência de forma
+inequívoca (PPL $-22{,}9\%$, EC $-15{,}2\%$, Acurácia $+2{,}98$ pp -- aluno superou o
+professor). Já ao nível de \textbf{corretude semântica} (LLM-as-Judge), o aluno
+\textbf{piorou} (69\% $\rightarrow$ 62\%), enquanto pela métrica de
+\textit{substring} ele \textbf{melhorou} (36\% $\rightarrow$ 42\%): menor
+perplexidade/entropia cruzada não implica, portanto, respostas mais corretas ou
+confiáveis.
+\end{destaquebox}
+
+\subsection{Por que o Aluno Superou o Professor nas Métricas?}
+
+O resultado é contra-intuitivo, mas explicável: as métricas são calculadas sobre o
+\textbf{mesmo dataset} usado no treino do aluno (viés \textit{in-distribution}), e o
+fine-tuning com LoRA \textbf{especializou} o aluno no estilo de resposta do professor
+nesse domínio específico -- enquanto o professor, genérico, não está especializado
+nesse formato. Em um cenário \textit{out-of-distribution} o professor ainda supera o
+aluno, como confirma o benchmark qualitativo (55\% vs 42\%, métrica \textit{substring}).
+
+\subsection{Por que a Métrica Automática e o LLM-as-Judge Divergem?}
+
+A divergência (Seção~4.4) ocorre porque o \textit{substring} recompensa respostas
+curtas que contenham literalmente o gabarito, sem penalizar alucinações ao lado da
+informação correta; já o LLM-as-Judge penaliza tanto a ausência do dado certo quanto
+informações fabricadas. Tudo indica que o fine-tuning ensinou o aluno a produzir
+respostas num \textbf{formato} mais parecido ao do gabarito (o que ajuda no
+\textit{substring}), mas também introduziu maior propensão a alucinar -- o que a
+avaliação semântica captura e a automática não. Isso reforça a recomendação de
+priorizar avaliações semânticas (LLM-as-Judge ou revisão humana) para conclusões
+definitivas sobre corretude.
+
+\subsection{Limitações e Observações}
+
+\begin{itemize}
+  \item \textbf{Respostas em inglês do professor:} o Qwen2.5-3B-Instruct respondeu
+        em inglês em vários casos, reduzindo artificialmente seus acertos no
+        \textit{substring matching}; um prompt mais diretivo mitigaria isso.
+  \item \textbf{Tamanho do dataset:} 100 exemplos é pouco para destilação; 1.000+
+        (como na Questão 2) dariam resultados mais robustos.
+  \item \textbf{Avaliação por substring:} métrica aproximada, como evidenciado pela
+        divergência com o LLM-as-Judge (Seções~4.4 e 5.3).
+  \item \textbf{Viés do LLM-as-Judge:} o avaliador também é um modelo de linguagem e
+        pode ter vieses próprios; o ideal seria complementar com revisão humana.
+\end{itemize}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Conclusão}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Este trabalho demonstrou a viabilidade da destilação de conhecimento por
+\textit{Chain-of-Thought} entre modelos da família Qwen2.5, aplicada ao domínio
+de documentos oficiais dos municípios do Piauí.
+
+Os principais resultados foram:
+
+\begin{itemize}
+  \item \textbf{Transferência confirmada nas métricas quantitativas:} PPL $-22{,}9\%$
+        e acurácia de tokens $+2{,}98$ pp após a destilação
+  \item \textbf{Especialização no domínio:} o aluno destilado superou o professor
+        nas métricas quantitativas
+  \item \textbf{Resultado qualitativo misto:} pelo \textit{substring}, o aluno
+        melhorou ($+6$ pp); pelo LLM-as-Judge, piorou ($-7$ pp, 17 regressões x 10
+        melhoras), em grande parte por alucinações introduzidas no fine-tuning
+  \item \textbf{Eficiência:} o aluno (1,5B) alcançou desempenho comparável ao
+        professor (3B) treinando via LoRA apenas $\approx$0,5\% dos parâmetros
+\end{itemize}
+
+A abordagem confirma que modelos menores podem ser especializados via destilação com
+dados sintéticos, reduzindo custos de inferência. Porém, a divergência entre os
+métodos de avaliação alerta para o risco de conclusões precipitadas baseadas apenas
+em correspondência textual: ganhos de formato podem mascarar perda de confiabilidade
+factual, que só uma avaliação semântica (ou humana) captura.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section*{Referências}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{enumerate}[label={[\arabic*]}]
+  \item \label{dompi2025} Portelaa, G. et al. (2025). \textit{DOMPI-2025: Dataset dos
+        Diários Oficiais dos Municípios do Piauí}.
+        \url{https://huggingface.co/datasets/gutoportelaa/DOMPI-2025}
+  \item \label{llmjudge} Zheng, L. et al. (2023). \textit{Judging LLM-as-a-Judge with
+        MT-Bench and Chatbot Arena}. arXiv:2306.05685.
+\end{enumerate}
+
+\end{document}

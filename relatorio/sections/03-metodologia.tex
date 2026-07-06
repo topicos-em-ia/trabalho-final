@@ -14,45 +14,87 @@ decretos, extratos de contrato, editais de licitação e relatórios fiscais.
 docentesDC~\cite{dataset_docentesdc} contém materiais acadêmicos (slides, notas de
 aula, fragmentos de código e artigos) de 19 professores do Departamento de
 Computação da UFPI, em 13.762 registros com os campos \texttt{text} e
-\texttt{nome\_professor}. É a base do pós-treino, da qual foram gerados os pares de
-pergunta e resposta usados no SFT e no LoRA/QLoRA.
+\texttt{nome\_professor}. O conteúdo é heterogêneo e ruidoso: além de texto em
+português extraído de slides, há artigos científicos em inglês fatiados em blocos e
+código-fonte em linguagem C. É a base do pipeline de geração de pares descrito na
+Seção~\ref{sec:q2}.
 
 \subsection{Modelo e ambiente computacional}
 
 Todos os experimentos partem do mesmo modelo base, \texttt{Qwen2.5-0.5B}, carregado
-via biblioteca \textit{Transformers}~\cite{wolf2020transformers}. O treino de
-referência foi executado em uma única GPU NVIDIA T4 (16~GB) na plataforma Kaggle. A
-escolha de uma única T4 (em vez das duas disponíveis) foi deliberada: com duas GPUs,
-o \texttt{Trainer} ativaria \textit{DataParallel} e concentraria os \textit{logits}
-do vocabulário de 151~mil tokens em uma só placa, estourando a memória. O modelo de
-0,5~bilhão de parâmetros cabe folgadamente em uma T4.
+via biblioteca \textit{Transformers}~\cite{wolf2020transformers}. A execução ocorreu
+em uma única sessão da plataforma Kaggle, em um \textit{notebook} unificado que
+encadeia as três questões, com uma única GPU NVIDIA T4 (16~GB) visível. A escolha de
+uma única T4 (em vez das duas disponíveis) foi deliberada: com duas GPUs, o
+\texttt{Trainer} ativaria \textit{DataParallel} e concentraria os \textit{logits} do
+vocabulário de 151~mil tokens em uma só placa, estourando a memória.
 
-Por exigência do \textit{GradScaler} usado no treino em precisão mista (\texttt{fp16}
-com \textit{autocast}), os pesos mestres foram mantidos em \texttt{fp32}; sem isso, a
-T4, que não possui suporte de hardware a \texttt{bfloat16}, falhava no treino.
-Empregou-se \textit{gradient checkpointing} para reduzir o consumo de memória.
+Por exigência do \textit{GradScaler} usado no treino em precisão mista
+(\texttt{fp16} com \textit{autocast}), os pesos mestres dos treinos completos foram
+mantidos em \texttt{fp32}; a T4 não possui suporte de hardware a \texttt{bfloat16}.
+Empregou-se \textit{gradient checkpointing} em todos os treinos para reduzir o
+consumo de memória, e o melhor \textit{checkpoint} de cada treino foi selecionado
+pela menor perda de validação (\texttt{load\_best\_model\_at\_end}).
 
 \subsection{Protocolo de avaliação}
 
-Para cada questão, o modelo é avaliado \emph{antes} e \emph{depois} do treino sobre
-o mesmo conjunto reservado, usando as métricas da Seção~\ref{sec:metricas}
-(perplexidade, entropia cruzada e acurácia de tokens). Complementa-se a avaliação
-quantitativa com inspeção qualitativa de gerações livres a partir de prompts fixos,
-contrastando o comportamento do modelo base e do modelo treinado. A
-Tabela~\ref{tab:visao-geral} resume a configuração das três questões.
+Para cada experimento, o modelo é avaliado \emph{antes} e \emph{depois} do treino
+sobre o mesmo conjunto reservado, usando as métricas da Seção~\ref{sec:metricas}. Na
+Questão 01 as métricas cobrem a sequência completa (modelagem de linguagem pura);
+nas Questões 02 e 03, apenas os tokens de resposta, conforme a
+Seção~\ref{sec:mascara}. A avaliação quantitativa é complementada por comparações
+qualitativas com geração determinística (\textit{greedy}), garantindo que as
+respostas registradas antes e depois sejam reprodutíveis. Sementes aleatórias fixas
+controlam embaralhamentos e divisões de dados. A Tabela~\ref{tab:visao-geral} resume
+os quatro experimentos executados.
 
-\begin{table}[h]
+\begin{table}[ht]
   \centering
-  \caption{Visão geral das três questões e do estado de execução.}
+  \caption{Visão geral dos experimentos executados na sessão única de T4.}
   \label{tab:visao-geral}
   \footnotesize
-  \begin{tabularx}{\textwidth}{@{}l l l l X@{}}
+  \begin{tabular}{@{}l l l r r r@{}}
     \toprule
-    \textbf{Questão} & \textbf{Técnica} & \textbf{Dataset} & \textbf{Params. treinados} & \textbf{Estado} \\
+    \textbf{Experimento} & \textbf{Técnica} & \textbf{Dataset} & \textbf{Params. treinados} & \textbf{Tempo} & \textbf{VRAM} \\
     \midrule
-    01 & Pré-treino continuado & DOMPI-2025 & 100\% (494M) & Concluída (antes/depois) \\
-    02 & SFT (full)            & docentesDC & 100\% (494M) & Baseline coletado; treino em andamento \\
-    03 & LoRA/QLoRA            & docentesDC & 0,44\% (2,16M) & Baseline coletado; treino em andamento \\
+    Questão 01 & Pré-treino continuado & DOMPI-2025 & 494M (100\%) & 4h23 & 10,60~GB \\
+    Questão 02 & SFT completo          & docentesDC & 494M (100\%) & 11~min & 9,77~GB \\
+    Questão 03 & QLoRA (NF4)           & docentesDC & 2,16M (0,44\%) & 18~min & 1,77~GB \\
+    Adicional  & QLoRA no 1.5B         & docentesDC & 4,36M (0,28\%) & 26~min & 2,75~GB \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Ambientes e recursos das Questões 04 a 06}
+\label{sec:amb-q456}
+
+As Questões 04 a 06 ampliam o estudo para técnicas que não se resumem ao treino de
+um único modelo e, por isso, foram desenvolvidas em ambientes próprios, com modelos e
+ferramentas distintos dos das três primeiras. A Questão 04 usa dois modelos da
+família Qwen2.5 na variante \texttt{-Instruct} (professor de 3 bilhões e aluno de 1,5
+bilhão de parâmetros) e o mesmo corpus DOMPI-2025 da Questão 01, agora como fonte de
+um dataset sintético de destilação. A Questão 05 não treina modelo algum: monta um
+pipeline de RAG sobre o docentesDC com serviços da OpenAI para geração e
+\textit{embeddings}. A Questão 06 reaproveita o próprio modelo pós-treinado na
+Questão 02, adicionando-lhe camadas de \textit{guardrails} baseadas em regras. A
+Tabela~\ref{tab:amb-q456} resume esses ambientes.
+
+\begin{table}[ht]
+  \centering
+  \caption{Modelos, dados, ferramentas e ambientes das Questões 04 a 06.}
+  \label{tab:amb-q456}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}l
+    >{\hsize=1.05\hsize\raggedright\arraybackslash}X
+    >{\hsize=0.85\hsize\raggedright\arraybackslash}X
+    >{\hsize=1.30\hsize\raggedright\arraybackslash}X
+    >{\hsize=0.80\hsize\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Questão} & \textbf{Modelo(s)} & \textbf{Dataset} & \textbf{Principais ferramentas} & \textbf{Ambiente} \\
+    \midrule
+    Q4 Destilação & Qwen2.5-3B $\rightarrow$ 1.5B-Instruct & DOMPI-2025 (sintético, 100 trechos) & Transformers, PEFT/LoRA, SFTTrainer, LLM-as-Judge & GPU RTX 4050 (6~GB) \\
+    Q5 RAG & \texttt{gpt-4o-mini} \newline + \texttt{text-\allowbreak embedding-\allowbreak 3-\allowbreak small} & docentesDC & LangChain, ChromaDB, Ragas & API OpenAI (local) \\
+    Q6 Guardrails & Qwen2.5-0.5B (SFT da Q2) & docentesDC & Transformers + trilhos de regras (\textit{regex}) & CPU (local) \\
     \bottomrule
   \end{tabularx}
 \end{table}
